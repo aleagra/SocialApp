@@ -6,33 +6,57 @@ import { format } from "timeago.js";
 import axios from "axios";
 
 const Post = ({ post, userprofile }) => {
-  const [like, setLike] = useState(post.likes.length);
-  const [isLiked, setIsLiked] = useState(false);
+  const [isLiked, setIsLiked] = useState();
   const [comments, setComments] = useState(post.comments);
   const [commentwriting, setcommentwriting] = useState("");
   const { user } = useContext(AuthContext);
-  const PF = import.meta.env.VITE_PUBLIC_FOLDER;
+  const PF = "http://localhost:5050/images/";
+  const [likesCount, setLikesCount] = useState(post.likesCount || 0);
 
-  useEffect(() => {}, [comments, like]);
+  useEffect(() => {
+    const fetchLikeStatus = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:5050/posts/${post._id}/checkLike/${user._id}`
+        );
+        setIsLiked(response.data);
+      } catch (err) {}
+    };
 
-  //funcion de likes
-  const likeHandler = () => {
+    fetchLikeStatus();
+  }, [post._id, user._id]);
+
+  const likeHandler = async () => {
     try {
-      axios.put("http://localhost:5050/posts/" + post._id + "/like", {
-        userId: userprofile._id,
-      }); //ruta del like
-    } catch (err) {}
+      const response = await axios.get(
+        `http://localhost:5050/posts/${post._id}/checkLike/${user._id}`
+      );
+      const hasLiked = response.data;
 
-    if (like) {
-      setIsLiked(false);
-      setLike(like - 1);
-    } else {
-      setIsLiked(true);
-      setLike(like + 1);
-    }
+      if (hasLiked) {
+        await axios.put(`http://localhost:5050/posts/${post._id}/like`, {
+          userId: user._id,
+        });
+        setLikesCount(likesCount - 1);
+        setIsLiked(false);
+      } else {
+        if (!isLiked) {
+          await axios.put(`http://localhost:5050/posts/${post._id}/like`, {
+            userId: user._id,
+          });
+          setLikesCount(likesCount + 1);
+          setIsLiked(true);
+        }
+      }
+    } catch (err) {}
   };
 
-  //funcion de comentarios
+  useEffect(() => {
+    setLikesCount(post.likes.length);
+  }, [post.likes.length]);
+
+  useEffect(() => {}, [comments]);
+
   const addComment = async () => {
     const comment = {
       img: `${user.avatarImage}`,
@@ -86,7 +110,7 @@ const Post = ({ post, userprofile }) => {
               xmlns="http://www.w3.org/2000/svg"
               onClick={likeHandler}
               viewBox="0 0 512 512"
-              className="fill-red-600 w-5 h-6"
+              className={`${isLiked ? "fill-red-600" : "fill-white"} w-5 h-6`}
             >
               <path
                 d={
@@ -97,7 +121,7 @@ const Post = ({ post, userprofile }) => {
               />
             </svg>
 
-            <h4 className="text-xs font-extralight">{like}</h4>
+            <h4 className="text-xs font-extralight">{likesCount}</h4>
           </div>
           <div className="flex items-center gap-2">
             <svg

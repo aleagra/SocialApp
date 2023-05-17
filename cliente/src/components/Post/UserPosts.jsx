@@ -11,7 +11,7 @@ const userPosts = () => {
   // const url2 = `http://localhost:5050/posts`;
   // const [posts, setPosts] = useState([]);
   // const [following, setFollowing] = useState([]);
-  // const PF = import.meta.env.VITE_PUBLIC_FOLDER;
+  // const PF = "http://localhost:5050/images/";
 
   // useEffect(() => {
   //   async function userPosts() {

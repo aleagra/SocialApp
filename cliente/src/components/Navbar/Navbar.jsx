@@ -4,6 +4,7 @@ import NavSearch from "./NavSearch";
 import "tw-elements";
 import ColorItem from "../Home/colorItem";
 import Toggle from "./Toggle";
+import Notifications from "./Notifications";
 
 const Navbar = () => {
   let btn = document.getElementById("btn");
@@ -187,51 +188,7 @@ const Navbar = () => {
           </svg>
         </button>
 
-        <div
-          className="modal fade fixed hidden  h-full w-[20%] top-[7%] right-0 overflow-y-auto overflow-x-hidden outline-none"
-          id="exampleModalNotificacion"
-          tabIndex="-1"
-          aria-labelledby="exampleModalNotificacion"
-          aria-modal="true"
-          role="dialog"
-        >
-          <div className="flex h-[70%] w-[90%] m-auto bg-white  dark:bg-[#16181C] dark:text-white shadow-lg rounded-lg ">
-            <div className="modal-dialog pointer-events-none relative w-full ">
-              <div className="modal-content pointer-events-auto relative flex w-full flex-col rounded-md border-none bg-white dark:bg-[#16181C] bg-clip-padding text-current outline-none">
-                <div className="modal-body relative p-4  ">
-                  <div className="flex w-full justify-center">
-                    <h1 className="text-lg font-light mb-5 mt-2">
-                      Notificaciones
-                    </h1>
-                  </div>
-                  {lista.map((Element) => {
-                    return (
-                      <>
-                        <a href={"/Profile/" + Element._id} className="">
-                          <div className="relative flex w-full py-3 border-notificacion gap-5 p-[2%] items-center text-black dark:text-white ">
-                            <div className="w-[15%]">
-                              <img
-                                src={`data:image/svg+xml;base64,${Element.avatarImage}`}
-                                alt=""
-                                className=""
-                              />
-                            </div>
-                            <h1 className="font-extralight">
-                              <span className="font-bold">
-                                {Element.username}
-                              </span>{" "}
-                              ha comenzado a seguirte.
-                            </h1>
-                          </div>
-                        </a>
-                      </>
-                    );
-                  })}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <Notifications />
         <Link to="/Profile">
           <svg
             xmlns="http://www.w3.org/2000/svg"

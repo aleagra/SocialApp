@@ -63,6 +63,22 @@ const likePost = async (req, res) => {
   }
 };
 
+const checkLike = async (req, res) => {
+  try {
+    const { id, userId } = req.params;
+    const post = await Post.findById(id);
+
+    if (!post) {
+      return res.status(404).json({ error: 'Post not found' });
+    }
+
+    const hasLiked = post.likes.includes(userId);
+    res.json(hasLiked);
+  } catch (err) {
+    // Manejar el error
+  }
+}
+
 const comentPost = async (req, res) => {
   const post = await Post.findById(req.params.id);
   // console.log(req.body);
@@ -111,6 +127,7 @@ module.exports = {
   comentPost,
   getAllPosts,
   findByPost,
+  checkLike,
 
 
 };

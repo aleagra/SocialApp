@@ -7,26 +7,37 @@ import axios from "axios";
 function ProfileUsers() {
   let { id } = useParams();
   const url = `http://localhost:5050/users/${id}`;
-  const [currentUserImage, setCurrentUserImage] = useState(undefined);
-  const [currentUserName, setCurrentUserName] = useState(undefined);
-  const [description, setdescription] = useState(undefined);
-  const [profile, setProfile] = useState(undefined);
-  const [followers, setFollow] = useState(undefined);
-  const [following, setFollowing] = useState(undefined);
-  const [background, setBackground] = useState(undefined);
+  const [profile, setProfile] = useState({
+    currentUserImage: undefined,
+    currentUserName: undefined,
+    description: undefined,
+    followers: undefined,
+    following: undefined,
+    background: undefined,
+  });
 
   useEffect(() => {
-    async function productosDB() {
-      const data = await axios.get(url);
-      setProfile(data.data);
-      setCurrentUserName(data.data.username);
-      setdescription(data.data.descripcion);
-      setBackground(data.data.background);
-      setCurrentUserImage(data.data.avatarImage);
-      setFollow(data.data.followers.length);
-      setFollowing(data.data.following.length);
+    async function fetchUser() {
+      const { data } = await axios.get(url);
+      const {
+        username,
+        descripcion,
+        background,
+        avatarImage,
+        followers,
+        following,
+      } = data;
+      setProfile({
+        ...data,
+        currentUserImage: avatarImage,
+        currentUserName: username,
+        description: descripcion,
+        background: background,
+        followers: followers.length,
+        following: following.length,
+      });
     }
-    productosDB();
+    fetchUser();
   }, []);
 
   return (
@@ -35,41 +46,35 @@ function ProfileUsers() {
       <div className="relative pb-2 h-full mt-20 justify-center items-center">
         <div className="flex flex-col pb-5 dark:text-white">
           <div className="relative flex flex-col mb-7">
-            {/* imagen de fondo */}
             <div className="flex flex-col justify-center items-center">
               <img
-                src={background} //hacerlo dinamico con la db
+                src={profile.background}
                 alt=""
                 className="w-full h-60 2xl:h-510 shadow-lg object-cover rounded-lg"
               />
               <img
-                src={`data:image/svg+xml;base64,${currentUserImage}`}
+                src={`data:image/svg+xml;base64,${profile.currentUserImage}`}
                 className="rounded-full w-40 h-40 -mt-10 shadow-2xl object-cover"
                 alt=""
               />
               <h1 className="font-bold text-3xl text-center mt-3 mb-10">
-                {currentUserName}
+                {profile.currentUserName}
               </h1>
-              <h5 className=" text-center mb-8 mt-0">{description}</h5>
+              <h5 className="text-center mb-8 mt-0">{profile.description}</h5>
               <div className="flex justify-center gap-9">
                 <div className="flex w-[33%] flex-col items-center">
-                  <h1 className="text-lg font-bold">{following}</h1>
+                  <h1 className="text-lg font-bold">{profile.following}</h1>
                   <h3 className="text-xs font-extralight opacity-60">
                     Followers
                   </h3>
                 </div>
                 <div className="flex w-[33%] flex-col items-center">
-                  <h1 className="text-lg font-bold">{followers}</h1>
+                  <h1 className="text-lg font-bold">{profile.followers}</h1>
                   <h3 className="text-xs font-extralight opacity-60">
                     Following
                   </h3>
                 </div>
               </div>
-            </div>
-
-            {/* botones */}
-            <div className="text-center mb-7">
-              <UserPosts />
             </div>
           </div>
         </div>
