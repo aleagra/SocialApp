@@ -1,16 +1,10 @@
 import React, { useEffect, useState, useRef, useContext } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 import { io } from "socket.io-client";
-import styled from "styled-components";
-import { allUsersRoute, host } from "../utils/APIRoutes";
-import ChatContainer from "../components/ChatContainer";
-import Contacts from "../components/Contacts";
-import Welcome from "../components/Welcome";
 import { AuthContext } from "../context/AuthContext";
+import { ChatContainer, Contacts, Welcome } from "../components/Chat";
 
 export default function Chat() {
-  const navigate = useNavigate();
   const socket = useRef();
   const [contacts, setContacts] = useState([]);
   const [currentChat, setCurrentChat] = useState(undefined);
@@ -18,7 +12,7 @@ export default function Chat() {
 
   useEffect(() => {
     if (user) {
-      socket.current = io(host);
+      socket.current = io("http://localhost:5050");
       socket.current.emit("add-user", user._id);
     }
   }, [user]);
@@ -26,7 +20,9 @@ export default function Chat() {
   useEffect(() => {
     const fetchContacts = async () => {
       if (user) {
-        const response = await axios.get(`${allUsersRoute}`);
+        const response = await axios.get(
+          `http://localhost:5050/users/allusers`
+        );
         const users = response.data.filter((u) => u._id !== user._id);
         setContacts(users);
       }

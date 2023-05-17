@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react";
-import styled from "styled-components";
 import axios from "axios";
 import { Buffer } from "buffer";
-import loader from "../assets/loader.gif";
+import loader from "../../assets/loader.gif";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
-import { setAvatarRoute } from "../utils/APIRoutes";
 export default function SetAvatar() {
   const api = `https://api.multiavatar.com/4645646`;
   const navigate = useNavigate();
@@ -37,9 +35,12 @@ export default function SetAvatar() {
         localStorage.getItem(import.meta.env.REACT_APP_LOCALHOST_KEY)
       );
 
-      const { data } = await axios.post(`${setAvatarRoute}/${user._id}`, {
-        image: avatars[selectedAvatar],
-      });
+      const { data } = await axios.post(
+        `http://localhost:5050/users/setavatar/${user._id}`,
+        {
+          image: avatars[selectedAvatar],
+        }
+      );
 
       if (data.isSet) {
         user.isAvatarImageSet = true;
@@ -63,7 +64,7 @@ export default function SetAvatar() {
           `${api}/${Math.round(Math.random() * 1000)}`
         );
         const buffer = new Buffer(image.data);
-      data.push(buffer.toString("base64"));
+        data.push(buffer.toString("base64"));
       }
       setAvatars(data);
       setIsLoading(false);
@@ -75,7 +76,7 @@ export default function SetAvatar() {
       {isLoading ? (
         <section className="flex justify-center items-center flex-col gap-[3rem] bg-[#131324] h-[100vh] w-[100vw]">
           <img src={loader} alt="loader" className="loader" />
-          </section>
+        </section>
       ) : (
         <section className="flex justify-center items-center flex-col gap-[3rem] bg-[#131324] h-[100vh] w-[100vw]">
           <div className="text-white">
@@ -89,7 +90,7 @@ export default function SetAvatar() {
                     selectedAvatar === index ? "selected" : ""
                   }`}
                 >
-                  <img 
+                  <img
                     src={`data:image/svg+xml;base64,${avatar}`}
                     alt="avatar"
                     key={avatar}
@@ -100,14 +101,16 @@ export default function SetAvatar() {
               );
             })}
           </div>
-          <button onClick={setProfilePicture} className="bg-[#4e0eff] text-white py-[1rem] px-[2rem] border-none font-bold text-[1rem] uppercase :hover:bg-[#4e0eff]
-">
+          <button
+            onClick={setProfilePicture}
+            className="bg-[#4e0eff] text-white py-[1rem] px-[2rem] border-none font-bold text-[1rem] uppercase :hover:bg-[#4e0eff]
+"
+          >
             Set as Profile Picture
           </button>
           <ToastContainer />
-       </section>
+        </section>
       )}
     </>
   );
 }
-

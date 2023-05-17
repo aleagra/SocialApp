@@ -3,7 +3,6 @@ import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { loginRoute } from "../utils/APIRoutes";
 import { AuthContext } from "../context/AuthContext";
 
 export default function Login() {
@@ -29,7 +28,7 @@ export default function Login() {
       return;
     }
 
-    const { data } = await axios.post(loginRoute, {
+    const { data } = await axios.post("http://localhost:5050/users/login", {
       username,
       password,
     });

@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 import Navbar from "../Navbar/Navbar";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import UserPosts from "./UserPosts";
 
 function ProfileUsers() {
   let { id } = useParams();

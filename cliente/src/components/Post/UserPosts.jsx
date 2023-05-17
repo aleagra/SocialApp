@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
-import Post from "../Post/Post";
+import Post from "./Post";
 import { format } from "timeago.js";
 import { AuthContext } from "../../context/AuthContext";
 

@@ -254,10 +254,6 @@ const Navbar = () => {
 };
 const setTheme = (color) => {
   document.documentElement.style.setProperty("--bg-color", color);
-
-  // modal.style.background = ("--bg-color", color);
-  // nav.style.background = ("--bg-color", color);
-  // plus.style.stroke = ("--bg-color", color);
 };
 
 export default Navbar;

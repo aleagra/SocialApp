@@ -1,8 +1,8 @@
 import { useState, useContext } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
-import { AuthContext } from "../../context/AuthContext";
-import Navbar from "../Navbar/Navbar";
+import { AuthContext } from "../context/AuthContext";
+import Navbar from "../components/Navbar/Navbar";
 
 export default function Profile() {
   const { user, setUser, dispatch } = useContext(AuthContext);

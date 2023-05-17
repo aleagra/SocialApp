@@ -1,17 +1,15 @@
 import React from "react";
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import Navbar from "./Navbar";
-import { allUsersRoute } from "../../utils/APIRoutes";
 
 export function Search() {
-  const url = `http://localhost:5050/users`;
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
     async function productosDB() {
-      const data = await axios.get(allUsersRoute);
+      const data = await axios.get(`http://localhost:5050/users/allusers`);
       setUsers(data.data);
     }
     productosDB();

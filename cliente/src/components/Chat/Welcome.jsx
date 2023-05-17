@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
-import Robot from "../assets/robot.gif";
-import { AuthContext } from "../context/AuthContext";
+import Robot from "../../assets/robot.gif";
+import { AuthContext } from "../../context/AuthContext";
 export default function Welcome() {
   const { user } = useContext(AuthContext);
 

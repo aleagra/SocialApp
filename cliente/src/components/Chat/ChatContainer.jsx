@@ -3,8 +3,7 @@ import styled from "styled-components";
 import ChatInput from "./ChatInput";
 import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
-import { sendMessageRoute, recieveMessageRoute } from "../utils/APIRoutes";
-import { AuthContext } from "../context/AuthContext";
+import { AuthContext } from "../../context/AuthContext";
 
 export default function ChatContainer({ currentChat, socket }) {
   const [messages, setMessages] = useState([]);
@@ -14,10 +13,13 @@ export default function ChatContainer({ currentChat, socket }) {
 
   useEffect(() => {
     const fetchMessages = async () => {
-      const response = await axios.post(recieveMessageRoute, {
-        from: user._id,
-        to: currentChat._id,
-      });
+      const response = await axios.post(
+        `http://localhost:5050/messages/getmsg`,
+        {
+          from: user._id,
+          to: currentChat._id,
+        }
+      );
       setMessages(response.data);
     };
 
@@ -31,7 +33,7 @@ export default function ChatContainer({ currentChat, socket }) {
       msg,
     });
 
-    await axios.post(sendMessageRoute, {
+    await axios.post("http://localhost:5050/messages/addmsg", {
       from: user._id,
       to: currentChat._id,
       message: msg,

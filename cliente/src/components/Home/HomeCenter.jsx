@@ -2,7 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Post from "../Post/Post";
-import UserPost from "../UserPost/UserPost";
+import UserPost from "../Post/UserPost";
 
 export function HomeCenter() {
   const url = "http://localhost:5050/posts/";

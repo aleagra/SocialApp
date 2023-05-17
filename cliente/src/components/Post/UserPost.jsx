@@ -2,8 +2,7 @@ import React from "react";
 import { useContext, useRef, useState, useEffect } from "react";
 import axios from "axios";
 import { AuthContext } from "../../context/AuthContext";
-import MapsView from "../maps/MapsView";
-import app from "../../firebase";
+import app from "../../Storage";
 import {
   getStorage,
   ref,

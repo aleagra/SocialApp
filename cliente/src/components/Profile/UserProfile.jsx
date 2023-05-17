@@ -9,10 +9,9 @@ const UserProfile = () => {
     <div className="relative pb-2 h-full justify-center items-center">
       <div className="flex flex-col pb-5">
         <div className="relative flex flex-col mb-7">
-          {/* imagen de fondo */}
           <div className="flex flex-col justify-center items-center">
             <img
-              src={bgImage} //hacerlo dinamico con la db
+              src={bgImage}
               alt=""
               className="w-full h-60 2xl:h-510 shadow-lg object-cover rounded-lg"
             />
@@ -30,10 +29,8 @@ const UserProfile = () => {
               <li className=" mx-8">Trabajo actual</li>
               <li>Algo mas</li>
             </div>
-            {/*hacerlo dinamico*/}
           </div>
 
-          {/* botones */}
           <div className="text-center mb-7">
             <button
               type="button"

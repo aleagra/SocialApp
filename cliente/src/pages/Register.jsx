@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import styled from "styled-components";
 import { useNavigate, Link } from "react-router-dom";
-import Logo from "../assets/logo.svg";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { registerRoute } from "../utils/APIRoutes";
 
 export default function Register() {
   const navigate = useNavigate();
@@ -65,11 +62,14 @@ export default function Register() {
     event.preventDefault();
     if (handleValidation()) {
       const { email, username, password } = values;
-      const { data } = await axios.post(registerRoute, {
-        username,
-        email,
-        password,
-      });
+      const { data } = await axios.post(
+        `http://localhost:5050/users/register`,
+        {
+          username,
+          email,
+          password,
+        }
+      );
 
       if (data.status === false) {
         toast.error(data.msg, toastOptions);
@@ -87,38 +87,55 @@ export default function Register() {
   return (
     <>
       <section className=" flex flex-col w-full h-screen justify-center gap-[1rem] items-center bg-[#131324]">
-        <form action="" className="flex flex-col gap-[2rem] rounded-lg  bg-[#00000076] p-[5rem] " onSubmit={(event) => handleSubmit(event)}>
+        <form
+          action=""
+          className="flex flex-col gap-[2rem] rounded-lg  bg-[#00000076] p-[5rem] "
+          onSubmit={(event) => handleSubmit(event)}
+        >
           <div className="flex items-center gap-[1rem] justify-center">
-       
-            <h1 className="text-white uppercase font-bold text-lg">social media app</h1>
+            <h1 className="text-white uppercase font-bold text-lg">
+              social media app
+            </h1>
           </div>
-          <input  className=" bg-transparent p-[1rem] rounded-lg text-white w-full text-[1rem] border focus:outline-none "
+          <input
+            className=" bg-transparent p-[1rem] rounded-lg text-white w-full text-[1rem] border focus:outline-none "
             type="text"
             placeholder="Username"
             name="username"
             onChange={(e) => handleChange(e)}
           />
-          <input  className=" bg-transparent p-[1rem] rounded-lg text-white w-full text-[1rem]  border focus:outline-none "
+          <input
+            className=" bg-transparent p-[1rem] rounded-lg text-white w-full text-[1rem]  border focus:outline-none "
             type="email"
             placeholder="Email"
             name="email"
             onChange={(e) => handleChange(e)}
           />
-          <input  className=" bg-transparent p-[1rem] text-white rounded-lg w-full text-[1rem] border focus:outline-none"
+          <input
+            className=" bg-transparent p-[1rem] text-white rounded-lg w-full text-[1rem] border focus:outline-none"
             type="password"
             placeholder="Password"
             name="password"
             onChange={(e) => handleChange(e)}
           />
-          <input className=" bg-transparent p-[1rem] text-white rounded-lg w-full text-[1rem]  border focus:outline-none "
+          <input
+            className=" bg-transparent p-[1rem] text-white rounded-lg w-full text-[1rem]  border focus:outline-none "
             type="password"
             placeholder="Confirm Password"
             name="confirmPassword"
             onChange={(e) => handleChange(e)}
           />
-          <button type="submit" className="container   text-white py-[1rem]  border font-bold cursor-pointer uppercase text-[1rem] px-[2rem]">Create User</button>
+          <button
+            type="submit"
+            className="container   text-white py-[1rem]  border font-bold cursor-pointer uppercase text-[1rem] px-[2rem]"
+          >
+            Create User
+          </button>
           <span className="uppercase text-white">
-            Already have an account ? <Link to="/login" className="text font-bold">Login.</Link>
+            Already have an account ?{" "}
+            <Link to="/login" className="text font-bold">
+              Login.
+            </Link>
           </span>
         </form>
       </section>
@@ -126,4 +143,3 @@ export default function Register() {
     </>
   );
 }
-
