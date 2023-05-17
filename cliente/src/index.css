@@ -1,0 +1,86 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url("https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap");
+
+/* 
+      .emoji-picker-react {
+        position: absolute;
+        top: -350px;
+        background-color: #080420;
+        box-shadow: 0 5px 10px #9a86f3;
+        border-color: #9a86f3;}
+        .emoji-scroll-wrapper::-webkit-scrollbar {
+          background-color: #080420;
+          width: 5px;
+         
+        }
+        .emoji-categories {
+        
+            filter: contrast(0);
+          
+        }
+        {
+          backgr.emoji-search ound-color: transparent;
+          border-color: #9a86f3;
+        }
+        .emoji-group:before {
+          background-color: #080420;
+        }
+      }
+    }
+  } */
+
+  :root {
+    --bg-color: #ff6961;
+  }
+.display-none{
+  @apply hidden;
+}
+
+#nav{
+  background-color: var(--bg-color);
+}
+#btn{
+  background-color: var(--bg-color);
+}
+#modal {
+  background-color: var(--bg-color);
+}
+
+.plus{
+  stroke: var(--bg-color);
+}
+.color-item{
+  background-color: var(--bg-color);
+}
+
+.container{
+  background-color: var(--bg-color);
+}
+.text{
+  color: var(--bg-color);
+}
+#button-chat{
+  background-color: var(--bg-color);
+}
+.fondo{
+  background-color: rgb(245, 244, 242);
+}
+.border{
+  border-color: transparent;
+}
+.border-search{
+  border: 2px solid  ;
+  border-color: var(--bg-color); 
+}
+.border:focus{
+  border: 2px solid  ;
+  border-color: var(--bg-color);
+}
+
+.leaflet-container{
+  width: 30vw;
+  height: 30vw;
+}
