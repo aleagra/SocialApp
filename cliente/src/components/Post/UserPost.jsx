@@ -20,19 +20,6 @@ const userPost = () => {
   const [inputStr, setInputStr] = useState("");
   const [showPicker, setShowPicker] = useState(false);
 
-  // const fetchData = async () => {
-  //   const data = await JSON.parse(
-  //     localStorage.getItem(import.meta.env.REACT_APP_LOCALHOST_KEY)
-  //   )._id;
-  //   setId(data);
-  //   const res = await axios.get(`http://localhost:5050/users/${data}`);
-
-  //   setProfile(res.data);
-  // };
-  // useEffect(() => {
-  //   fetchData();
-  // }, []);
-
   const submitPost = async (e) => {
     e.preventDefault();
     const newPost = {
@@ -110,19 +97,25 @@ const userPost = () => {
 
   return (
     <>
-      <div className="  h-full w-[80%] rounded-lg shadow-lg py-3 bg-white dark:text-white dark:bg-[#16181C] ">
-        <div className=" h-full flex flex-col gap-y-12  rounded-lg py-5  items-center">
-          <input
-            type="text"
-            placeholder="Share your thoughts"
-            className="rounded-lg flex justify-center m-auto py-5 bg-transparent w-[90%]  text-2xl outline-none  "
-            required
-            value={inputStr}
-            onChange={(e) => setInputStr(e.target.value)}
-          />
-
-          <div className=" flex  w-[90%]  ">
-            <div className=" flex w-full items-center gap-10  ">
+      <div className="w-[90%] rounded-lg bg-white dark:text-white dark:bg-[#1e1f23] py-5 dark:border dark:border-white/20 mb-8">
+        <div className="flex flex-col rounded-lg items-center">
+          <div className="flex w-full px-6 gap-3 items-center">
+            <img
+              src={`data:image/svg+xml;base64,${user.avatarImage}`}
+              className="h-12 w-12 rounded-lg"
+              alt=""
+            />
+            <input
+              type="text"
+              placeholder="What's on your mind?"
+              className="rounded-md flex justify-center m-auto  p-[6px] bg-transparent w-[100%] text-xl outline-none"
+              required
+              value={inputStr}
+              onChange={(e) => setInputStr(e.target.value)}
+            />
+          </div>
+          <div className="flex justify-between w-full px-6 pt-6 items-center">
+            <div className="flex items-center gap-4">
               <label>
                 <svg //imagen
                   xmlns="http://www.w3.org/2000/svg"
@@ -130,7 +123,7 @@ const userPost = () => {
                   viewBox="0 0 24 24"
                   strokeWidth={1.5}
                   stroke="currentColor"
-                  className="w-6 h-6 plus cursor-pointer"
+                  className="w-7 h-7 plus cursor-pointer"
                 >
                   <path
                     strokeLinecap="round"
@@ -154,7 +147,7 @@ const userPost = () => {
                   viewBox="0 0 24 24"
                   strokeWidth={1.5}
                   stroke="currentColor"
-                  className="w-6 h-6 plus cursor-pointer"
+                  className="w-7 h-7 plus cursor-pointer"
                   onClick={() => setShowPicker((val) => !val)}
                 >
                   <path
@@ -171,7 +164,7 @@ const userPost = () => {
                   viewBox="0 0 24 24"
                   strokeWidth="1.5"
                   stroke="currentColor"
-                  className="w-6 h-6 plus cursor-pointer"
+                  className="w-7 h-7 plus cursor-pointer"
                 >
                   <path
                     strokeLinecap="round"
@@ -193,23 +186,9 @@ const userPost = () => {
                 onKeyDown={handleKey}
                 type="button"
                 id="btn"
-                className=" rounded-xl px-5 py-3 bg-black text-xs
-      font-medium
-      uppercase
-      leading-tight
-      text-white
-      shadow-md
-      transition
-      duration-150
-      ease-in-out
-      hover:shadow-lg focus:shadow-lg
-      focus:outline-none  focus:ring-0 
-      active:shadow-lg sm:w-min
-      md:w-auto
-      lg:w-auto
-      "
+                className="bg-black text-lg p-1 px-3 rounded-md"
               >
-                Share
+                Post
               </button>
             </div>
           </div>

@@ -11,7 +11,7 @@ const Navbar = () => {
   let modal = document.getElementById("modal");
   let nav = document.getElementById("nav");
   let plus = document.getElementById("plus");
-  const colors = ["#ff6961", "#2ABA7D", "#84b6f4", "#fdcae1"];
+  const colors = ["#ff6961", "#2ABA7D", "#84b6f4", "#dafc56"];
   const [lista, setLista] = useState([]);
 
   const defaultColor = "#2ABA7D";

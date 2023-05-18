@@ -32,55 +32,60 @@
     }
   } */
 
-  :root {
-    --bg-color: #ff6961;
-  }
-.display-none{
+:root {
+  --bg-color: #ff6961;
+}
+.display-none {
   @apply hidden;
 }
 
-#nav{
+#nav {
   background-color: var(--bg-color);
 }
-#btn{
+#btn {
   background-color: var(--bg-color);
 }
 #modal {
   background-color: var(--bg-color);
 }
 
-.plus{
+.plus {
   stroke: var(--bg-color);
 }
-.color-item{
+.color-item {
   background-color: var(--bg-color);
 }
 
-.container{
+.container {
   background-color: var(--bg-color);
 }
-.text{
+.text {
   color: var(--bg-color);
 }
-#button-chat{
+#button-chat {
   background-color: var(--bg-color);
 }
-.fondo{
+.fondo {
   background-color: rgb(245, 244, 242);
 }
-.border{
+.border {
   border-color: transparent;
 }
-.border-search{
-  border: 2px solid  ;
-  border-color: var(--bg-color); 
+.border-search {
+  border: 2px solid;
+  border-color: var(--bg-color);
 }
-.border:focus{
-  border: 2px solid  ;
+.border:focus {
+  border: 2px solid;
   border-color: var(--bg-color);
 }
 
-.leaflet-container{
+.leaflet-container {
   width: 30vw;
   height: 30vw;
+}
+
+aside.EmojiPickerReact.epr-main {
+  position: absolute !important;
+  bottom: 110px !important;
 }

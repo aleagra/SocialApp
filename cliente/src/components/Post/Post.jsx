@@ -11,6 +11,7 @@ const Post = ({ post, userprofile }) => {
   const [commentwriting, setcommentwriting] = useState("");
   const { user } = useContext(AuthContext);
   const PF = "http://localhost:5050/images/";
+  const [toggle, setTogle] = useState(true);
   const [likesCount, setLikesCount] = useState(post.likesCount || 0);
 
   useEffect(() => {
@@ -55,62 +56,73 @@ const Post = ({ post, userprofile }) => {
     setLikesCount(post.likes.length);
   }, [post.likes.length]);
 
-  useEffect(() => {}, [comments]);
+  useEffect(() => {
+    setComments(comments);
+  }, [comments]);
 
   const addComment = async () => {
     const comment = {
-      img: `${user.avatarImage}`,
-      username: `${user.username}`,
-      comment: `${commentwriting}`,
+      img: user.avatarImage,
+      username: user.username,
+      comment: commentwriting,
     };
     try {
-      axios.put("http://localhost:5050/posts/" + post._id + "/comment", {
+      await axios.put("http://localhost:5050/posts/" + post._id + "/comment", {
         userId: user._id,
         value: comment,
       });
-    } catch (err) {}
-    setComments(comments.concat(comment));
+      // Obtener los comentarios actualizados desde el servidor
+      const response = await axios.get(
+        "http://localhost:5050/posts/" + post._id + "/comments"
+      );
+      setComments(response.data.comments);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
-  const handleComment = () => {
-    window.location.reload();
-    addComment();
+  const handleComment = async () => {
+    await addComment();
+    setcommentwriting("");
   };
 
+  const toggleComments = () => {
+    setTogle(!toggle);
+  };
   return (
-    <div className="max-ms:px-0 flex h-[50%]  w-[85%] flex-col gap-y-8 py-[2%] px-[2%] max-lg:w-[70%] max-md:pl-0 max-sm:w-[95%]">
-      <div className=" flex w-[100%] flex-col  rounded-lg bg-white p-[2%] shadow-lg dark:bg-[#16181C] dark:text-white max-lg:p-0">
-        <div className="flex h-16 w-full p-2">
-          <div className="relative  flex w-full cursor-pointer items-center gap-4">
+    <div className="max-ms:px-0 flex w-[90%] flex-col gap-y-8 dark:border dark:border-white/20 rounded-md">
+      <div className=" flex w-[100%] flex-col   bg-white shadow-lg dark:bg-[#1e1f23] dark:text-white max-lg:p-0">
+        <div className="flex h-24 w-full px-6 py-2">
+          <div className="relative  flex w-full cursor-pointer items-center gap-3">
             <img
               src={`data:image/svg+xml;base64,${userprofile.avatarImage}`}
               className="h-12 w-12 rounded-lg"
               alt=""
             />
 
-            <div className="flex flex-col ">
+            <div className="flex flex-col text-md font-light capitalize">
               <h2>{userprofile.username}</h2>
 
-              <h4 className="text-xs font-extralight opacity-70">
+              <h4 className="text-md font-extralight opacity-40">
                 {format(post.createdAt)}
               </h4>
             </div>
           </div>
         </div>
-        <p className="px-[3%] py-[1%] text-lg font-light max-lg:text-base">
-          {post.desc}
-        </p>
+        <p className="px-6 pb-4  text-lg max-lg:text-base">{post.desc}</p>
         <div className="w-full max-h-[400px] flex justify-center ">
-          <img className=" " src={PF + post.img} alt="" />
+          <img className="w-full object-cover" src={PF + post.img} alt="" />
         </div>
 
-        <div className="flex w-full items-center gap-6  p-[2%]  ">
+        <div className="flex w-full items-center justify-between px-6 py-6 ">
           <div className="flex items-center gap-2">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               onClick={likeHandler}
               viewBox="0 0 512 512"
-              className={`${isLiked ? "fill-red-600" : "fill-white"} w-5 h-6`}
+              className={`${
+                isLiked ? "fill-red-600" : "fill-white"
+              } w-6 h-6 cursor-pointer`}
             >
               <path
                 d={
@@ -121,9 +133,33 @@ const Post = ({ post, userprofile }) => {
               />
             </svg>
 
-            <h4 className="text-xs font-extralight">{likesCount}</h4>
+            <h4 className="text-md font-extralight">{likesCount}</h4>
+            <p className="text-md">Likes</p>
           </div>
           <div className="flex items-center gap-2">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-6 h-6 cursor-pointer"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M7.217 10.907a2.25 2.25 0 100 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186l9.566-5.314m-9.566 7.5l9.566 5.314m0 0a2.25 2.25 0 103.935 2.186 2.25 2.25 0 00-3.935-2.186zm0-12.814a2.25 2.25 0 103.933-2.185 2.25 2.25 0 00-3.933 2.185z"
+              />
+            </svg>
+
+            <h4 className="text-md font-extralight">{comments.length}</h4>
+            <p className="text-md">Shares</p>
+          </div>
+
+          <div
+            className="flex items-center gap-2 cursor-pointer"
+            onClick={toggleComments}
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -138,55 +174,62 @@ const Post = ({ post, userprofile }) => {
                 d="M8.625 9.75a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375m-13.5 3.01c0 1.6 1.123 2.994 2.707 3.227 1.087.16 2.185.283 3.293.369V21l4.184-4.183a1.14 1.14 0 01.778-.332 48.294 48.294 0 005.83-.498c1.585-.233 2.708-1.626 2.708-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z"
               />
             </svg>
-            <h4 className="text-xs font-extralight">{comments.length}</h4>
+            <h4 className="text-md font-extralight">{comments.length}</h4>
+            <p className="text-md">Comments</p>
           </div>
         </div>
-        <div className="relative flex w-[100%] gap-5 p-[2%] ">
-          <img
-            src={`data:image/svg+xml;base64,${user.avatarImage}`}
-            className="h-12 w-12 rounded-lg"
-            alt=""
-          />
-          <input
-            className="w-full rounded-lg bg-gray-100 p-2 pl-8 pr-16 text-sm outline-none text-black"
-            placeholder="Escribi tu comentario"
-            onChange={(e) => setcommentwriting(e.target.value)}
-          />
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-            className="absolute top-7 right-8 h-4 w-4 cursor-pointer opacity-70 dark:stroke-black"
-            onClick={handleComment}
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5"
-            />
-          </svg>
-        </div>
-        {comments.map((item) => {
-          return (
-            <>
-              <div className="relative flex w-[100%] gap-5 p-[2%] items-center">
+        {!toggle && (
+          <div>
+            <div
+              className={`relative items-center flex w-[100%] gap-5 p-6  border-t dark:border-white/40 border-black/40`}
+            >
+              <img
+                src={`data:image/svg+xml;base64,${user.avatarImage}`}
+                className="h-8 w-8 rounded-lg"
+                alt=""
+              />
+              <input
+                className="w-full m-auto rounded-lg bg-gray-100 dark:bg-transparent dark:border dark:text-white dark:border-white/40 p-1 pl-3 pr-10 text-sm outline-none text-black"
+                placeholder="Escribi tu comentario"
+                onChange={(e) => setcommentwriting(e.target.value)}
+              />
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="absolute top-8 right-10 h-4 w-4 cursor-pointer opacity-70 "
+                onClick={(e) => {
+                  handleComment();
+                  toggleComments();
+                }}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5"
+                />
+              </svg>
+            </div>
+            {comments.map((item, index) => (
+              <div
+                className="relative flex w-[100%] gap-5 p-[2%] items-center"
+                key={index}
+              >
                 <img
-                  key={item}
                   src={`data:image/svg+xml;base64,${item.value.img}`}
                   className="h-12 w-12 rounded-lg"
                   alt=""
                 />
-
                 <div>
                   <h1 className="font-bold text">{item.value.username}</h1>
                   <h1>{item.value.comment}</h1>
                 </div>
               </div>
-            </>
-          );
-        })}
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

@@ -23,7 +23,7 @@ export default function App() {
               <Route path="/Search/:buscar" element={<Search />} />
               <Route path="/chat" element={[<Navbar />, <Chat />]} />
               <Route path="/Profile/:id" element={[<ProfileUsers />]} />
-              <Route path="/profile" element={<Profile key={user._id} />} />
+              <Route path="/profile" element={<Profile key={user?._id} />} />
             </Routes>
           </BrowserRouter>
         </ThemeProvider>

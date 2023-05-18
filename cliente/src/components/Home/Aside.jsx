@@ -1,85 +1,101 @@
-import React from "react";
-import { useState, useEffect, useContext } from "react";
-import { AuthContext } from "../../context/AuthContext";
-import axios from "axios";
+import React, { useState, useEffect, useRef } from "react";
+import { Bars, Bell, HomeIcon, SearchIcon, UserIcon } from "../../utilities";
+import ChatIcon from "../../utilities/icons/ChatIcon";
+import { Link } from "react-router-dom";
 
 const Aside = () => {
-  const { user } = useContext(AuthContext);
-  const [notFollowing, setNotFollowing] = useState([]);
+  const [isOpen, setIsOpen] = useState(false);
+  const modalRef = useRef(null);
 
   useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const response = await axios.get(
-          `http://localhost:5050/users/not-following/${user._id}`
-        );
-        setNotFollowing(response.data);
-      } catch (error) {
-        console.error(error);
+    const handleOutsideClick = (event) => {
+      if (
+        modalRef.current &&
+        !modalRef.current.contains(event.target) &&
+        !event.target.classList.contains("modal-content")
+      ) {
+        closeModal();
       }
     };
-    fetchUsers();
-  }, [user._id]);
 
-  const handleFollow = async (id) => {
-    try {
-      await axios.post(`http://localhost:5050/users/follow/${user._id}`, {
-        follower: id,
-      });
+    document.addEventListener("mousedown", handleOutsideClick);
 
-      setNotFollowing((prevNotFollowing) =>
-        prevNotFollowing.filter((user) => user._id !== id)
-      );
-    } catch (error) {
-      console.error(error);
-    }
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    };
+  }, []);
+
+  const openModal = () => {
+    setIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsOpen(false);
   };
 
   return (
     <>
-      <div className="w-[25%] py-[2%] gap-y-10  justify-end  flex max-lg:hidden">
-        <div className="flex fixed w-[20%] flex-col  rounded-lg p-3 shadow-lg bg-white dark:text-white dark:bg-[#16181C] max-xl:text-xs">
-          <div className="w-full flex flex-col gap-y-1">
-            <h4 className=" text-sm  mt-2 mb-2  text font-semibold text-center">
-              RECOMMENDATION
-            </h4>
-            {notFollowing.map((Element) => {
-              return (
-                <>
-                  <div
-                    className="flex justify-between p-2 items-center max-xl:px-0"
-                    key={Element._id}
-                  >
-                    <div className="flex w-full items-center ">
-                      <a
-                        className="flex items-center justify-evenly w-full "
-                        href={"/Profile/" + Element._id}
-                      >
-                        <div className="w-full text-center flex items-center gap-4">
-                          <img
-                            alt=""
-                            src={`data:image/svg+xml;base64,${Element.avatarImage}`}
-                            className="w-12 h-10"
-                          />
-                          <h3 className=" font-extralight">
-                            {Element.username}
-                          </h3>
-                        </div>
-                      </a>
-                    </div>
-                    <button
-                      className="color-item rounded-lg p-2 text-md font-light"
-                      id={Element._id}
-                      onClick={() => handleFollow(Element._id)}
-                    >
-                      Follow
-                    </button>
-                  </div>
-                </>
-              );
-            })}
-          </div>
+      <div className="fixed top-0 z-10 left-0 w-[20%] h-full border-r border-white/20 dark:text-white">
+        <div className="flex h-fit px-24 py-16 w-full items-center gap-2">
+          <img src="icon.png" className="w-10 h-10" alt="" />
+          <p className="text-2xl uppercase dark:text-white">SocialApp</p>
         </div>
+        <div className="w-full h-fit">
+          <ul className="flex flex-col uppercase">
+            <li className="py-8 px-24  text-xl font-semibold flex items-center gap-4">
+              <HomeIcon />
+              <span>home</span>
+            </li>
+            <li className="p-8 px-24  text-xl font-semibold flex items-center gap-4">
+              <SearchIcon />
+              <span>buscar</span>
+            </li>
+            <li className="p-8 px-24  text-xl font-semibold flex items-center gap-4">
+              <ChatIcon />
+              <span>chat</span>
+            </li>
+
+            <li className="p-8 px-24  text-xl font-semibold flex items-center gap-4">
+              <Bell />
+              <span>Notifications</span>
+            </li>
+            <li className="p-8 px-24  text-xl font-semibold flex items-center gap-4 hover:bg-white/40">
+              <UserIcon />
+              <span>perfil</span>
+            </li>
+            <li
+              className="p-8 px-24  pb-16 text-xl absolute bottom-0 flex gap-4 font-semibold cursor-pointer"
+              onClick={openModal}
+            >
+              <Bars />
+              <span className="">mas</span>
+            </li>
+          </ul>
+        </div>
+        {isOpen && (
+          <div className="fixed inset-0 flex items-center left-20 top-[28rem]">
+            <div
+              ref={modalRef}
+              className="bg-[#1e1f23] px-10 py-6 rounded-xl shadow-xl modal-content z-20 w-[18rem] h-fit "
+            >
+              <div className="flex flex-col">
+                <Link to="/chat" className="text-whte p-4">
+                  CHat
+                </Link>
+                <Link to="/chat" className="text-whte p-4">
+                  CHat
+                </Link>
+                <Link to="/chat" className="text-whte p-4">
+                  CHat
+                </Link>
+                <Link to="/chat" className="text-whte p-4">
+                  CHat
+                </Link>
+              </div>
+            </div>
+            <div className="fixed inset-0 " onClick={closeModal}></div>
+          </div>
+        )}
       </div>
     </>
   );
