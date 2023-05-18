@@ -3,6 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "../context/AuthContext";
 import Navbar from "../components/Navbar/Navbar";
+import { Aside } from "../components/Home";
 
 export default function Profile() {
   const { user, setUser, dispatch } = useContext(AuthContext);
@@ -44,46 +45,43 @@ export default function Profile() {
   };
 
   const handleLogout = () => {
-    // Limpiar los datos del usuario en el contexto de autenticación
     dispatch({ type: "LOGOUT" });
-
-    // Limpiar los datos del usuario en el localStorage
     localStorage.removeItem("user");
-
-    // Redirigir al usuario a la página de inicio de sesión
     navigate("/login");
   };
 
   return (
     <>
       <section>
-        <Navbar />
+        <Aside />
 
         <form onSubmit={handleClick} encType="multipart/form-data">
-          <div className="relative pb-2 h-full mt-20 justify-center items-center">
-            <div className="flex flex-col pb-5 dark:text-white">
-              <div className="relative flex flex-col mb-7">
-                <div className="flex flex-col justify-center items-center">
+          <div className="relative justify-center items-center min-h-screen h-screen ">
+            <div className="flex flex-col bg-[#17181c] h-full dark:text-white ml-[35%] mr-[15%] max-lg:m-0 max-lg:overflow-hidden">
+              <div className="relative flex flex-col border-2 border-white/30">
+                <div className="flex flex-col pt-4 relative items-center ">
                   <img
                     src={user.background}
                     alt=""
-                    className="w-full h-60 2xl:h-510 shadow-lg object-cover rounded-lg"
+                    className="min-h-[250px] max-h-[250px] w-[100%] rounded-lg object-cover "
                   />
-                  <img
-                    src={`data:image/svg+xml;base64,${user.avatarImage}`}
-                    className="rounded-full w-40 h-40 -mt-10 shadow-2xl object-cover"
-                    alt=""
-                  />
-                  <h1 className="font-bold text-3xl text-center mt-3 mb-10">
-                    {user.username}
-                  </h1>
-                  <h5 className=" text-center mb-8 mt-0">{user.descripcion}</h5>
-                  <div className=" flex flex-row mt-0 mb-10">
-                    @{user.username}
+                  <div className="w-full absolute top-[12rem] left-[3rem] flex justify-between">
+                    <img
+                      src={`data:image/svg+xml;base64,${user.avatarImage}`}
+                      className="rounded-full w-[10rem] h-[10rem] border-8 border-[#17181c]"
+                      alt=""
+                    />
+                    <button className="p-2 w-fit rounded-md h-fit container mt-[6rem] mr-[6rem]">
+                      Edit profile
+                    </button>
                   </div>
+                  {/* <h1 className="font-bold text-xl capitalize ">
+                    {user.username}
+                    <h5 className="">{user.descripcion}</h5>
+                  </h1> */}
                 </div>
 
-                <div className="text-center mb-7">
+                {/* <div className="text-center mb-7">
                   <div className="flex justify-center gap-4">
                     <div className="w-full flex justify-center">
                       <div className="w-auto flex gap-3 justify-center sm: flex-col">
@@ -171,7 +169,7 @@ export default function Profile() {
                       </div>
                     </div>
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>

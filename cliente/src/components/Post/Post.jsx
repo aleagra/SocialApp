@@ -91,7 +91,7 @@ const Post = ({ post, userprofile }) => {
   };
   return (
     <div className="max-ms:px-0 flex w-[90%] flex-col gap-y-8 dark:border dark:border-white/20 rounded-md">
-      <div className=" flex w-[100%] flex-col   bg-white shadow-lg dark:bg-[#1e1f23] dark:text-white max-lg:p-0">
+      <div className=" flex w-[100%] flex-col   bg-white shadow-lg dark:bg-[#17181c] dark:text-white max-lg:p-0">
         <div className="flex h-24 w-full px-6 py-2">
           <div className="relative  flex w-full cursor-pointer items-center gap-3">
             <img
@@ -185,11 +185,11 @@ const Post = ({ post, userprofile }) => {
             >
               <img
                 src={`data:image/svg+xml;base64,${user.avatarImage}`}
-                className="h-8 w-8 rounded-lg"
+                className="h-12 w-12 rounded-lg"
                 alt=""
               />
               <input
-                className="w-full m-auto rounded-lg bg-gray-100 dark:bg-transparent dark:border dark:text-white dark:border-white/40 p-1 pl-3 pr-10 text-sm outline-none text-black"
+                className="w-full m-auto p-2 rounded-xl bg-gray-100 dark:bg-transparent dark:border dark:text-white dark:border-white/40  pl-3 pr-10 text-sm outline-none text-black"
                 placeholder="Escribi tu comentario"
                 onChange={(e) => setcommentwriting(e.target.value)}
               />
@@ -199,7 +199,7 @@ const Post = ({ post, userprofile }) => {
                 viewBox="0 0 24 24"
                 strokeWidth={1.5}
                 stroke="currentColor"
-                className="absolute top-8 right-10 h-4 w-4 cursor-pointer opacity-70 "
+                className="absolute top-10 right-10 h-4 w-4 cursor-pointer opacity-70 "
                 onClick={(e) => {
                   handleComment();
                   toggleComments();

@@ -9,8 +9,8 @@ export default function Contacts({ contacts, changeChat }) {
   };
   return (
     <>
-      <section className=" grid grid-rows-[10%,75%,15%] mt-5 overflow-hidden bg-white dark:bg-[#16181C] ">
-        <div className="flex justify-center items-center mt-4 gap-[2rem] ">
+      <section className=" grid grid-rows-[10%,75%,15%] border-2 border-white/20 overflow-hidden bg-white dark:bg-[#17181c]">
+        <div className="flex justify-center items-center my-4 gap-[2rem]  border-b border-white/30">
           <h3 className="text-black dark:text-white font-bold ">CHATS</h3>
         </div>
         <div className="flex flex-col overflow-auto gap-[0.8rem]">
@@ -20,8 +20,8 @@ export default function Contacts({ contacts, changeChat }) {
                 key={contact._id}
                 className={`contact ${
                   index === currentSelected
-                    ? "container w-full p-3 text-white dark:text-black flex items-center  gap-[2rem]"
-                    : " text-black dark:text-white flex items-center mx-3 px-5 py-2  gap-[3rem]"
+                    ? "bg-white/20 w-full px-3 py-6 text flex items-center gap-6 pl-16 cursor-pointer"
+                    : " text-black dark:text-white px-3 py-6 flex items-center  gap-6 pl-16 cursor-pointer"
                 }`}
                 onClick={() => changeCurrentChat(index, contact)}
               >
@@ -29,31 +29,31 @@ export default function Contacts({ contacts, changeChat }) {
                   <img
                     src={`data:image/svg+xml;base64,${contact.avatarImage}`}
                     alt=""
-                    className="h-[4rem]"
+                    className="w-12 h-12"
                   />
                 </div>
                 <div className=" font-bold text-lg">
-                  <h3>{contact.username}</h3>
+                  <h3 className="uppercase">{contact.username}</h3>
                 </div>
               </div>
             );
           })}
         </div>
-        <div className="flex items-center justify-center gap-[2rem] container">
+        {/* <div className="flex items-center justify-center gap-[2rem] container">
           <div className="">
             <img
-              className="h-[4rem] inline"
+              className="h-12 w-12"
               src={`data:image/svg+xml;base64,${user.avatarImage}`}
               alt="avatar"
             />
           </div>
           <div
-            className="text-white uppercase
+            className="font-bold text-xl text-white uppercase
             "
           >
             <h2>{user.username}</h2>
           </div>
-        </div>
+        </div> */}
       </section>
     </>
   );

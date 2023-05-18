@@ -61,27 +61,17 @@ export default function ChatContainer({ currentChat, socket }) {
   }, [messages]);
 
   return (
-    <Container className="bg-white dark:bg-[#22232c] fondo">
-      <div className="flex justify-between items-center py-[2rem]">
-        <div className="flex items-center gap-[1rem]">
-          <div className="avatar">
-            <img
-              src={`data:image/svg+xml;base64,${currentChat.avatarImage}`}
-              alt=""
-            />
-          </div>
-        </div>
-      </div>
+    <Container className="bg-white dark:bg-[#17181c]">
       <div className="chat-messages">
         {messages.map((message) => {
           return (
             <div ref={scrollRef} key={uuidv4()}>
               <div
                 className={`message ${
-                  message.fromSelf ? "sended" : "recieved"
+                  message.fromSelf ? "sended" : "recieved "
                 }`}
               >
-                <div className="content ">
+                <div className="content border-[1px] border-white/30 ">
                   <p>{message.message}</p>
                 </div>
               </div>
@@ -96,18 +86,17 @@ export default function ChatContainer({ currentChat, socket }) {
 
 const Container = styled.div`
   display: grid;
-  grid-template-rows: 10% 75% 15%;
+  grid-template-rows: 85% 15%;
   gap: 0.1rem;
 
   overflow: hidden;
   @media screen and (min-width: 720px) and (max-width: 1080px) {
-    grid-template-rows: 15% 70% 15%;
   }
   .chat-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 2rem;
+    padding: 0 5rem;
     .user-details {
       display: flex;
       align-items: center;
@@ -120,7 +109,7 @@ const Container = styled.div`
     }
   }
   .chat-messages {
-    padding: 1rem 2rem;
+    padding: 4rem 3rem;
     display: flex;
     flex-direction: column;
     gap: 1rem;
@@ -151,14 +140,15 @@ const Container = styled.div`
     .sended {
       justify-content: flex-end;
       .content {
-        background-color: var(--bg-color);
-        color: black;
+        background-color: transparent;
+        color: white;
       }
     }
     .recieved {
       justify-content: flex-start;
       .content {
-        background-color: black;
+        background-color: #1e1f23;
+
         color: white;
       }
     }

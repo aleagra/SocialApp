@@ -3,6 +3,7 @@ import axios from "axios";
 import { io } from "socket.io-client";
 import { AuthContext } from "../context/AuthContext";
 import { ChatContainer, Contacts, Welcome } from "../components/Chat";
+import { Aside } from "../components/Home";
 
 export default function Chat() {
   const socket = useRef();
@@ -37,8 +38,9 @@ export default function Chat() {
 
   return (
     <>
-      <section className="h-screen w-full flex flex-col justify-center gap-[1rem] items-center bg-[#131324] ">
-        <div className="h-full w-[100vw] bg-[#00000076] mt-[3%] grid grid-cols-[25%,75%]">
+      <section className="h-screen w-full flex flex-col justify-center items-center   ">
+        <Aside />
+        <div className="h-full w-full pl-[35rem] py-[1.5rem] pr-[12rem] bg-[#1e1f23] grid grid-cols-[25%,75%] ">
           <Contacts contacts={contacts} changeChat={handleChatChange} />
           {currentChat === undefined ? (
             <Welcome />

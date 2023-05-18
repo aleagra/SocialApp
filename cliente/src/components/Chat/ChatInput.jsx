@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { IoMdSend } from "react-icons/io";
-import styled from "styled-components";
 import Picker from "emoji-picker-react";
 
 export default function ChatInput({ handleSendMsg }) {
@@ -21,105 +20,57 @@ export default function ChatInput({ handleSendMsg }) {
   };
 
   return (
-    <Container>
-      <div className="button-container">
-        <div className="emoji">
-          <label>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="w-12 h-12 plus cursor-pointer"
-              onClick={() => setShowPicker((val) => !val)}
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M15.182 15.182a4.5 4.5 0 01-6.364 0M21 12a9 9 0 11-18 0 9 9 0 0118 0zM9.75 9.75c0 .414-.168.75-.375.75S9 10.164 9 9.75 9.168 9 9.375 9s.375.336.375.75zm-.375 0h.008v.015h-.008V9.75zm5.625 0c0 .414-.168.75-.375.75s-.375-.336-.375-.75.168-.75.375-.75.375.336.375.75zm-.375 0h.008v.015h-.008V9.75z"
-              />
-            </svg>
-          </label>
+    <section className="flex w-full px-12 items-center relative">
+      <label>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth={1.5}
+          stroke="currentColor"
+          className="w-8 h-8 fill cursor-pointer absolute top-[3.25rem] left-16 hover:bg-white/30 hover:rounded-md"
+          onClick={() => setShowPicker((val) => !val)}
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M15.182 15.182a4.5 4.5 0 01-6.364 0M21 12a9 9 0 11-18 0 9 9 0 0118 0zM9.75 9.75c0 .414-.168.75-.375.75S9 10.164 9 9.75 9.168 9 9.375 9s.375.336.375.75zm-.375 0h.008v.015h-.008V9.75zm5.625 0c0 .414-.168.75-.375.75s-.375-.336-.375-.75.168-.75.375-.75.375.336.375.75zm-.375 0h.008v.015h-.008V9.75z"
+          />
+        </svg>
+      </label>
 
-          {showPicker && (
-            <Picker
-              pickerStyle={{ width: "100%" }}
-              onEmojiClick={handleEmojiClick}
-            />
-          )}
-        </div>
-      </div>
-      <form className="input-container " onSubmit={(event) => sendChat(event)}>
+      {showPicker && (
+        <Picker
+          pickerStyle={{ width: "100%" }}
+          onEmojiClick={handleEmojiClick}
+        />
+      )}
+
+      <form className="flex h-16 w-full " onSubmit={sendChat}>
         <input
           type="text"
           placeholder="type your message here"
           onChange={(e) => setMsg(e.target.value)}
           value={msg}
-          className="dark:text-white"
+          className=" border-2 rounded-lg  px-14 w-full focus:outline-none text-white text-lg bg-transparent border-white/30"
         />
-        <button
-          type="submit"
-          className="p-[0.3rem] rounded-[2rem] flex justify-center items-center border-none pl-[1rem] "
-          id="button-chat"
-        >
-          <IoMdSend />
+        <button type="submit">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="w-9 h-9 fill absolute top-[3.25rem] right-16 z-10 hover:bg-white/30 hover:rounded-md"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.348a1.125 1.125 0 010 1.971l-11.54 6.347a1.125 1.125 0 01-1.667-.985V5.653z"
+            />
+          </svg>
         </button>
       </form>
-    </Container>
+    </section>
   );
 }
-
-const Container = styled.div`
-  display: grid;
-  align-items: center;
-  grid-template-columns: 5% 95%;
-  padding: 0 2rem;
-  @media screen and (min-width: 720px) and (max-width: 1080px) {
-    padding: 0 1rem;
-    gap: 1rem;
-  }
-  .input-container {
-    width: 100%;
-    border-radius: 2rem;
-    display: flex;
-    align-items: center;
-    gap: 2rem;
-    background-color: white;
-    input {
-      width: 90%;
-      height: 60%;
-      background-color: transparent;
-      color: black;
-      border: none;
-      padding-left: 1rem;
-      font-size: 1.2rem;
-
-      &::selection {
-        background-color: #9a86f3;
-      }
-      &:focus {
-        outline: none;
-      }
-    }
-    button {
-      padding: 0.3rem 2rem;
-      border-radius: 2rem;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background-color: #9a86f3;
-      border: none;
-      @media screen and (min-width: 720px) and (max-width: 1080px) {
-        padding: 0.3rem 1rem;
-        svg {
-          font-size: 1rem;
-        }
-      }
-      svg {
-        font-size: 2rem;
-        color: white;
-      }
-    }
-  }
-`;

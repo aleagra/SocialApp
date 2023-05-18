@@ -52,6 +52,9 @@
 .plus {
   stroke: var(--bg-color);
 }
+.fill {
+  fill: var(--bg-color);
+}
 .color-item {
   background-color: var(--bg-color);
 }
@@ -87,5 +90,19 @@
 
 aside.EmojiPickerReact.epr-main {
   position: absolute !important;
-  bottom: 110px !important;
+  background-color: #17181c !important;
+  bottom: 130px !important;
+}
+.color:hover {
+  color: var(--bg-color);
+}
+.EmojiPickerReact li.epr-emoji-category > .epr-emoji-category-label {
+  background-color: transparent !important;
+}
+.EmojiPickerReact .epr-search-container input.epr-search {
+  background-color: transparent !important;
+  outline: none !important;
+}
+.EmojiPickerReact:focus .epr-search-container:focus input.epr-search:focus {
+  background-color: transparent !important;
 }

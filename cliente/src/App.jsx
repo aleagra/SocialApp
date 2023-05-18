@@ -21,7 +21,7 @@ export default function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/setAvatar" element={<SetAvatar />} />
               <Route path="/Search/:buscar" element={<Search />} />
-              <Route path="/chat" element={[<Navbar />, <Chat />]} />
+              <Route path="/chat" element={[<Chat />]} />
               <Route path="/Profile/:id" element={[<ProfileUsers />]} />
               <Route path="/profile" element={<Profile key={user?._id} />} />
             </Routes>

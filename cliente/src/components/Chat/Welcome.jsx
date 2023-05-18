@@ -5,7 +5,7 @@ export default function Welcome() {
   const { user } = useContext(AuthContext);
 
   return (
-    <section className="flex justify-center items-center text-black dark:bg-[#22232c] flex-col fondo dark:text-white">
+    <section className="flex justify-center items-center text-black dark:bg-[#17181c] border-l border-white/20 flex-col fondo dark:text-white">
       <img src={Robot} alt="" className="h-[20rem]" />
       <h1>
         Welcome, <span className="text">{user.username}!</span>

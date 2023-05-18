@@ -97,7 +97,7 @@ const userPost = () => {
 
   return (
     <>
-      <div className="w-[90%] rounded-lg bg-white dark:text-white dark:bg-[#1e1f23] py-5 dark:border dark:border-white/20 mb-8">
+      <div className="w-[90%] rounded-lg bg-white dark:text-white dark:bg-[#17181c] py-5 dark:border dark:border-white/20 mb-8">
         <div className="flex flex-col rounded-lg items-center">
           <div className="flex w-full px-6 gap-3 items-center">
             <img

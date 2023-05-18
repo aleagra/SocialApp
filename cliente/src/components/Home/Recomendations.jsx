@@ -34,7 +34,7 @@ function Recomendations() {
     }
   };
   return (
-    <section className=" py-6 px-8 my-6 rounded-md dark:border dark:border-white/20 shadow-lg bg-white dark:text-white dark:bg-[#1e1f23]">
+    <section className=" py-6 px-8 my-6 rounded-md dark:border dark:border-white/20 shadow-lg bg-white dark:text-white dark:bg-[#17181c]">
       <p className="font-semibold">RECOMMENDATION</p>
       <div className="flex w-full">
         {notFollowing.map((Element) => {
@@ -53,7 +53,7 @@ function Recomendations() {
                       <img
                         alt=""
                         src={`data:image/svg+xml;base64,${Element.avatarImage}`}
-                        className="w-8 h-8"
+                        className="w-12 h-12"
                       />
                       <h3 className="text-white/70 capitalize">
                         {Element.username}
@@ -62,7 +62,7 @@ function Recomendations() {
                   </a>
                 </div>
                 <button
-                  className="color-item rounded-xl p-1 px-4 text-sm "
+                  className="color-item rounded-xl p-2 px-4 text-sm "
                   id={Element._id}
                   onClick={() => handleFollow(Element._id)}
                 >
