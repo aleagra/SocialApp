@@ -9,8 +9,8 @@ const AsideRight = () => {
 
   return (
     <>
-      <section className="min-screen  mt-[4rem] fixed right-[7rem]">
-        <div className="flex h-fit  rounded-lg bg-white p-3  shadow-lg dark:text-white dark:bg-[#17181c] dark:border dark:border-white/20">
+      <section className="min-screen mt-[4rem] fixed right-[7rem]">
+        <div className="flex h-fit rounded-lg bg-white p-3 shadow-lg dark:text-white dark:bg-[#0a0a13]">
           <div className="flex flex-col">
             <div className="relative flex justify-center">
               <img

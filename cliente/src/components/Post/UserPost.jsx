@@ -97,7 +97,7 @@ const userPost = () => {
 
   return (
     <>
-      <div className="w-[90%] rounded-lg bg-white dark:text-white dark:bg-[#17181c] py-5 dark:border dark:border-white/20 mb-8">
+      <div className="w-[90%] rounded-lg bg-white dark:text-white shadow-md dark:bg-[#0a0a13] py-5 mb-8">
         <div className="flex flex-col rounded-lg items-center">
           <div className="flex w-full px-6 gap-3 items-center">
             <img
@@ -117,13 +117,13 @@ const userPost = () => {
           <div className="flex justify-between w-full px-6 pt-6 items-center">
             <div className="flex items-center gap-4">
               <label>
-                <svg //imagen
+                <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  fill="ff6961"
+                  fill="none"
                   viewBox="0 0 24 24"
                   strokeWidth={1.5}
                   stroke="currentColor"
-                  className="w-7 h-7 plus cursor-pointer"
+                  className="w-6 h-6 plus"
                 >
                   <path
                     strokeLinecap="round"
@@ -186,7 +186,7 @@ const userPost = () => {
                 onKeyDown={handleKey}
                 type="button"
                 id="btn"
-                className="bg-black text-lg p-1 px-3 rounded-md"
+                className="bg-black text-white text-lg p-1 px-3 rounded-md"
               >
                 Post
               </button>

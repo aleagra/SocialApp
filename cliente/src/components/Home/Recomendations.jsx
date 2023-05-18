@@ -34,7 +34,7 @@ function Recomendations() {
     }
   };
   return (
-    <section className=" py-6 px-8 my-6 rounded-md dark:border dark:border-white/20 shadow-lg bg-white dark:text-white dark:bg-[#17181c]">
+    <section className=" py-6 px-8 my-6 rounded-md shadow-lg bg-white dark:text-white dark:bg-[#0a0a13]">
       <p className="font-semibold">RECOMMENDATION</p>
       <div className="flex w-full">
         {notFollowing.map((Element) => {

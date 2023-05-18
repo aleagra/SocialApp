@@ -49,10 +49,10 @@ export default function Login() {
   return (
     <>
       <div>
-        <section className="h-screen w-full flex flex-col justify-center gap-[1rem] items-center bg-[#131324]">
+        <section className="h-screen w-full flex flex-col justify-center gap-[1rem] items-center bg-[#f7f7f7] dark:bg-[#131324]">
           <form
             onSubmit={(event) => handleSubmit(event)}
-            className="flex flex-col gap-[2rem] bg-[#00000076] rounded-lg p-[5rem]"
+            className="flex flex-col gap-[2rem] bg-white dark:bg-[#00000076] shadow-md rounded-lg p-[5rem]"
           >
             <div className="flex items-center gap-[1rem] justify-center">
               <h1 className="font-semibold text-lg text-white ">
@@ -63,14 +63,14 @@ export default function Login() {
               type="text"
               placeholder="Username"
               name="username"
-              className="bg-transparent p-[1rem] border-solid rounded-lg w-full outline-none border text-white"
+              className="bg-transparent p-[1rem] border-solid rounded-lg w-full border-search outline-none dark:border  dark:text-white"
               onChange={(e) => handleChange(e)}
               min="3"
             />
             <input
               type="password"
               placeholder="Password"
-              className="bg-transparent p-[1rem] border-solid rounded-lg w-full border text-white outline-none"
+              className="bg-transparent p-[1rem] border-solid rounded-lg border-search w-full dark:border  dark:text-white outline-none"
               name="password"
               onChange={(e) => handleChange(e)}
             />
@@ -80,7 +80,7 @@ export default function Login() {
             >
               Log In
             </button>
-            <span className="text-white uppercase">
+            <span className="dark:text-white uppercase">
               Don't have an account ?
               <Link to="/register" className="text">
                 Create One.

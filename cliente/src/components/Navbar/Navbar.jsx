@@ -4,7 +4,6 @@ import NavSearch from "./NavSearch";
 import "tw-elements";
 import ColorItem from "../Home/colorItem";
 import Toggle from "./Toggle";
-import Notifications from "./Notifications";
 
 const Navbar = () => {
   let btn = document.getElementById("btn");
@@ -122,7 +121,6 @@ const Navbar = () => {
                 </div>
                 <div className="flex gap-6 p-3 items-center">
                   <h1>Thema:</h1>
-                  <Toggle />
                 </div>
               </div>
               <div className="modal-footer flex flex-shrink-0 flex-wrap items-center justify-end rounded-b-md border-t border-gray-200 p-4">

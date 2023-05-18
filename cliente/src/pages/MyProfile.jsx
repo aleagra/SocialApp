@@ -44,12 +44,6 @@ export default function Profile() {
     }
   };
 
-  const handleLogout = () => {
-    dispatch({ type: "LOGOUT" });
-    localStorage.removeItem("user");
-    navigate("/login");
-  };
-
   return (
     <>
       <section>
@@ -57,7 +51,7 @@ export default function Profile() {
 
         <form onSubmit={handleClick} encType="multipart/form-data">
           <div className="relative justify-center items-center min-h-screen h-screen ">
-            <div className="flex flex-col bg-[#17181c] h-full dark:text-white ml-[35%] mr-[15%] max-lg:m-0 max-lg:overflow-hidden">
+            <div className="flex flex-col bg-white dark:bg-[#17181c] h-full dark:text-white ml-[35%] mr-[15%] max-lg:m-0 max-lg:overflow-hidden">
               <div className="relative flex flex-col border-2 border-white/30">
                 <div className="flex flex-col pt-4 relative items-center ">
                   <img
@@ -68,10 +62,10 @@ export default function Profile() {
                   <div className="w-full absolute top-[12rem] left-[3rem] flex justify-between">
                     <img
                       src={`data:image/svg+xml;base64,${user.avatarImage}`}
-                      className="rounded-full w-[10rem] h-[10rem] border-8 border-[#17181c]"
+                      className="rounded-full w-[10rem] h-[10rem] border-8 dark:border-[#17181c] border-white"
                       alt=""
                     />
-                    <button className="p-2 w-fit rounded-md h-fit container mt-[6rem] mr-[6rem]">
+                    <button className="p-2 w-fit rounded-md h-fit text-white container mt-[6rem] mr-[6rem]">
                       Edit profile
                     </button>
                   </div>

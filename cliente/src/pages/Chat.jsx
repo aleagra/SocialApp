@@ -40,7 +40,7 @@ export default function Chat() {
     <>
       <section className="h-screen w-full flex flex-col justify-center items-center   ">
         <Aside />
-        <div className="h-full w-full pl-[35rem] py-[1.5rem] pr-[12rem] bg-[#1e1f23] grid grid-cols-[25%,75%] ">
+        <div className="h-full w-full pl-[35rem] py-[1.5rem] pr-[12rem] bg-white shadow-md dark:bg-[#1e1f23] grid grid-cols-[25%,75%] ">
           <Contacts contacts={contacts} changeChat={handleChatChange} />
           {currentChat === undefined ? (
             <Welcome />

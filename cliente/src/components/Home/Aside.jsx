@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
+import { AuthContext } from "../../context/AuthContext";
 import { Link } from "react-router-dom";
 import {
   BarsIcon,
@@ -10,8 +11,15 @@ import {
   UsersIcon,
 } from "../../utilities";
 import ChatIcon from "../../utilities/icons/ChatIcon";
+import { Toggle } from "../Navbar";
+import ColorItem from "./colorItem";
 
 const Aside = () => {
+  let btn = document.getElementById("btn");
+  let modal = document.getElementById("modal");
+  let nav = document.getElementById("nav");
+  let plus = document.getElementById("plus");
+  const { dispatch } = useContext(AuthContext);
   const [isOpen, setIsOpen] = useState(false);
   const modalRef = useRef(null);
   const [isSecondModalOpen, setSecondModalOpen] = useState(false);
@@ -81,6 +89,24 @@ const Aside = () => {
       text: "perfil",
     },
   ];
+  const colors = ["#ff6961", "#2ABA7D", "#84b6f4", "#dafc56"];
+  const handleLogout = () => {
+    dispatch({ type: "LOGOUT" });
+    localStorage.removeItem("user");
+  };
+  const defaultColor = "#2ABA7D";
+  let currentColor = defaultColor;
+
+  const setColor = (event) => {
+    currentColor = event.target.style.getPropertyValue("--bg-color");
+
+    if (currentColor === "undefined") {
+      currentColor = defaultColor;
+    }
+
+    setTheme(currentColor);
+    localStorage.setItem("color", currentColor);
+  };
 
   const renderNavLinks = () => {
     return navLinks.map((link, index) => (
@@ -90,7 +116,7 @@ const Aside = () => {
       >
         <Link
           to={link.to}
-          className="flex gap-4 p-8 max-lg:p-2 hover:bg-white/20 px-24 max-2xl:px-6 w-full color font-bold"
+          className="flex gap-4 p-8 max-lg:p-2 hover:bg-black/10 dark:hover:bg-white/20  px-24 max-2xl:px-6 w-full color font-bold"
         >
           {link.icon}
           <span>{link.text}</span>
@@ -101,7 +127,7 @@ const Aside = () => {
 
   return (
     <>
-      <div className="fixed top-0 z-10 left-0 w-[20%] h-full border-r max-lg:hidden border-white/20 dark:text-white bg-[#17181c]">
+      <div className="fixed top-0 z-10 left-0 w-[20%] h-full max-lg:hidden shadow-md dark:text-white bg-white dark:bg-[#0a0a13]">
         <div className="flex h-fit px-24 max-2xl:px-4 max-lg:px-0 py-12 w-full items-center">
           <Link to="/" className="flex gap-2">
             <img src="icon.png" className="w-10 h-10" alt="" />
@@ -113,7 +139,7 @@ const Aside = () => {
             {renderNavLinks()}
 
             <li
-              className="p-8 px-24 h-fit w-full mb-16 text-xl absolute bottom-0 flex gap-4 font-bold cursor-pointer hover:bg-white/40"
+              className="p-8 px-24 h-fit w-full mb-16 text-xl absolute bottom-0 flex gap-4 font-bold cursor-pointer hover:bg-black/10 dark:hover:bg-white/20 color"
               onClick={openModal}
             >
               <BarsIcon />
@@ -125,18 +151,18 @@ const Aside = () => {
           <div className="fixed inset-0 flex items-center left-20 top-[28rem]">
             <div
               ref={modalRef}
-              className={`bg-[#1e1f23] px-6 py-6 rounded-xl shadow-xl modal-content z-20 w-[18rem] h-fit transition-opacity  duration-300 ease-out`}
+              className={`dark:bg-[#1e1f23] px-6 py-6 rounded-xl shadow-xl modal-content z-20 w-[18rem] h-fit transition-opacity  duration-300 ease-out`}
             >
               <div className="flex flex-col">
                 <Link
                   to="/chat"
-                  className="flex items-center gap-4 p-4 hover:bg-white/40"
+                  className="flex items-center gap-4 p-4 hover:bg-black/10 dark:hover:bg-white/40"
                 >
                   <UsersIcon />
                   <span className="text-xl font-bold">About me</span>
                 </Link>
                 <Link
-                  className="flex items-center gap-4 p-4 hover:bg-white/40"
+                  className="flex items-center gap-4 p-4 hover:bg-black/10 dark:hover:bg-white/40"
                   onClick={() => {
                     setSecondModalOpen(true);
                     setIsOpen(false);
@@ -146,8 +172,9 @@ const Aside = () => {
                   <p className="text-xl font-bold">View</p>
                 </Link>
                 <Link
-                  to="/chat"
-                  className="flex items-center gap-4 p-4 hover:bg-white/40"
+                  to="/login"
+                  onClick={handleLogout}
+                  className="flex items-center gap-4 p-4 hover:bg-black/10 dark:hover:bg-white/40"
                 >
                   <UserIcon />
                   <span className="text-xl font-bold">Log out</span>
@@ -158,19 +185,32 @@ const Aside = () => {
           </div>
         )}
         {isSecondModalOpen && (
-          <div className="fixed inset-0 flex items-center left-20 top-[38rem]">
+          <div className="fixed inset-0 flex items-center left-28 top-[30rem] ">
             <div
               ref={secondModalRef}
-              className="bg-[#1e1f23] px-10 py-6 rounded-xl shadow-xl modal-content z-20 w-[18rem] h-fit"
+              className="dark:bg-[#1e1f23] bg-white rounded-xl shadow-xl modal-content z-20 w-[19rem] h-fit"
             >
-              {/* Contenido del segundo modal */}
+              <div className="modal-body relative p-4">
+                <div className="flex flex-wrap gap-6 p-3 max-sm:py-0">
+                  <h1>Colors:</h1>
+                  {colors.map((color, idx) => (
+                    <ColorItem key={idx} setColor={setColor} color={color} />
+                  ))}
+                </div>
+                <div className="flex gap-2 p-3 items-center">
+                  <h1>Thema:</h1>
+                  <Toggle />
+                </div>
+              </div>
             </div>
           </div>
         )}
       </div>
-      {/* <Notifications /> */}
     </>
   );
+};
+const setTheme = (color) => {
+  document.documentElement.style.setProperty("--bg-color", color);
 };
 
 export default Aside;

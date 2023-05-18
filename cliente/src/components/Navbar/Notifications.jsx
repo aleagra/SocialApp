@@ -24,7 +24,7 @@ function Notifications() {
   }, []);
   return (
     <>
-      <section className="flex absolute top-0 left-0 w-full justify-center">
+      <section className="flex absolute top-0 left-0 w-full justify-center z-10">
         <div className="flex absolute top-0 left-0 w-full justify-center">
           <h1 className="text-lg font-light mb-5 mt-2">Notificaciones</h1>
         </div>
