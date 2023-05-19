@@ -4,10 +4,10 @@ import axios from "axios";
 import { AuthContext } from "../context/AuthContext";
 import Navbar from "../components/Navbar/Navbar";
 import { Aside } from "../components/Home";
+import MyPosts from "../components/Profile/MyPosts";
 
 export default function Profile() {
-  const { user, setUser, dispatch } = useContext(AuthContext);
-  const navigate = useNavigate();
+  const { user, setUser } = useContext(AuthContext);
   const [username, setUsername] = useState("");
   const [background, setBackground] = useState("");
   const [descripcion, setDescripcion] = useState("");
@@ -51,21 +51,21 @@ export default function Profile() {
 
         <form onSubmit={handleClick} encType="multipart/form-data">
           <div className="relative justify-center items-center min-h-screen h-screen ">
-            <div className="flex flex-col bg-white dark:bg-[#17181c] h-full dark:text-white ml-[35%] mr-[15%] max-lg:m-0 max-lg:overflow-hidden">
-              <div className="relative flex flex-col border-2 border-white/30">
-                <div className="flex flex-col pt-4 relative items-center ">
+            <div className="flex flex-col dark:bg-[#17181c] h-full dark:text-white mt-12 ml-[35%] mr-[15%] max-lg:m-0 max-lg:overflow-hidden">
+              <div className="relative mb-[4rem] flex flex-col border-2  border-white/30">
+                <div className="flex flex-col pt-4 relative items-centee">
                   <img
                     src={user.background}
                     alt=""
-                    className="min-h-[250px] max-h-[250px] w-[100%] rounded-lg object-cover "
+                    className="min-h-[250px] max-h-[250px] w-[100%] object-cover"
                   />
-                  <div className="w-full absolute top-[12rem] left-[3rem] flex justify-between">
+                  <div className="w-full h-[7rem] rounded-md shadow-lg flex justify-end items-center bg-white">
                     <img
                       src={`data:image/svg+xml;base64,${user.avatarImage}`}
-                      className="rounded-full w-[10rem] h-[10rem] border-8 dark:border-[#17181c] border-white"
+                      className="rounded-full w-[10rem] absolute bottom-[2rem] left-[3rem] h-[10rem] border-8 dark:border-[#17181c] border-white"
                       alt=""
                     />
-                    <button className="p-2 w-fit rounded-md h-fit text-white container mt-[6rem] mr-[6rem]">
+                    <button className="p-2 w-fit rounded-md h-fit text-white container mr-10 mb-4">
                       Edit profile
                     </button>
                   </div>
@@ -165,6 +165,7 @@ export default function Profile() {
                   </div>
                 </div> */}
               </div>
+              <MyPosts />
             </div>
           </div>
         </form>

@@ -5,7 +5,6 @@ const {
   setAvatar,
   logOut,
   getUsers,
-  createUser,
   findByUser,
   FollowUser,
   UnfollowUser,

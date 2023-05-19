@@ -55,7 +55,7 @@ function Recomendations() {
                         src={`data:image/svg+xml;base64,${Element.avatarImage}`}
                         className="w-12 h-12"
                       />
-                      <h3 className="text-white/70 capitalize">
+                      <h3 className="dark:text-white/70 capitalize">
                         {Element.username}
                       </h3>
                     </div>

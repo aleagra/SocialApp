@@ -5,7 +5,7 @@ import { AuthContext } from "./context/AuthContext";
 import { Chat, Login, MainHome, Register } from "./pages";
 import { SetAvatar } from "./components/Register";
 import { Search } from "./components/Navbar/Search";
-import ProfileUsers from "./components/Profile/UsersProfile";
+import ProfileUsers from "./components/Post/UsersProfile";
 import Profile from "./pages/MyProfile";
 import Notifications from "./components/Navbar/Notifications";
 export default function App() {
@@ -20,7 +20,7 @@ export default function App() {
               <Route path="/register" element={<Register />} />
               <Route path="/login" element={<Login />} />
               <Route path="/setAvatar" element={<SetAvatar />} />
-              <Route path="/Search/:buscar" element={<Search />} />
+              <Route path="/search" element={<Search />} />
               <Route path="/chat" element={[<Chat />]} />
               <Route path="/notifications" element={[<Notifications />]} />
               <Route path="/Profile/:id" element={[<ProfileUsers />]} />

@@ -1,5 +1,5 @@
 const { Post } = require("../models/post.models");
-const { User } = require("../models/users.models");
+const  User  = require("../models/users.models");
 
 const createPost = async (req, res) => {
   const newPost = new Post(req.body);
@@ -29,22 +29,28 @@ const getPost = async (req, res) => {
     res.status(500).json(err);
   }
 };
-
 const friendPost = async (req, res) => {
+  const userId = req.params.userId;
+
   try {
-    const userId = req.params.userId; // Obtener el ID del usuario actual
+    // Obtener los usuarios seguidos por el usuario dado
+    const user = await User.findById(userId);
+    const followedUserIds = user.following;
 
-    // Obtener los IDs de los usuarios seguidos, incluyendo el ID del usuario actual
-    const user = await User.findById(userId); // Obtener el usuario actual
-    const followedUsers = user.followers; // Obtener los IDs de los usuarios seguidos
+    // Buscar las publicaciones de los usuarios seguidos
+    const followedUserPosts = await Post.find({ userId: { $in: followedUserIds } });
 
-    // Obtener todos los posteos de los usuarios seguidos
-    const allPosts = await Post.find({ user: { $in: followedUsers } });
+    // Buscar las publicaciones del usuario actual
+    const userPosts = await Post.find({ userId });
 
-    res.status(200).json(allPosts);
+    // Combinar las publicaciones de los usuarios seguidos y las propias
+    const posts = followedUserPosts.concat(userPosts);
+
+    res.json(posts);
   } catch (err) {
-    res.status(500).json(err);
-  } 
+    console.error('Error al buscar publicaciones:', err);
+    res.status(500).json({ error: 'Error al buscar publicaciones.' });
+  }
 };
 
 const likePost = async (req, res) => {
@@ -60,6 +66,18 @@ const likePost = async (req, res) => {
   } catch (err) {
     res.status(500).json(err);
     console.log(err);
+  }
+};
+
+const getPostsByUserID = async (req, res) => {
+  const userId = req.params.userId;
+
+  try {
+    const posts = await Post.find({ userId: userId });
+    res.json(posts);
+  } catch (err) {
+    console.error('Error al buscar publicaciones:', err);
+    res.status(500).json({ error: 'Error al buscar publicaciones.' });
   }
 };
 
@@ -104,23 +122,11 @@ const findByPost = async (req, res) => {
     });
 };
 
-const findUserPosts =  (req, res) => {
-  const userId = req.params.userId;
 
-  // Buscar todos los post de un usuario específico
-  Post.find({ userId: userId })
-    .then(posts => {
-      res.json(posts);
-    })
-    .catch(error => {
-      res.status(500).send(error);
-    });
-};
 
 
 module.exports = {
   friendPost,
-  findUserPosts,
   createPost,
   getPost,
   likePost,
@@ -128,6 +134,7 @@ module.exports = {
   getAllPosts,
   findByPost,
   checkLike,
+  getPostsByUserID,
 
 
 };

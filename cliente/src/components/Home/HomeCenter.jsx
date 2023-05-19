@@ -1,11 +1,13 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import Post from "../Post/Post";
 import UserPost from "../Post/UserPost";
+import { AuthContext } from "../../context/AuthContext";
 
 export function HomeCenter() {
-  const url = "http://localhost:5050/posts/";
+  const { user } = useContext(AuthContext);
+  const url = `http://localhost:5050/posts/friends/${user._id}`;
   const [data, setData] = useState([]);
 
   const fetchData = async () => {
@@ -22,7 +24,7 @@ export function HomeCenter() {
   return (
     //trae todos los posts de los users
     <>
-      <div className=" max-ms:px-0 flex my-[4rem] ml-[25%] mr-[33rem] w-full flex-col max-lg:w-[70%] max-md:pl-0 max-sm:w-[95%] items-center ">
+      <div className=" max-ms:px-0 flex my-[4rem] ml-[25%] mr-[32%] w-full flex-col max-lg:w-[70%] max-md:pl-0 max-sm:w-[95%] items-center ">
         <UserPost />
         <div className="flex gap-y-12 flex-col w-full justify-center m-auto items-center">
           {data.map((post, key) => {
