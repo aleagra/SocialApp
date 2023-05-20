@@ -5,6 +5,7 @@ import axios from "axios";
 function Recomendations() {
   const { user } = useContext(AuthContext);
   const [notFollowing, setNotFollowing] = useState([]);
+  const [tv, setTv] = useState();
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -33,6 +34,23 @@ function Recomendations() {
       console.error(error);
     }
   };
+
+  useEffect(() => {
+    const tv = async () => {
+      try {
+        const response = await axios.get(
+          `https://api.themoviedb.org/3/movie/popular?api_key=3b83db2d4b5956348334c87e86072609`
+        );
+        setTv(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    tv();
+  }, []);
+
+  console.log(tv);
+
   return (
     <section className=" py-6 px-8 my-6 rounded-md shadow-lg bg-white dark:text-white dark:bg-[#0a0a13]">
       <p className="font-semibold">RECOMMENDATION</p>
