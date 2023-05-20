@@ -33,10 +33,11 @@ function Recomendations() {
       console.error(error);
     }
   };
+  console.log(user);
   return (
     <section className=" py-6 px-8 my-6 rounded-md shadow-lg bg-white dark:text-white dark:bg-[#0a0a13]">
       <p className="font-semibold">RECOMMENDATION</p>
-      <div className="flex w-full">
+      <div className="flex flex-col w-full">
         {notFollowing.map((Element) => {
           return (
             <>

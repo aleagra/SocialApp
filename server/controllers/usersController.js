@@ -161,7 +161,7 @@ module.exports.likePost = async (req, res) => {
 };
 
 // Follow a user
-module.exports.FollowUser = async (req, res, io) => {
+module.exports.FollowUser = async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
     const follower = await User.findById(req.body.follower);
@@ -172,8 +172,7 @@ module.exports.FollowUser = async (req, res, io) => {
     await user.save();
     await follower.save();
 
-    // Emitir evento "follow" con la información necesaria
-    io.emit("follow", { user: user._id, follower: req.body.follower });
+  
 
     res.send({ message: "Followed successfully" });
   } catch (error) {
