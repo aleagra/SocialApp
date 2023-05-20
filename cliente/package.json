@@ -9,6 +9,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@dicebear/avatars": "^4.10.8",
+    "@dicebear/avatars-male-sprites": "^4.10.8",
+    "@dicebear/collection": "^6.0.4",
+    "@dicebear/core": "^6.0.4",
     "@emoji-mart/data": "^1.1.2",
     "@emoji-mart/react": "^1.1.1",
     "@googlemaps/react-wrapper": "^1.1.35",
