@@ -10,7 +10,7 @@ export default function Contacts({ contacts, changeChat }) {
   };
   return (
     <>
-      <section className=" grid grid-rows-[10%,75%,15%] border-2 border-white/20 overflow-hidden bg-white dark:bg-[#17181c]">
+      <section className=" grid 2xl:grid-rows-[10%,75%,15%] grid-rows-[20%,75%,5%]  border-2 dark:border-white/20 border-black/10 overflow-hidden bg-white dark:bg-[#131324]">
         <div className="flex justify-center items-center my-4 gap-[2rem]  border-b border-white/30">
           <h3 className="text-black dark:text-white font-bold ">CHATS</h3>
         </div>
@@ -21,8 +21,8 @@ export default function Contacts({ contacts, changeChat }) {
                 key={contact._id}
                 className={`contact ${
                   index === currentSelected
-                    ? "bg-white/20 w-full px-3 py-6 text flex items-center gap-6 pl-16 cursor-pointer"
-                    : " text-black dark:text-white px-3 py-6 flex items-center  gap-6 pl-16 cursor-pointer"
+                    ? "dark:bg-white/20 bg-black/10 w-full px-3 py-6 text flex items-center gap-6 xl:pl-16 cursor-pointer"
+                    : " text-black dark:text-white px-3 py-6 flex items-center  gap-6 xl:pl-16 cursor-pointer"
                 }`}
                 onClick={() => changeCurrentChat(index, contact)}
               >

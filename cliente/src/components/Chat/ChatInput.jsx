@@ -52,7 +52,7 @@ export default function ChatInput({ handleSendMsg }) {
           placeholder="type your message here"
           onChange={(e) => setMsg(e.target.value)}
           value={msg}
-          className=" border-2 rounded-lg  px-14 w-full focus:outline-none text-white text-lg bg-transparent border-white/30"
+          className=" border-2 rounded-lg  px-14 w-full focus:outline-none dark:text-white text-lg bg-transparent border-black/10 dark:border-white/30"
         />
         <button type="submit">
           <svg
@@ -61,7 +61,7 @@ export default function ChatInput({ handleSendMsg }) {
             viewBox="0 0 24 24"
             strokeWidth={1.5}
             stroke="currentColor"
-            className="w-9 h-9 fill absolute top-[3.25rem] right-16 z-10 hover:bg-white/30 hover:rounded-md"
+            className="w-9 h-9 fill absolute top-12 right-16 z-10 hover:bg-white/30 hover:rounded-md"
           >
             <path
               strokeLinecap="round"

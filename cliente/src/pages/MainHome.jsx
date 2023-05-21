@@ -5,8 +5,10 @@ const MainHome = () => {
   return (
     <>
       {/* <Navbar /> */}
-      <section className="flex justify-center z-10 ">
-        <Aside />
+      <section className="flex min-h-screen h-full">
+        <div className="fixed">
+          <Aside />
+        </div>
         <HomeCenter />
         <AsideRight />
       </section>

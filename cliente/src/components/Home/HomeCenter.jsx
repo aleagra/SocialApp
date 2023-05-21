@@ -24,9 +24,9 @@ export function HomeCenter() {
   return (
     //trae todos los posts de los users
     <>
-      <div className=" max-ms:px-0 flex my-[4rem] ml-[25%] mr-[32%] w-full flex-col max-lg:w-[70%] max-md:pl-0 max-sm:w-[95%] items-center ">
+      <div className=" max-sm:mx-0 max-sm:px-6 flex my-[4rem] lg:ml-[25%] md:ml-[12%] lg:mr-[32%] md:mr-[12%] max-md:mx-16 max-md:justify-center w-full flex-col max-md:w-[100%] items-center ">
         <UserPost />
-        <div className="flex gap-y-12 flex-col w-full justify-center m-auto items-center">
+        <div className="flex gap-y-12 flex-col w-full justify-center items-center">
           {data.map((post, key) => {
             return (
               <>

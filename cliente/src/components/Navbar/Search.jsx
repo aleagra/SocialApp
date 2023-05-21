@@ -40,7 +40,7 @@ export function Search() {
     <>
       <section className="flex h-fit">
         <Aside />
-        <section className="w-full ml-[25%] mr-[32%] my-14 bg-white">
+        <section className="w-full ml-[8%] max-2xl:-[10%] rounded-md mr-[32%] max-2xl:mr-[10%] my-14 bg-white">
           <div className="flex flex-col items-center ">
             <div className="flex w-full justify-center py-12">
               <input

@@ -16,7 +16,7 @@ export default function ChatContainer({ currentChat, socket }) {
       const response = await axios.post(
         `http://localhost:5050/messages/getmsg`,
         {
-          from: user._id,
+          from: user,
           to: currentChat._id,
         }
       );
@@ -29,12 +29,12 @@ export default function ChatContainer({ currentChat, socket }) {
   const handleSendMsg = async (msg) => {
     socket.current.emit("send-msg", {
       to: currentChat._id,
-      from: user._id,
+      from: user,
       msg,
     });
 
     await axios.post("http://localhost:5050/messages/addmsg", {
-      from: user._id,
+      from: user,
       to: currentChat._id,
       message: msg,
     });
@@ -61,7 +61,7 @@ export default function ChatContainer({ currentChat, socket }) {
   }, [messages]);
 
   return (
-    <Container className="bg-white dark:bg-[#17181c]">
+    <Container className="bg-white dark:bg-[#0a0a13]">
       <div className="chat-messages">
         {messages.map((message) => {
           return (
@@ -71,7 +71,7 @@ export default function ChatContainer({ currentChat, socket }) {
                   message.fromSelf ? "sended" : "recieved "
                 }`}
               >
-                <div className="content border-[1px] border-white/30 ">
+                <div className="content border-[1px] text-white dark:border-white/30 bg-black ">
                   <p>{message.message}</p>
                 </div>
               </div>
@@ -131,7 +131,6 @@ const Container = styled.div`
         padding: 1rem;
         font-size: 1.1rem;
         border-radius: 1rem;
-        color: #d1d1d1;
         @media screen and (min-width: 720px) and (max-width: 1080px) {
           max-width: 70%;
         }
@@ -140,16 +139,13 @@ const Container = styled.div`
     .sended {
       justify-content: flex-end;
       .content {
-        background-color: transparent;
-        color: white;
+        background-color: var(--bg-color);
       }
     }
     .recieved {
       justify-content: flex-start;
       .content {
-        background-color: #1e1f23;
-
-        color: white;
+        //
       }
     }
   }

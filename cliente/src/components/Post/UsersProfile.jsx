@@ -55,9 +55,11 @@ function ProfileUsers() {
     fetchData();
   }, []);
   return (
-    <section>
-      <Aside />
-      <div className="relative justify-center items-center min-h-screen h-screen ">
+    <section className="flex">
+      <div className="fixed z-20">
+        <Aside />
+      </div>
+      <div className="relative w-full justify-center items-center min-h-screen h-screen ">
         <div className="flex flex-col dark:bg-[#17181c] h-full dark:text-white mt-12 ml-[35%] mr-[15%] max-lg:m-0 max-lg:overflow-hidden">
           <div className="relative mb-[4rem] flex flex-col border-2  border-white/30">
             <div className="flex flex-col pt-4 relative items-centee">
@@ -74,7 +76,7 @@ function ProfileUsers() {
               </div>
             </div>
           </div>
-          <div className="flex gap-y-12 pb-20 flex-col w-full justify-center m-auto items-center">
+          <div className="flex gap-y-12 pb-20 flex-col w-full justify-center  items-center">
             {data.map((post, key) => {
               return (
                 <>

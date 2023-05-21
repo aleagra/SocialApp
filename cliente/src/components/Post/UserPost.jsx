@@ -100,7 +100,7 @@ const userPost = () => {
           <div className="flex w-full px-6 gap-3 items-center">
             <ReactSVG
               src={`data:image/svg+xml;base64,${btoa(userData?.avatarImage)}`}
-              className="color-item  rounded-full w-16 h-16"
+              className="color-item  rounded-full w-20 h-full"
             />
             <input
               type="text"

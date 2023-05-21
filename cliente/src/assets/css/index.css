@@ -32,9 +32,9 @@
     }
   } */
 
-/* :root {
+:root {
   --bg-color: #ff6961;
-} */
+}
 .display-none {
   @apply hidden;
 }

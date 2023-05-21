@@ -46,20 +46,28 @@ export default function Profile() {
 
   return (
     <>
-      <section>
-        <Aside />
-
-        <form onSubmit={handleClick} encType="multipart/form-data">
-          <div className="relative justify-center items-center min-h-screen h-screen ">
-            <div className="flex flex-col dark:bg-[#17181c] h-full dark:text-white mt-12 ml-[35%] mr-[15%] max-lg:m-0 max-lg:overflow-hidden">
-              <div className="relative mb-[4rem] flex flex-col border-2  border-white/30">
+      <section className="flex w-full">
+        <div className="fixed z-20">
+          <Aside />
+        </div>
+        <form
+          onSubmit={handleClick}
+          encType="multipart/form-data"
+          className="w-full"
+        >
+          <div className="relative  w-full justify-center items-center min-h-screen h-screen ">
+            <div className="flex flex-col  h-full dark:text-white mt-12 ml-[35%] mr-[15%] max-lg:m-0 max-lg:overflow-hidden">
+              <div className="relative mb-[4rem] flex flex-col ">
                 <div className="flex flex-col pt-4 relative items-centee">
                   <img
                     src={userData?.background}
                     alt=""
                     className="min-h-[250px] max-h-[250px] w-[100%] object-cover "
                   />
-                  <div className="w-full h-[7rem] rounded-md shadow-lg flex justify-end items-center bg-white">
+                  <div
+                    className="w-full h-[7rem] rounded-md shadow-lg flex justify-end items-center bg-white dark:bg-[#0a0a13]
+                    "
+                  >
                     <ReactSVG
                       src={`data:image/svg+xml;base64,${btoa(
                         userData?.avatarImage

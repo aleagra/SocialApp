@@ -136,8 +136,8 @@ const Aside = () => {
 
   return (
     <>
-      <div className="fixed top-0 z-10 left-0 w-[15%] h-full max-lg:hidden shadow-md dark:text-white bg-white dark:bg-[#0a0a13]">
-        <div className="flex h-fit px-12 max-2xl:px-4 max-lg:px-0 py-12 w-full items-center">
+      <div className="flex-col relative z-10 flex h-screen max-lg:hidden shadow-md dark:text-white bg-white dark:bg-[#0a0a13]">
+        <div className="flex  px-12 max-2xl:px-4 max-lg:px-0 py-12 w-full items-center">
           <Link to="/" className="flex gap-2">
             <img src={icon} className="w-10 h-100" alt="" />
             <p className="text-2xl uppercase dark:text-white">SocialApp</p>
