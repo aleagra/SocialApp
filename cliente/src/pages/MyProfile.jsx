@@ -2,12 +2,12 @@ import { useState, useContext } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "../context/AuthContext";
-import Navbar from "../components/Navbar/Navbar";
 import { Aside } from "../components/Home";
 import MyPosts from "../components/Profile/MyPosts";
+import { ReactSVG } from "react-svg";
 
 export default function Profile() {
-  const { user, setUser } = useContext(AuthContext);
+  const { userData, setUser } = useContext(AuthContext);
   const [username, setUsername] = useState("");
   const [background, setBackground] = useState("");
   const [descripcion, setDescripcion] = useState("");
@@ -55,15 +55,16 @@ export default function Profile() {
               <div className="relative mb-[4rem] flex flex-col border-2  border-white/30">
                 <div className="flex flex-col pt-4 relative items-centee">
                   <img
-                    src={user.background}
+                    src={userData?.background}
                     alt=""
-                    className="min-h-[250px] max-h-[250px] w-[100%] object-cover"
+                    className="min-h-[250px] max-h-[250px] w-[100%] object-cover "
                   />
                   <div className="w-full h-[7rem] rounded-md shadow-lg flex justify-end items-center bg-white">
-                    <img
-                      src={`data:image/svg+xml;base64,${user.avatarImage}`}
-                      className="rounded-full w-[10rem] absolute bottom-[2rem] left-[3rem] h-[10rem] border-8 dark:border-[#17181c] border-white"
-                      alt=""
+                    <ReactSVG
+                      src={`data:image/svg+xml;base64,${btoa(
+                        userData?.avatarImage
+                      )}`}
+                      className="color-item  rounded-full w-[8rem] h-auto absolute left-10 bottom-10"
                     />
                     <button className="p-2 w-fit rounded-md h-fit text-white container mr-10 mb-4">
                       Edit profile

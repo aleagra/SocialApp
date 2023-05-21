@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { Aside } from "../Home";
 import Post from "./Post";
-
+import { ReactSVG } from "react-svg";
 function ProfileUsers() {
   const [data, setData] = useState([]);
   let { id } = useParams();
@@ -18,7 +18,7 @@ function ProfileUsers() {
     following: undefined,
     background: undefined,
   });
-  console.log(id);
+
   useEffect(() => {
     async function fetchUser() {
       const { data } = await axios.get(url);
@@ -50,7 +50,6 @@ function ProfileUsers() {
         return new Date(p2.createdAt) - new Date(p1.createdAt);
       })
     );
-    console.log(res.data);
   };
   useEffect(() => {
     fetchData();
@@ -68,10 +67,9 @@ function ProfileUsers() {
                 className="min-h-[250px] max-h-[250px] w-[100%] object-cover"
               />
               <div className="w-full h-[7rem] rounded-md shadow-lg flex justify-end items-center bg-white">
-                <img
-                  src={`data:image/svg+xml;base64,${profile.avatarImage}`}
-                  className="rounded-full w-[10rem] absolute bottom-[2rem] left-[3rem] h-[10rem] border-8 dark:border-[#17181c] border-white"
-                  alt=""
+                <ReactSVG
+                  src={`data:image/svg+xml;base64,${btoa(profile.avatarImage)}`}
+                  className="color-item  rounded-full w-[8rem] h-auto absolute left-10 bottom-10"
                 />
               </div>
             </div>

@@ -10,22 +10,20 @@ import {
   getDownloadURL,
 } from "firebase/storage";
 import Picker from "emoji-picker-react";
-
+import { ReactSVG } from "react-svg";
 const userPost = () => {
-  const { user } = useContext(AuthContext);
+  const { userData } = useContext(AuthContext);
   const [file, setFile] = useState(null);
   const [video, setVideo] = useState(null);
-
-  const [profile, setProfile] = useState(null);
   const [inputStr, setInputStr] = useState("");
   const [showPicker, setShowPicker] = useState(false);
 
   const submitPost = async (e) => {
     e.preventDefault();
     const newPost = {
-      userId: user._id,
+      userId: userData._id,
       desc: inputStr,
-      user: user,
+      user: userData,
     };
 
     //imagen
@@ -66,7 +64,7 @@ const userPost = () => {
         () => {
           getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
             const uploadVideo = {
-              userId: user._id,
+              userId: userData._id,
               desc: inputStr,
               video: downloadURL,
             };
@@ -100,10 +98,9 @@ const userPost = () => {
       <div className="w-[100%] rounded-lg bg-white dark:text-white shadow-md dark:bg-[#0a0a13] py-5 mb-8">
         <div className="flex flex-col rounded-lg items-center">
           <div className="flex w-full px-6 gap-3 items-center">
-            <img
-              src={`data:image/svg+xml;base64,${user.avatarImage}`}
-              className="h-12 w-12 rounded-lg"
-              alt=""
+            <ReactSVG
+              src={`data:image/svg+xml;base64,${btoa(userData?.avatarImage)}`}
+              className="color-item  rounded-full w-16 h-16"
             />
             <input
               type="text"

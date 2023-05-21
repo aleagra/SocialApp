@@ -1,5 +1,6 @@
 import { createContext, useEffect, useReducer, useState } from "react";
 import AuthReducer from "./AuthReducer";
+import axios from "axios";
 
 const INITIAL_STATE = {
   user: JSON.parse(localStorage.getItem("user")),
@@ -11,9 +12,32 @@ export const AuthContext = createContext(INITIAL_STATE);
 
 export const AuthContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(AuthReducer, INITIAL_STATE);
+  const [userData, setUserData] = useState(null); // Agregar el useState para userData
 
   useEffect(() => {
-    localStorage.setItem("user", JSON.stringify(state.user));
+    if (state.user) {
+      localStorage.setItem("user", JSON.stringify(state.user));
+    }
+  }, [state.user]);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        if (state.user) {
+          const response = await axios.get(
+            `http://localhost:5050/users/${state.user}`
+          );
+          const user = response.data;
+
+          dispatch({ type: "SET_USER", payload: user });
+          setUserData(user);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchUser();
   }, [state.user]);
 
   return (
@@ -23,6 +47,7 @@ export const AuthContextProvider = ({ children }) => {
         isFetching: state.isFetching,
         error: state.error,
         dispatch,
+        userData, // Agregar userData al value del contexto
       }}
     >
       {children}

@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { AuthContext } from "../context/AuthContext";
 
-export default function Register() {
+const Register = () => {
   const navigate = useNavigate();
+  const { dispatch } = useContext(AuthContext);
   const toastOptions = {
     position: "bottom-right",
     autoClose: 8000,
@@ -13,18 +15,13 @@ export default function Register() {
     draggable: true,
     theme: "dark",
   };
+
   const [values, setValues] = useState({
     username: "",
     email: "",
     password: "",
     confirmPassword: "",
   });
-
-  useEffect(() => {
-    if (localStorage.getItem(import.meta.env.REACT_APP_LOCALHOST_KEY)) {
-      navigate("/register");
-    }
-  }, []);
 
   const handleChange = (event) => {
     setValues({ ...values, [event.target.name]: event.target.value });
@@ -34,7 +31,7 @@ export default function Register() {
     const { password, confirmPassword, username, email } = values;
     if (password !== confirmPassword) {
       toast.error(
-        "Password and confirm password should be same.",
+        "Password and confirm password should be the same.",
         toastOptions
       );
       return false;
@@ -63,7 +60,7 @@ export default function Register() {
     if (handleValidation()) {
       const { email, username, password } = values;
       const { data } = await axios.post(
-        `http://localhost:5050/users/register`,
+        "http://localhost:5050/users/register",
         {
           username,
           email,
@@ -75,10 +72,8 @@ export default function Register() {
         toast.error(data.msg, toastOptions);
       }
       if (data.status === true) {
-        localStorage.setItem(
-          import.meta.env.REACT_APP_LOCALHOST_KEY,
-          JSON.stringify(data.user)
-        );
+        dispatch({ type: "LOGIN_SUCCESS", payload: data.user._id });
+        localStorage.setItem("user", JSON.stringify(data.user._id));
         navigate("/setAvatar");
       }
     }
@@ -86,11 +81,11 @@ export default function Register() {
 
   return (
     <>
-      <section className=" flex flex-col w-full h-screen justify-center gap-[1rem] items-center bg-[#131324]">
+      <section className="flex flex-col w-full h-screen justify-center gap-[1rem] items-center bg-[#131324]">
         <form
           action=""
           className="flex flex-col gap-[2rem] rounded-lg  bg-[#00000076] p-[5rem] "
-          onSubmit={(event) => handleSubmit(event)}
+          onSubmit={handleSubmit}
         >
           <div className="flex items-center gap-[1rem] justify-center">
             <h1 className="text-white uppercase font-bold text-lg">
@@ -98,41 +93,41 @@ export default function Register() {
             </h1>
           </div>
           <input
-            className=" bg-transparent p-[1rem] rounded-lg text-white w-full text-[1rem] border focus:outline-none "
+            className="bg-transparent p-[1rem] rounded-lg text-white w-full text-[1rem] border focus:outline-none"
             type="text"
             placeholder="Username"
             name="username"
-            onChange={(e) => handleChange(e)}
+            onChange={handleChange}
           />
           <input
-            className=" bg-transparent p-[1rem] rounded-lg text-white w-full text-[1rem]  border focus:outline-none "
+            className="bg-transparent p-[1rem] rounded-lg text-white w-full text-[1rem]  border focus:outline-none"
             type="email"
             placeholder="Email"
             name="email"
-            onChange={(e) => handleChange(e)}
+            onChange={handleChange}
           />
           <input
-            className=" bg-transparent p-[1rem] text-white rounded-lg w-full text-[1rem] border focus:outline-none"
+            className="bg-transparent p-[1rem] text-white rounded-lg w-full text-[1rem] border focus:outline-none"
             type="password"
             placeholder="Password"
             name="password"
-            onChange={(e) => handleChange(e)}
+            onChange={handleChange}
           />
           <input
-            className=" bg-transparent p-[1rem] text-white rounded-lg w-full text-[1rem]  border focus:outline-none "
+            className="bg-transparent p-[1rem] text-white rounded-lg w-full text-[1rem]  border focus:outline-none"
             type="password"
             placeholder="Confirm Password"
             name="confirmPassword"
-            onChange={(e) => handleChange(e)}
+            onChange={handleChange}
           />
           <button
             type="submit"
-            className="container   text-white py-[1rem]  border font-bold cursor-pointer uppercase text-[1rem] px-[2rem]"
+            className="container text-white py-[1rem] border font-bold cursor-pointer uppercase text-[1rem] px-[2rem]"
           >
             Create User
           </button>
           <span className="uppercase text-white">
-            Already have an account ?{" "}
+            Already have an account?{" "}
             <Link to="/login" className="text font-bold">
               Login.
             </Link>
@@ -142,4 +137,5 @@ export default function Register() {
       <ToastContainer />
     </>
   );
-}
+};
+export default Register;

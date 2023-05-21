@@ -5,7 +5,7 @@ import axios from "axios";
 function MyPosts() {
   const { user } = useContext(AuthContext);
 
-  const url = `http://localhost:5050/posts/user/${user._id}`;
+  const url = `http://localhost:5050/posts/user/${user}`;
   const [data, setData] = useState([]);
 
   const fetchData = async () => {
@@ -15,7 +15,6 @@ function MyPosts() {
         return new Date(p2.createdAt) - new Date(p1.createdAt);
       })
     );
-    console.log(res.data);
   };
   useEffect(() => {
     fetchData();

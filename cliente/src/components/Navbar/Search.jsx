@@ -2,9 +2,9 @@ import React from "react";
 import axios from "axios";
 import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import Navbar from "./Navbar";
 import { Aside, AsideRight } from "../Home";
 import { AuthContext } from "../../context/AuthContext";
+import { ReactSVG } from "react-svg";
 export function Search() {
   const [users, setUsers] = useState([]);
   const [buscar, setBuscar] = useState("");
@@ -51,7 +51,7 @@ export function Search() {
                 type="search"
               />
             </div>
-            <div className=" flex flex-col w-full rounded-lg justify-center">
+            <div className=" flex flex-col w-full rounded-lg justify-center cursor-pointer">
               {buscar &&
                 users?.map((Element, index) => {
                   const regex = new RegExp(
@@ -68,10 +68,11 @@ export function Search() {
                       >
                         <div className="w-full  m-auto  dark:bg-[#16181C]">
                           <div className="flex items-center gap-2 py-6 justify-center">
-                            <img
-                              src={`data:image/svg+xml;base64,${Element.avatarImage}`}
-                              className="relative h-20 w-20 rounded-lg"
-                              alt=""
+                            <ReactSVG
+                              src={`data:image/svg+xml;base64,${btoa(
+                                Element.avatarImage
+                              )}`}
+                              className="color-item  rounded-full w-16 h-auto"
                             />
                             <div className="flex flex-col px-6">
                               <h1 className="text-2xl font-semibold">
@@ -79,12 +80,12 @@ export function Search() {
                               </h1>
                               <div className="flex items-center gap-4 text-black/50">
                                 <h1 className="text-xl">
-                                  {Element.following.length}
+                                  {Element.followers.length}
                                 </h1>
                                 <h3 className="text-xl">Followers</h3>
 
                                 <h1 className="text-xl font-bold">
-                                  {Element.followers.length}
+                                  {Element.following.length}
                                 </h1>
                                 <h3 className="text-xl">Following</h3>
                               </div>

@@ -37,7 +37,8 @@ export default function Login() {
       toast.error(data.msg, toastOptions);
     } else {
       const user = data.user;
-      dispatch({ type: "LOGIN_SUCCESS", payload: user });
+      dispatch({ type: "LOGIN_SUCCESS", payload: user._id });
+      console.log(user._id);
       navigate("/");
     }
   };

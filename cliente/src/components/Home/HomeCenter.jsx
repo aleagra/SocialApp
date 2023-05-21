@@ -7,7 +7,7 @@ import { AuthContext } from "../../context/AuthContext";
 
 export function HomeCenter() {
   const { user } = useContext(AuthContext);
-  const url = `http://localhost:5050/posts/friends/${user._id}`;
+  const url = `http://localhost:5050/posts/friends/${user}`;
   const [data, setData] = useState([]);
 
   const fetchData = async () => {

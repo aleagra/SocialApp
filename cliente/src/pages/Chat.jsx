@@ -24,7 +24,7 @@ export default function Chat() {
         const response = await axios.get(
           `http://localhost:5050/users/allusers`
         );
-        const users = response.data.filter((u) => u._id !== user._id);
+        const users = response.data.filter((u) => u._id !== user);
         setContacts(users);
       }
     };

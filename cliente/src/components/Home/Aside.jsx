@@ -112,6 +112,11 @@ const Aside = () => {
     localStorage.setItem("color", currentColor);
   };
 
+  useEffect(() => {
+    const currentColor = localStorage.getItem("color");
+    setTheme(currentColor);
+  });
+
   const renderNavLinks = () => {
     return navLinks.map((link, index) => (
       <li

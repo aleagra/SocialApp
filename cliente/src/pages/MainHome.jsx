@@ -1,5 +1,4 @@
 import React from "react";
-import Navbar from "../components/Navbar/Navbar";
 import { Aside, AsideRight, HomeCenter } from "../components/Home";
 
 const MainHome = () => {

@@ -4,12 +4,13 @@ import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { format } from "timeago.js";
 import axios from "axios";
+import { ReactSVG } from "react-svg";
 
 const Post = ({ post, userprofile }) => {
   const [isLiked, setIsLiked] = useState();
   const [comments, setComments] = useState(post.comments);
   const [commentwriting, setcommentwriting] = useState("");
-  const { user } = useContext(AuthContext);
+  const { userData, user } = useContext(AuthContext);
   const PF = "http://localhost:5050/images/";
   const [toggle, setTogle] = useState(true);
   const [likesCount, setLikesCount] = useState(post.likesCount || 0);
@@ -18,32 +19,32 @@ const Post = ({ post, userprofile }) => {
     const fetchLikeStatus = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5050/posts/${post._id}/checkLike/${user._id}`
+          `http://localhost:5050/posts/${post._id}/checkLike/${user}`
         );
         setIsLiked(response.data);
       } catch (err) {}
     };
 
     fetchLikeStatus();
-  }, [post._id, user._id]);
+  }, [post._id, user]);
 
   const likeHandler = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:5050/posts/${post._id}/checkLike/${user._id}`
+        `http://localhost:5050/posts/${post._id}/checkLike/${user}`
       );
       const hasLiked = response.data;
 
       if (hasLiked) {
         await axios.put(`http://localhost:5050/posts/${post._id}/like`, {
-          userId: user._id,
+          userId: userData._id,
         });
         setLikesCount(likesCount - 1);
         setIsLiked(false);
       } else {
         if (!isLiked) {
           await axios.put(`http://localhost:5050/posts/${post._id}/like`, {
-            userId: user._id,
+            userId: userData._id,
           });
           setLikesCount(likesCount + 1);
           setIsLiked(true);
@@ -62,13 +63,13 @@ const Post = ({ post, userprofile }) => {
 
   const addComment = async () => {
     const comment = {
-      img: user.avatarImage,
-      username: user.username,
+      img: userData.avatarImage,
+      username: userData.username,
       comment: commentwriting,
     };
     try {
       await axios.put("http://localhost:5050/posts/" + post._id + "/comment", {
-        userId: user._id,
+        userId: userData._id,
         value: comment,
       });
       // Obtener los comentarios actualizados desde el servidor
@@ -94,16 +95,15 @@ const Post = ({ post, userprofile }) => {
       <div className=" flex w-[100%] flex-col rounded-lg bg-white shadow-lg dark:bg-[#0a0a13] dark:text-white max-lg:p-0">
         <div className="flex h-24 w-full px-6 py-2">
           <div className="relative  flex w-full cursor-pointer items-center gap-3">
-            <img
-              src={`data:image/svg+xml;base64,${userprofile.avatarImage}`}
-              className="h-12 w-12 rounded-lg"
-              alt=""
+            <ReactSVG
+              src={`data:image/svg+xml;base64,${btoa(userprofile.avatarImage)}`}
+              className="color-item  rounded-full w-16 h-16"
             />
 
             <div className="flex flex-col text-md font-light capitalize">
               <h2>{userprofile.username}</h2>
 
-              <h4 className="text-md font-extralight opacity-40">
+              <h4 className="text-md font-extralight opacity-70">
                 {format(post.createdAt)}
               </h4>
             </div>
@@ -111,7 +111,11 @@ const Post = ({ post, userprofile }) => {
         </div>
         <p className="px-6 pb-4  text-lg max-lg:text-base">{post.desc}</p>
         <div className="w-full max-h-[400px] flex justify-center ">
-          <img className="w-full object-cover" src={PF + post.img} alt="" />
+          <img
+            className="w-full object-cover"
+            src={post.img && PF + post.img}
+            alt=""
+          />
         </div>
 
         <div className="flex w-full items-center justify-between px-6 py-6 ">
@@ -183,10 +187,9 @@ const Post = ({ post, userprofile }) => {
             <div
               className={`relative items-center flex w-[100%] gap-5 p-6  border-t dark:border-white/40 border-black/40`}
             >
-              <img
-                src={`data:image/svg+xml;base64,${user.avatarImage}`}
-                className="h-12 w-12 rounded-lg"
-                alt=""
+              <ReactSVG
+                src={`data:image/svg+xml;base64,${btoa(userData.avatarImage)}`}
+                className="color-item  rounded-full w-16 h-16"
               />
               <input
                 className="w-full m-auto p-2 rounded-xl bg-gray-100 dark:bg-transparent dark:border dark:text-white dark:border-white/40  pl-3 pr-10 text-sm outline-none text-black"
@@ -199,7 +202,7 @@ const Post = ({ post, userprofile }) => {
                 viewBox="0 0 24 24"
                 strokeWidth={1.5}
                 stroke="currentColor"
-                className="absolute top-10 right-10 h-4 w-4 cursor-pointer opacity-70 "
+                className="absolute top-12 right-10 h-4 w-4 cursor-pointer opacity-70 "
                 onClick={(e) => {
                   handleComment();
                   toggleComments();

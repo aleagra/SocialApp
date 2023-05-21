@@ -1,7 +1,8 @@
 import React, { useState, useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
+import { ReactSVG } from "react-svg";
 export default function Contacts({ contacts, changeChat }) {
-  const { user } = useContext(AuthContext);
+  const { userData } = useContext(AuthContext);
   const [currentSelected, setCurrentSelected] = useState(undefined);
   const changeCurrentChat = (index, contact) => {
     setCurrentSelected(index);
@@ -26,10 +27,11 @@ export default function Contacts({ contacts, changeChat }) {
                 onClick={() => changeCurrentChat(index, contact)}
               >
                 <div>
-                  <img
-                    src={`data:image/svg+xml;base64,${contact.avatarImage}`}
-                    alt=""
-                    className="w-12 h-12"
+                  <ReactSVG
+                    src={`data:image/svg+xml;base64,${btoa(
+                      contact.avatarImage
+                    )}`}
+                    className="color-item  rounded-full w-16 h-16"
                   />
                 </div>
                 <div className=" font-bold text-lg">
