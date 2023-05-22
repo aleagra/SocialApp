@@ -40,12 +40,12 @@ export function Search() {
     <>
       <section className="flex h-fit">
         <Aside />
-        <section className="w-full ml-[8%] max-2xl:-[10%] rounded-md mr-[32%] max-2xl:mr-[10%] my-14 bg-white">
+        <section className="w-full ml-[8%] max-2xl:-[10%] rounded-md mr-[32%] max-2xl:mr-[10%] my-14 bg-white dark:bg-[#0a0a13]">
           <div className="flex flex-col items-center ">
             <div className="flex w-full justify-center py-12">
               <input
                 placeholder="Buscar"
-                className="text-black focus:outline-none px-6 py-2 mx-10 border-2  w-full rounded-lg"
+                className="text-black dark:bg-transparent dark:text-white focus:outline-none px-6 py-2 mx-10 border-2 dark:border-white/20 w-full rounded-lg"
                 onChange={(e) => setBuscar(e.target.value)}
                 value={buscar}
                 type="search"
@@ -61,12 +61,12 @@ export function Search() {
                   if (regex.test(Element.username.toLowerCase())) {
                     return (
                       <a
-                        className="w-full hover:bg-black/10"
+                        className="w-full hover:bg-black/10 hover:shadow-md dark:hover:bg-[#131324] dark:hover:border dark:hover:border-white/20"
                         onClick={(e) => {
                           search(Element._id);
                         }}
                       >
-                        <div className="w-full  m-auto  dark:bg-[#16181C]">
+                        <div className="w-full  m-auto  ">
                           <div className="flex items-center gap-2 py-6 justify-center">
                             <ReactSVG
                               src={`data:image/svg+xml;base64,${btoa(
@@ -75,10 +75,10 @@ export function Search() {
                               className="color-item  rounded-full w-16 h-auto"
                             />
                             <div className="flex flex-col px-6">
-                              <h1 className="text-2xl font-semibold">
+                              <h1 className="text-2xl font-semibold dark:text-white">
                                 {Element.username}
                               </h1>
-                              <div className="flex items-center gap-4 text-black/50">
+                              <div className="flex items-center gap-4 text-black/50 dark:text-white">
                                 <h1 className="text-xl">
                                   {Element.followers.length}
                                 </h1>
@@ -104,7 +104,7 @@ export function Search() {
                     "i"
                   ).test(Element.username.toLowerCase())
                 ) && (
-                  <div className="h-[128px] bg-[#f7f7f7] flex items-center justify-center">
+                  <div className="h-[128px] bg-[#f7f7f7] flex items-center dark:text-white justify-center dark:bg-[#0a0a13]">
                     <p className="text-xl">No se encontraron usuarios.</p>
                   </div>
                 )}

@@ -125,7 +125,7 @@ const Post = ({ post, userprofile }) => {
               onClick={likeHandler}
               viewBox="0 0 512 512"
               className={`${
-                isLiked ? "fill-red-600" : "dark:fill-white"
+                isLiked ? "fill" : "dark:fill-white"
               } w-6 h-6 cursor-pointer`}
             >
               <path

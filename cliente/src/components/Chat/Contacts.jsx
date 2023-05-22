@@ -10,7 +10,7 @@ export default function Contacts({ contacts, changeChat }) {
   };
   return (
     <>
-      <section className=" grid 2xl:grid-rows-[10%,75%,15%] grid-rows-[20%,75%,5%]  border-2 dark:border-white/20 border-black/10 overflow-hidden bg-white dark:bg-[#131324]">
+      <section className=" grid 2xl:grid-rows-[10%,75%,15%] grid-rows-[20%,75%,5%] overflow-hidden bg-white dark:bg-[#131324]">
         <div className="flex justify-center items-center my-4 gap-[2rem]  border-b border-white/30">
           <h3 className="text-black dark:text-white font-bold ">CHATS</h3>
         </div>
