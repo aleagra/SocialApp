@@ -75,10 +75,6 @@ export default function SetAvatar() {
     }
   };
 
-  if (isLoading) {
-    return <div>Cargando avatares...</div>;
-  }
-
   return (
     <>
       <section className="flex justify-center items-center flex-col gap-[3rem] bg-[#131324] h-[100vh] w-[100vw]">
