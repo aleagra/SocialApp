@@ -65,23 +65,35 @@ export default function Profile() {
                     className="min-h-[250px] max-h-[250px] w-[100%] object-cover "
                   />
                   <div
-                    className="w-full h-[7rem] rounded-md shadow-lg flex justify-end items-center bg-white dark:bg-[#0a0a13]
+                    className="w-full h-[7rem] justify-end px-2 rounded-md shadow-lg flex items-center bg-white dark:bg-[#0a0a13] gap-16
                     "
                   >
                     <ReactSVG
                       src={`data:image/svg+xml;base64,${btoa(
                         userData?.avatarImage
                       )}`}
-                      className="color-item  rounded-full w-[8rem] h-auto absolute left-10 bottom-10"
+                      className="color-item  rounded-full w-[8rem] h-auto absolute left-10 bottom-10 "
                     />
-                    <button className="p-2 w-fit rounded-md h-fit text-white container mr-10 mb-4">
+
+                    <h1 className="text-xl font-bold capitalize p-2">
+                      {userData?.username} sanchez
+                    </h1>
+                    <div className="flex  justify-center text-center text-xl gap-2">
+                      <span className="font-bold">
+                        {userData?.followers.length}
+                      </span>
+                      <p>Followers </p>
+                    </div>
+                    <div className="flex  justify-center text-center text-xl gap-2">
+                      <span className="font-bold">
+                        {userData?.following.length}
+                      </span>
+                      <p>Followings </p>
+                    </div>
+                    <button className="p-2 w-fit rounded-md text-xl h-fit text-white container mr-10 ">
                       Edit profile
                     </button>
                   </div>
-                  {/* <h1 className="font-bold text-xl capitalize ">
-                    {user.username}
-                    <h5 className="">{user.descripcion}</h5>
-                  </h1> */}
                 </div>
 
                 {/* <div className="text-center mb-7">

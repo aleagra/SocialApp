@@ -97,7 +97,7 @@ const Post = ({ post, userprofile }) => {
           <div className="relative  flex w-full cursor-pointer items-center gap-3">
             <ReactSVG
               src={`data:image/svg+xml;base64,${btoa(userprofile.avatarImage)}`}
-              className="color-item  rounded-full w-16 h-16"
+              className="color-item  rounded-full w-16 h-auto "
             />
 
             <div className="flex flex-col text-md font-light capitalize">
@@ -109,7 +109,7 @@ const Post = ({ post, userprofile }) => {
             </div>
           </div>
         </div>
-        <p className="px-6 pb-4  text-lg max-lg:text-base">{post.desc}</p>
+        <p className="px-12 pb-4  text-lg max-lg:text-base">{post.desc}</p>
         <div className="w-full max-h-[400px] flex justify-center ">
           <img
             className="w-full object-cover"
@@ -118,7 +118,7 @@ const Post = ({ post, userprofile }) => {
           />
         </div>
 
-        <div className="flex w-full items-center justify-between px-6 py-6 ">
+        <div className="flex w-full items-center justify-between px-11 py-6 ">
           <div className="flex items-center gap-2">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -139,25 +139,6 @@ const Post = ({ post, userprofile }) => {
 
             <h4 className="text-md font-extralight">{likesCount}</h4>
             <p className="text-md">Likes</p>
-          </div>
-          <div className="flex items-center gap-2">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="w-6 h-6 cursor-pointer"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M7.217 10.907a2.25 2.25 0 100 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186l9.566-5.314m-9.566 7.5l9.566 5.314m0 0a2.25 2.25 0 103.935 2.186 2.25 2.25 0 00-3.935-2.186zm0-12.814a2.25 2.25 0 103.933-2.185 2.25 2.25 0 00-3.933 2.185z"
-              />
-            </svg>
-
-            <h4 className="text-md font-extralight">{comments.length}</h4>
-            <p className="text-md">Shares</p>
           </div>
 
           <div
@@ -189,7 +170,7 @@ const Post = ({ post, userprofile }) => {
             >
               <ReactSVG
                 src={`data:image/svg+xml;base64,${btoa(userData.avatarImage)}`}
-                className="color-item  rounded-full w-16 h-16"
+                className="color-item  rounded-full w-16 h-auto"
               />
               <input
                 className="w-full m-auto p-2 rounded-xl bg-gray-100 dark:bg-transparent dark:border dark:text-white dark:border-white/40  pl-3 pr-10 text-sm outline-none text-black"
@@ -202,7 +183,7 @@ const Post = ({ post, userprofile }) => {
                 viewBox="0 0 24 24"
                 strokeWidth={1.5}
                 stroke="currentColor"
-                className="absolute top-12 right-10 h-4 w-4 cursor-pointer opacity-70 "
+                className="absolute top-11 right-10 h-4 w-4 cursor-pointer opacity-70 "
                 onClick={(e) => {
                   handleComment();
                   toggleComments();

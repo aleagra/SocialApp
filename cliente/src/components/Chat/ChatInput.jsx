@@ -28,7 +28,7 @@ export default function ChatInput({ handleSendMsg }) {
           viewBox="0 0 24 24"
           strokeWidth={1.5}
           stroke="currentColor"
-          className="w-8 h-8 fill cursor-pointer absolute top-[3.25rem] left-16 hover:bg-white/30 hover:rounded-md"
+          className="w-8 h-8 fill cursor-pointer absolute top-14 left-16 hover:bg-white/30 hover:rounded-md"
           onClick={() => setShowPicker((val) => !val)}
         >
           <path
@@ -61,7 +61,7 @@ export default function ChatInput({ handleSendMsg }) {
             viewBox="0 0 24 24"
             strokeWidth={1.5}
             stroke="currentColor"
-            className="w-9 h-9 fill absolute top-12 right-16 z-10 hover:bg-white/30 hover:rounded-md"
+            className="w-9 h-9 fill absolute top-14 right-16 z-10 hover:bg-white/30 hover:rounded-md"
           >
             <path
               strokeLinecap="round"

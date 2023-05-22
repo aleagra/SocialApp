@@ -66,13 +66,31 @@ function ProfileUsers() {
               <img
                 src={profile.background}
                 alt=""
-                className="min-h-[250px] max-h-[250px] w-[100%] object-cover"
+                className="min-h-[250px] max-h-[250px] w-[100%] object-cover "
               />
-              <div className="w-full h-[7rem] rounded-md shadow-lg flex justify-end items-center bg-white dark:bg-[#0a0a13]">
+              <div
+                className="w-full h-[7rem] justify-end px-2 rounded-md shadow-lg flex items-center bg-white dark:bg-[#0a0a13] gap-16
+                    "
+              >
                 <ReactSVG
                   src={`data:image/svg+xml;base64,${btoa(profile.avatarImage)}`}
-                  className="color-item  rounded-full w-[8rem] h-auto absolute left-10 bottom-10"
+                  className="color-item  rounded-full w-[8rem] h-auto absolute left-10 bottom-10 "
                 />
+
+                <h1 className="text-xl font-bold capitalize p-2">
+                  @{profile.username}Agra
+                </h1>
+                <div className="flex  justify-center text-center text-xl gap-2">
+                  <span className="font-bold">{profile.followers}</span>
+                  <p>Followers </p>
+                </div>
+                <div className="flex  justify-center text-center text-xl gap-2">
+                  <span className="font-bold">{profile.following}</span>
+                  <p>Followings </p>
+                </div>
+                <button className="p-2 w-fit rounded-md h-fit text-xl text-white container mr-10 ">
+                  Follow
+                </button>
               </div>
             </div>
           </div>

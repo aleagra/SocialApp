@@ -3,7 +3,7 @@ import { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import axios from "axios";
 import { ReactSVG } from "react-svg";
-function Recomendations({ updateFollowersCount }) {
+function Recomendations() {
   const { user } = useContext(AuthContext);
   const [notFollowing, setNotFollowing] = useState([]);
 
@@ -36,8 +36,7 @@ function Recomendations({ updateFollowersCount }) {
 
       const updatedList = notFollowing.filter((user) => user._id !== id);
       setNotFollowing(updatedList);
-      localStorage.setItem("notFollowing", JSON.stringify(updatedList));
-      updateFollowersCount(); // Llama a la función de actualización de seguidores en el componente padre
+      localStorage.setItem("notFollowing", JSON.stringify(updatedList)); // Llama a la función de actualización de seguidores en el componente padre
     } catch (error) {
       console.error(error);
     }

@@ -122,6 +122,24 @@ const findByPost = async (req, res) => {
     });
 };
 
+const getPostDetails = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const post = await Post.findById(id)
+      .populate('likes', 'username')
+      .populate('comments.userId', 'username');
+
+    if (!post) {
+      return res.json({ message: "Id no encontrado" });
+    }
+
+    res.json(post);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error retrieving post details" });
+  }
+};
 
 
 
@@ -135,6 +153,7 @@ module.exports = {
   findByPost,
   checkLike,
   getPostsByUserID,
+  getPostDetails,
 
 
 };

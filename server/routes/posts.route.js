@@ -10,6 +10,7 @@ const {
   friendPost,
   checkLike,
   getPostsByUserID,
+  getPostDetails,
 } = require("../controllers/postsController");
 
 routerPost.post("/posts/", createPost);
@@ -20,5 +21,5 @@ routerPost.put("/posts/:id/like", likePost);
 routerPost.put("/posts/:id/comment", comentPost);
 routerPost.get('/posts/:id/checkLike/:userId',checkLike);
 routerPost.get("/posts/user/:userId", getPostsByUserID)
-
+routerPost.get("/posts/details/:id", getPostDetails)
 module.exports = routerPost;

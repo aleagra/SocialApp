@@ -183,11 +183,11 @@ module.exports.FollowUser = async (req, res) => {
 module.exports.UnfollowUser = async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
-    user.followers.remove(req.body.follower);
+    user.following.remove(req.body.follower);
     await user.save();
 
     const follower = await User.findById(req.body.follower);
-    follower.following.remove(req.params.id);
+    follower.followers.remove(req.params.id);
     await follower.save();
 
     res.send({ message: "Unfollowed successfully" });

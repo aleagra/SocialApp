@@ -120,7 +120,7 @@ const userPost = () => {
                   viewBox="0 0 24 24"
                   strokeWidth={1.5}
                   stroke="currentColor"
-                  className="w-6 h-6 plus"
+                  className="w-6 h-6 plus cursor-pointer"
                 >
                   <path
                     strokeLinecap="round"
@@ -130,7 +130,7 @@ const userPost = () => {
                 </svg>
 
                 <input
-                  className=" hidden"
+                  className=" hidden cursor-pointer"
                   type="file"
                   id="file"
                   accept=".png,.jpeg,.jpg"

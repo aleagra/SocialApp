@@ -2,9 +2,10 @@ import React, { useState, useEffect, useRef, useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { Link } from "react-router-dom";
 import icon from "../../assets/icon.png";
-
 import { Toggle } from "../Navbar";
 import ColorItem from "./colorItem";
+import axios from "axios";
+import { ReactSVG } from "react-svg";
 import {
   BarsIcon,
   BellIcon,
@@ -21,13 +22,17 @@ const Aside = () => {
   let modal = document.getElementById("modal");
   let nav = document.getElementById("nav");
   let plus = document.getElementById("plus");
-  const { dispatch } = useContext(AuthContext);
+  const { dispatch, userData } = useContext(AuthContext);
   const [isOpen, setIsOpen] = useState(false);
   const modalRef = useRef(null);
+  const modalnotifications = useRef(null);
+  const [isOpen2, setIsOpen2] = useState(false);
   const [isSecondModalOpen, setSecondModalOpen] = useState(false);
   const secondModalRef = useRef(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchActive, setSearchActive] = useState(false);
+  const [followersUsers, setFollowersUsers] = useState([]);
+
   const handleOutsideClickSecondModal = (event) => {
     if (
       secondModalRef.current &&
@@ -66,6 +71,14 @@ const Aside = () => {
     setIsOpen(false);
   };
 
+  const openModal2 = () => {
+    setIsOpen2(true);
+  };
+
+  const closeModal2 = () => {
+    setIsOpen2(false);
+  };
+
   const navLinks = [
     {
       to: "/",
@@ -80,8 +93,8 @@ const Aside = () => {
     {
       icon: <BellIcon />,
       text: "Notifications",
+      onClick: openModal2, // Agregar el onClick para abrir el modal
     },
-
     {
       to: "/chat",
       icon: <ChatIcon />,
@@ -124,6 +137,7 @@ const Aside = () => {
         className="cursor-pointer text-xl max-2xl:text-sm font-bold flex items-center"
       >
         <Link
+          onClick={link.onClick}
           to={link.to}
           className="flex gap-4 p-8 max-lg:p-2 hover:bg-black/10 dark:hover:bg-white/20  px-12 max-2xl:px-6 w-full color font-bold"
         >
@@ -133,6 +147,26 @@ const Aside = () => {
       </li>
     ));
   };
+
+  useEffect(() => {
+    const fetchFollowersUsers = async () => {
+      try {
+        if (Array.isArray(userData?.following)) {
+          const userPromises = userData.followers.map((userId) =>
+            axios.get(`http://localhost:5050/users/${userId}`)
+          );
+
+          const users = await Promise.all(userPromises);
+          const followingUsersData = users.map((response) => response.data);
+          setFollowersUsers(followingUsersData);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchFollowersUsers();
+  }, [userData?.following]);
 
   return (
     <>
@@ -160,7 +194,7 @@ const Aside = () => {
           <div className="fixed inset-0 flex items-center left-20 top-[28rem]">
             <div
               ref={modalRef}
-              className={`dark:bg-[#1e1f23] bg-white px-6 py-6 rounded-xl shadow-xl modal-content z-20 w-[18rem] h-fit transition-opacity  duration-300 ease-out`}
+              className={`dark:bg-[#0a0a13] dark:border bg-white px-6 py-6 rounded-xl shadow-xl modal-content z-20 w-[18rem] h-fit transition-opacity  duration-300 ease-out`}
             >
               <div className="flex flex-col">
                 <Link className="flex items-center gap-4 p-4 hover:bg-black/10 dark:hover:bg-white/40">
@@ -199,7 +233,7 @@ const Aside = () => {
           <div className="fixed inset-0 flex items-center left-28 top-[30rem] ">
             <div
               ref={secondModalRef}
-              className="dark:bg-[#1e1f23] bg-white rounded-xl shadow-xl modal-content z-20 w-[19rem] h-fit"
+              className="dark:bg-[#0a0a13] dark:border bg-white rounded-xl shadow-xl modal-content z-20 w-[19rem] h-fit"
             >
               <div className="modal-body relative p-4">
                 <div className="flex flex-wrap gap-6 p-3 max-sm:py-0">
@@ -229,6 +263,65 @@ const Aside = () => {
               onChange={(e) => setSearchQuery(e.target.value)}
             />
           </div>
+        </div>
+      )}
+
+      {isOpen2 && (
+        <div className="fixed inset-0 flex items-center z-20">
+          <div
+            ref={modalnotifications}
+            className={`bg-white dark:bg-[#0a0a13] absolute shadow-sm modal-content z-20  w-[15%] max-xl:hidden h-full transition-opacity  duration-300 ease-out`}
+          >
+            <div className="w-full relative py-12 mb-12 flex justify-center items-center border-b-2">
+              <p className="text-center text-2xl dark:text-white">
+                Notifications
+              </p>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-6 h-6 cursor-pointer absolute left-7 dark:stroke-white"
+                onClick={closeModal2}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </div>
+            {followersUsers.map((element, key) => (
+              <div
+                className="flex justify-between  py-10 px-8 items-center max-xl:px-0 w-full dark:hover:bg-white/20 hover:bg-black/10"
+                key={element._id}
+              >
+                <div className="flex w-full items-center ">
+                  <a
+                    className="flex items-center justify-evenly w-full "
+                    href={"/Profile/" + element._id}
+                  >
+                    <div className="w-full flex items-center gap-4">
+                      <ReactSVG
+                        src={`data:image/svg+xml;base64,${btoa(
+                          element.avatarImage
+                        )}`}
+                        className="color-item  rounded-full w-16 h-auto"
+                      />
+                      <h3 className="dark:text-white text-lg">
+                        <span className="text font-bold">
+                          {element.username}
+                        </span>{" "}
+                        a comenzado a seguirte.
+                      </h3>
+                    </div>
+                  </a>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="fixed inset-0 " onClick={closeModal2}></div>
         </div>
       )}
     </>
