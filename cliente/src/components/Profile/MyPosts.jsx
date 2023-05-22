@@ -21,7 +21,7 @@ function MyPosts() {
   }, []);
 
   return (
-    <div className="flex gap-y-12 pb-20 flex-col w-full justify-center m-auto items-center">
+    <div className="flex gap-y-12 pb-20 flex-col w-full justify-center items-center">
       {data.map((post, key) => {
         return (
           <>

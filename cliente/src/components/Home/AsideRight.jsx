@@ -191,7 +191,7 @@ const AsideRight = () => {
             {followingUsers.map((element, key) => (
               <a href={"/Profile/" + element._id}>
                 <div
-                  className="flex justify-around py-6 px-6 items-center max-xl:px-0 w-full dark:hover:bg-white/20 hover:bg-black/10 "
+                  className="flex  py-6 px-6 pl-10 items-center max-xl:px-0 w-full dark:hover:bg-white/20 hover:bg-black/10 "
                   key={element._id}
                 >
                   <div className=" text-center flex items-center gap-4">

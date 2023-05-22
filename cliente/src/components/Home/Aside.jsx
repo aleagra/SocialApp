@@ -294,7 +294,7 @@ const Aside = () => {
             </div>
             {followersUsers.map((element, key) => (
               <div
-                className="flex justify-between  py-10 px-8 items-center max-xl:px-0 w-full dark:hover:bg-white/20 hover:bg-black/10"
+                className="flex justify-between  py-10 px-4 items-center max-xl:px-0 w-full dark:hover:bg-white/20 hover:bg-black/10"
                 key={element._id}
               >
                 <div className="flex w-full items-center ">
@@ -307,7 +307,7 @@ const Aside = () => {
                         src={`data:image/svg+xml;base64,${btoa(
                           element.avatarImage
                         )}`}
-                        className="color-item  rounded-full w-16 h-auto"
+                        className="color-item rounded-full w-16 h-full"
                       />
                       <h3 className="dark:text-white text-lg">
                         <span className="text font-bold">
