@@ -1,12 +1,18 @@
-import React from "react";
 import { useContext, useEffect, useState, useRef } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import Recomendations from "./Recomendations";
 import { ReactSVG } from "react-svg";
+import { io } from "socket.io-client";
 const AsideRight = () => {
-  const { user, userData } = useContext(AuthContext);
+  const {
+    user,
+    userData,
+    followingCount,
+    followedUserData,
+    setFollowingCount,
+  } = useContext(AuthContext);
   const [isOpen, setIsOpen] = useState(false);
   const [isOpen2, setIsOpen2] = useState(false);
   const [followingUsers, setFollowingUsers] = useState([]);
@@ -42,6 +48,7 @@ const AsideRight = () => {
 
   const openModal2 = () => {
     setIsOpen2(true);
+    fetchFollowersUsers();
   };
 
   const closeModal2 = () => {
@@ -67,25 +74,21 @@ const AsideRight = () => {
     fetchFollowingUsers();
   }, [userData?.followers]);
 
-  useEffect(() => {
-    const fetchFollowersUsers = async () => {
-      try {
-        if (Array.isArray(userData?.following)) {
-          const userPromises = userData.following.map((userId) =>
-            axios.get(`http://localhost:5050/users/${userId}`)
-          );
+  const fetchFollowersUsers = async () => {
+    try {
+      if (Array.isArray(userData?.following)) {
+        const userPromises = userData.following.map((userId) =>
+          axios.get(`http://localhost:5050/users/${userId}`)
+        );
 
-          const users = await Promise.all(userPromises);
-          const followingUsersData = users.map((response) => response.data);
-          setFollowersUsers(followingUsersData);
-        }
-      } catch (error) {
-        console.error(error);
+        const users = await Promise.all(userPromises);
+        const followingUsersData = users.map((response) => response.data);
+        setFollowersUsers(followingUsersData);
       }
-    };
-
-    fetchFollowersUsers();
-  }, [userData?.following]);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const url = `http://localhost:5050/posts/user/${user}`;
   const [data, setData] = useState([]);
@@ -98,11 +101,47 @@ const AsideRight = () => {
     fetchData();
   }, []);
 
-  const handleUnfollow = async (id) => {
-    await axios.post(`http://localhost:5050/users/unfollow/${user}`, {
-      follower: id,
+  const socket = useRef(null);
+  useEffect(() => {
+    socket.current = io("http://localhost:5050");
+    socket.current.emit("add-user", user);
+
+    socket.current.on("follower-count-updated", ({ userId, followerCount }) => {
+      if (userId === user) {
+        setFollowingCount(followerCount);
+      }
     });
-    setHiddenButtons((prevHiddenButtons) => [...prevHiddenButtons, id]);
+
+    return () => {
+      socket.current.disconnect();
+    };
+  }, [user]);
+  const handleUnfollow = async (id) => {
+    try {
+      // Realizar la petición para dejar de seguir a la persona
+      await axios.post(`http://localhost:5050/users/unfollow/${user}`, {
+        follower: id,
+      });
+
+      // Actualizar el estado y ocultar los botones correspondientes
+      setHiddenButtons((prevHiddenButtons) => [...prevHiddenButtons, id]);
+
+      // Restar 1 al número de seguidores
+      setFollowingCount((prevCount) => prevCount - 1);
+
+      // Volver a cargar la lista de seguidores
+      fetchFollowersUsers();
+
+      // Emitir el evento "unfollow-user" al servidor de sockets
+      socket.current.emit("unfollow-user", {
+        userId: user,
+        followerId: id,
+      });
+
+      // Realizar cualquier otra actualización necesaria
+    } catch (error) {
+      console.error(error);
+    }
   };
   return (
     <>
@@ -145,9 +184,7 @@ const AsideRight = () => {
                 </button>
               </div>
               <div className="flex w-[33%] flex-col items-center">
-                <h1 className="text-lg font-bold">
-                  {userData?.following.length}
-                </h1>
+                <h1 className="text-lg font-bold">{followingCount}</h1>
                 <button
                   type="button"
                   className="text-lg font-extralight opacity-60"
@@ -238,6 +275,35 @@ const AsideRight = () => {
               </svg>
             </div>
             {followersUsers.map((element, key) => (
+              <div
+                className="flex justify-between py-6 px-6 items-center max-xl:px-0 w-full dark:hover:bg-white/20 hover:bg-black/10 "
+                key={element._id}
+              >
+                <a href={"/Profile/" + element._id}>
+                  <div className="text-center flex items-center gap-6">
+                    <ReactSVG
+                      src={`data:image/svg+xml;base64,${btoa(
+                        element.avatarImage
+                      )}`}
+                      className="color-item  rounded-full w-16 h-16"
+                    />
+                    <h3 className="text font-bold capitalize">
+                      {element.username}
+                    </h3>
+                  </div>
+                </a>
+                {!hiddenButtons.includes(element._id) && (
+                  <button
+                    className="color-item text-white rounded-xl p-2 px-4 text-sm z-30"
+                    id={element._id}
+                    onClick={() => handleUnfollow(element._id)}
+                  >
+                    Unfollow
+                  </button>
+                )}
+              </div>
+            ))}
+            {followedUserData.map((element, key) => (
               <div
                 className="flex justify-between py-6 px-6 items-center max-xl:px-0 w-full dark:hover:bg-white/20 hover:bg-black/10 "
                 key={element._id}

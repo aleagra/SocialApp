@@ -13,6 +13,12 @@ export const AuthContext = createContext(INITIAL_STATE);
 export const AuthContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(AuthReducer, INITIAL_STATE);
   const [userData, setUserData] = useState(null); // Agregar el useState para userData
+  const [followingCount, setFollowingCount] = useState(0);
+  const [followedUserData, setFollowedUserData] = useState([]);
+
+  const updateFollowedUserData = (data) => {
+    setFollowedUserData(data);
+  };
 
   useEffect(() => {
     if (state.user) {
@@ -47,6 +53,11 @@ export const AuthContextProvider = ({ children }) => {
         isFetching: state.isFetching,
         error: state.error,
         dispatch,
+        followingCount,
+        setFollowingCount,
+        setFollowedUserData,
+        followedUserData,
+        updateFollowedUserData,
         userData, // Agregar userData al value del contexto
       }}
     >

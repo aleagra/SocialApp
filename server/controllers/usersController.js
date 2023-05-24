@@ -1,5 +1,7 @@
 const User = require("../models/users.models");
 const bcrypt = require("bcrypt");
+const getIO = require("../server");
+
 
 module.exports.login = async (req, res, next) => {
   try {
@@ -166,15 +168,28 @@ module.exports.FollowUser = async (req, res) => {
     const user = await User.findById(req.params.id);
     const follower = await User.findById(req.body.follower);
 
-    user.following.push(req.body.follower);
-    follower.followers.push(req.params.id);
+    if (user && follower) {
+      // Verificar si el seguidor ya está en la lista de following
+      if (!user.following.includes(req.body.follower)) {
+        user.following.push(req.body.follower);
+        follower.followers.push(req.params.id); // Agregar a la lista de followers del seguidor
 
-    await user.save();
-    await follower.save();
+        await user.save();
+        await follower.save();
 
-  
+        // Emitir evento de seguimiento a todos los clientes conectados
+        req.app.get("io").emit("follower-count-updated", {
+          userId: req.params.id,
+          followerCount: user.following.length, // Actualizar el contador de seguidos
+        });
 
-    res.send({ message: "Followed successfully" });
+        res.send({ message: "Followed successfully" });
+      } else {
+        res.status(400).send({ error: "Ya estás siguiendo a este usuario" });
+      }
+    } else {
+      res.status(404).send({ error: "No se encontraron los documentos de usuario" });
+    }
   } catch (error) {
     res.status(500).send({ error: error.message });
   }

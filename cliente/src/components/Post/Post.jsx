@@ -198,13 +198,12 @@ const Post = ({ post, userprofile }) => {
             </div>
             {comments.map((item, index) => (
               <div
-                className="relative flex w-[100%] gap-5 p-[2%] items-center"
+                className="relative flex w-[100%] gap-5 px-6 pb-4 items-center"
                 key={index}
               >
-                <img
-                  src={`data:image/svg+xml;base64,${item.value.img}`}
-                  className="h-12 w-12 rounded-lg"
-                  alt=""
+                <ReactSVG
+                  src={`data:image/svg+xml;base64,${btoa(item.value.img)}`}
+                  className="color-item  rounded-full w-12 h-auto"
                 />
                 <div>
                   <h1 className="font-bold text">{item.value.username}</h1>

@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "../context/AuthContext";
@@ -7,15 +7,15 @@ import MyPosts from "../components/Profile/MyPosts";
 import { ReactSVG } from "react-svg";
 
 export default function Profile() {
-  const { userData, setUser } = useContext(AuthContext);
+  const { userData, setUser, followingCount, followedUserData } =
+    useContext(AuthContext);
   const [username, setUsername] = useState("");
   const [background, setBackground] = useState("");
   const [descripcion, setDescripcion] = useState("");
-
+  const [followersUsers, setFollowersUsers] = useState([]);
   const updateMyData = (newData) => {
     setUser(newData);
   };
-
   const handleClick = async (e) => {
     e.preventDefault();
     try {
@@ -44,6 +44,27 @@ export default function Profile() {
     }
   };
 
+  useEffect(() => {
+    const fetchFollowingUsers = async () => {
+      console.log(userData?.following);
+      try {
+        if (Array.isArray(userData?.following)) {
+          const userPromises = userData.following.map((userId) =>
+            axios.get(`http://localhost:5050/users/${userId}`)
+          );
+
+          const users = await Promise.all(userPromises);
+          const followingUsersData = users.map((response) => response.data);
+          setFollowersUsers(followingUsersData);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchFollowingUsers();
+  }, [userData?.following]);
+  console.log(userData?.following);
   return (
     <>
       <section className="flex w-full">
@@ -85,15 +106,75 @@ export default function Profile() {
                       <p>Followers </p>
                     </div>
                     <div className="flex  justify-center text-center text-xl gap-2">
-                      <span className="font-bold">
-                        {userData?.following.length}
-                      </span>
+                      <span className="font-bold">{followingCount}</span>
                       <p>Followings </p>
                     </div>
                     <button className="p-2 w-fit rounded-md text-xl h-fit text-white container mr-10 ">
                       Edit profile
                     </button>
                   </div>
+                </div>
+
+                <div
+                  className={` bg-white dark:bg-[#0a0a13] absolute right-28 top-16 py-6 rounded-lg shadow-sm modal-content z-20 w-full max-xl:hidden h-[25rem] transition-opacity  duration-300 ease-out`}
+                >
+                  <div className="w-full relative py-4 flex justify-center border-b-2">
+                    <p className="text-center dark:text-white">Seguidores</p>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={1.5}
+                      stroke="currentColor"
+                      className="w-6 h-6 cursor-pointer absolute left-10 dark:stroke-white"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M6 18L18 6M6 6l12 12"
+                      />
+                    </svg>
+                  </div>
+                  {followersUsers.map((element, key) => (
+                    <a href={"/Profile/" + element._id}>
+                      <div
+                        className="flex  py-6 px-6 pl-10 items-center max-xl:px-0 w-full dark:hover:bg-white/20 hover:bg-black/10 "
+                        key={element._id}
+                      >
+                        <div className=" text-center flex items-center gap-4">
+                          <ReactSVG
+                            src={`data:image/svg+xml;base64,${btoa(
+                              element.avatarImage
+                            )}`}
+                            className="color-item  rounded-full w-16 h-16"
+                          />
+                          <h3 className="text capitalize font-bold text-xl">
+                            {element.username}
+                          </h3>
+                        </div>
+                      </div>
+                    </a>
+                  ))}
+                  {followedUserData?.map((element, key) => (
+                    <a href={"/Profile/" + element._id}>
+                      <div
+                        className="flex  py-6 px-6 pl-10 items-center max-xl:px-0 w-full dark:hover:bg-white/20 hover:bg-black/10 "
+                        key={element._id}
+                      >
+                        <div className=" text-center flex items-center gap-4">
+                          <ReactSVG
+                            src={`data:image/svg+xml;base64,${btoa(
+                              element.avatarImage
+                            )}`}
+                            className="color-item  rounded-full w-16 h-16"
+                          />
+                          <h3 className="text capitalize font-bold text-xl">
+                            {element.username}
+                          </h3>
+                        </div>
+                      </div>
+                    </a>
+                  ))}
                 </div>
 
                 {/* <div className="text-center mb-7">
