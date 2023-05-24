@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import Recomendations from "./Recomendations";
 import { ReactSVG } from "react-svg";
 import { io } from "socket.io-client";
+import Modal from "./Modal";
 const AsideRight = () => {
   const {
     user,
@@ -20,23 +21,23 @@ const AsideRight = () => {
   const modalFollow = useRef(null);
   const modalRef = useRef(null);
   const [hiddenButtons, setHiddenButtons] = useState([]);
-  useEffect(() => {
-    const handleOutsideClick = (event) => {
-      if (
-        modalFollow.current &&
-        !modalFollow.current.contains(event.target) &&
-        !event.target.classList.contains("modal-content")
-      ) {
-        closeModal();
-      }
-    };
+  // useEffect(() => {
+  //   const handleOutsideClick = (event) => {
+  //     if (
+  //       modalFollow.current &&
+  //       !modalFollow.current.contains(event.target) &&
+  //       !event.target.classList.contains("modal-content")
+  //     ) {
+  //       closeModal();
+  //     }
+  //   };
 
-    document.addEventListener("mousedown", handleOutsideClick);
+  //   document.addEventListener("mousedown", handleOutsideClick);
 
-    return () => {
-      document.removeEventListener("mousedown", handleOutsideClick);
-    };
-  }, []);
+  //   return () => {
+  //     document.removeEventListener("mousedown", handleOutsideClick);
+  //   };
+  // }, []);
 
   const openModal = () => {
     setIsOpen(true);
@@ -202,139 +203,100 @@ const AsideRight = () => {
       </section>
 
       {isOpen && (
-        <div className="fixed inset-0 flex items-center z-10">
-          <div
-            ref={modalFollow}
-            className={`bg-white dark:bg-[#0a0a13] absolute right-28 top-16 py-6 rounded-lg shadow-sm modal-content z-20 w-[18%] max-xl:hidden h-[25rem] transition-opacity  duration-300 ease-out`}
-          >
-            <div className="w-full relative py-4 flex justify-center border-b-2">
-              <p className="text-center dark:text-white">Seguidores</p>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="w-6 h-6 cursor-pointer absolute left-10 dark:stroke-white"
-                onClick={closeModal}
+        <Modal
+          isOpen={isOpen}
+          closeModal={closeModal}
+          style={`bg-white dark:bg-[#0a0a13] absolute right-28 top-16 py-6 rounded-lg shadow-sm modal-content z-20 w-[18%] max-xl:hidden h-[25rem] transition-opacity duration-300 ease-out`}
+          content={followingUsers.map((element, key) => (
+            <a href={"/Profile/" + element._id}>
+              <div
+                className="flex  py-6 px-6 pl-10 items-center max-xl:px-0 w-full dark:hover:bg-white/20 hover:bg-black/10 "
+                key={element._id}
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              </svg>
-            </div>
-            {followingUsers.map((element, key) => (
-              <a href={"/Profile/" + element._id}>
+                <div className=" text-center flex items-center gap-4">
+                  <ReactSVG
+                    src={`data:image/svg+xml;base64,${btoa(
+                      element.avatarImage
+                    )}`}
+                    className="color-item  rounded-full w-16 h-16"
+                  />
+                  <h3 className="text capitalize font-bold text-xl">
+                    {element.username}
+                  </h3>
+                </div>
+              </div>
+            </a>
+          ))}
+        />
+      )}
+      {isOpen2 && (
+        <Modal
+          isOpen={isOpen2}
+          closeModal={closeModal2}
+          style={`bg-white dark:bg-[#0a0a13] absolute right-28 top-16 py-6 rounded-lg shadow-sm modal-content z-20 w-[18%] max-xl:hidden h-[25rem] transition-opacity duration-300 ease-out`}
+          content={
+            <div>
+              {followersUsers.map((element, key) => (
                 <div
-                  className="flex  py-6 px-6 pl-10 items-center max-xl:px-0 w-full dark:hover:bg-white/20 hover:bg-black/10 "
+                  className="flex justify-between py-6 px-6 items-center max-xl:px-0 w-full dark:hover:bg-white/20 hover:bg-black/10 "
                   key={element._id}
                 >
-                  <div className=" text-center flex items-center gap-4">
-                    <ReactSVG
-                      src={`data:image/svg+xml;base64,${btoa(
-                        element.avatarImage
-                      )}`}
-                      className="color-item  rounded-full w-16 h-16"
-                    />
-                    <h3 className="text capitalize font-bold text-xl">
-                      {element.username}
-                    </h3>
-                  </div>
+                  <a href={"/Profile/" + element._id}>
+                    <div className="text-center flex items-center gap-6">
+                      <ReactSVG
+                        src={`data:image/svg+xml;base64,${btoa(
+                          element.avatarImage
+                        )}`}
+                        className="color-item  rounded-full w-16 h-16"
+                      />
+                      <h3 className="text font-bold capitalize">
+                        {element.username}
+                      </h3>
+                    </div>
+                  </a>
+                  {!hiddenButtons.includes(element._id) && (
+                    <button
+                      className="color-item text-white rounded-xl p-2 px-4 text-sm z-30"
+                      id={element._id}
+                      onClick={() => handleUnfollow(element._id)}
+                    >
+                      Unfollow
+                    </button>
+                  )}
                 </div>
-              </a>
-            ))}
-          </div>
-          <div className="fixed inset-0 " onClick={closeModal}></div>
-        </div>
-      )}
-
-      {isOpen2 && (
-        <div className="fixed inset-0 flex items-center z-10">
-          <div
-            ref={modalRef}
-            className={`bg-white dark:bg-[#0a0a13] absolute right-28 top-16 py-6 rounded-lg shadow-sm modal-content z-20 w-[18%] max-xl:hidden h-[25rem] transition-opacity  duration-300 ease-out`}
-          >
-            <div className="w-full relative py-4 flex justify-center border-b-2">
-              <p className="text-center dark:text-white">Seguidores</p>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="w-6 h-6 cursor-pointer absolute left-10 dark:stroke-white"
-                onClick={closeModal2}
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              </svg>
+              ))}{" "}
+              {followedUserData.map((element, key) => (
+                <div
+                  className="flex justify-between py-6 px-6 items-center max-xl:px-0 w-full dark:hover:bg-white/20 hover:bg-black/10 "
+                  key={element._id}
+                >
+                  <a href={"/Profile/" + element._id}>
+                    <div className="text-center flex items-center gap-6">
+                      <ReactSVG
+                        src={`data:image/svg+xml;base64,${btoa(
+                          element.avatarImage
+                        )}`}
+                        className="color-item  rounded-full w-16 h-16"
+                      />
+                      <h3 className="text font-bold capitalize">
+                        {element.username}
+                      </h3>
+                    </div>
+                  </a>
+                  {!hiddenButtons.includes(element._id) && (
+                    <button
+                      className="color-item text-white rounded-xl p-2 px-4 text-sm z-30"
+                      id={element._id}
+                      onClick={() => handleUnfollow(element._id)}
+                    >
+                      Unfollow
+                    </button>
+                  )}
+                </div>
+              ))}
             </div>
-            {followersUsers.map((element, key) => (
-              <div
-                className="flex justify-between py-6 px-6 items-center max-xl:px-0 w-full dark:hover:bg-white/20 hover:bg-black/10 "
-                key={element._id}
-              >
-                <a href={"/Profile/" + element._id}>
-                  <div className="text-center flex items-center gap-6">
-                    <ReactSVG
-                      src={`data:image/svg+xml;base64,${btoa(
-                        element.avatarImage
-                      )}`}
-                      className="color-item  rounded-full w-16 h-16"
-                    />
-                    <h3 className="text font-bold capitalize">
-                      {element.username}
-                    </h3>
-                  </div>
-                </a>
-                {!hiddenButtons.includes(element._id) && (
-                  <button
-                    className="color-item text-white rounded-xl p-2 px-4 text-sm z-30"
-                    id={element._id}
-                    onClick={() => handleUnfollow(element._id)}
-                  >
-                    Unfollow
-                  </button>
-                )}
-              </div>
-            ))}
-            {followedUserData.map((element, key) => (
-              <div
-                className="flex justify-between py-6 px-6 items-center max-xl:px-0 w-full dark:hover:bg-white/20 hover:bg-black/10 "
-                key={element._id}
-              >
-                <a href={"/Profile/" + element._id}>
-                  <div className="text-center flex items-center gap-6">
-                    <ReactSVG
-                      src={`data:image/svg+xml;base64,${btoa(
-                        element.avatarImage
-                      )}`}
-                      className="color-item  rounded-full w-16 h-16"
-                    />
-                    <h3 className="text font-bold capitalize">
-                      {element.username}
-                    </h3>
-                  </div>
-                </a>
-                {!hiddenButtons.includes(element._id) && (
-                  <button
-                    className="color-item text-white rounded-xl p-2 px-4 text-sm z-30"
-                    id={element._id}
-                    onClick={() => handleUnfollow(element._id)}
-                  >
-                    Unfollow
-                  </button>
-                )}
-              </div>
-            ))}
-          </div>
-          <div className="fixed inset-0 " onClick={closeModal2}></div>
-        </div>
+          }
+        />
       )}
     </>
   );
