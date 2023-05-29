@@ -63,11 +63,6 @@ function ProfileUsers() {
         <div className="flex flex-col dark:bg-[#131324] h-full dark:text-white mt-12 ml-[35%] mr-[15%] max-lg:m-0 max-lg:overflow-hidden">
           <div className="relative mb-[4rem] flex flex-col">
             <div className="flex flex-col pt-4 relative items-centee">
-              <img
-                src={profile.background}
-                alt=""
-                className="min-h-[250px] max-h-[250px] w-[100%] object-cover "
-              />
               <div
                 className="w-full h-[7rem] justify-end px-2 rounded-md shadow-lg flex items-center bg-white dark:bg-[#0a0a13] gap-16
                     "
@@ -76,10 +71,14 @@ function ProfileUsers() {
                   src={`data:image/svg+xml;base64,${btoa(profile.avatarImage)}`}
                   className="color-item  rounded-full w-[8rem] h-auto absolute left-10 bottom-10 "
                 />
-
-                <h1 className="text-xl font-bold capitalize p-2">
-                  @{profile.username}Agra
-                </h1>
+                <div className="flex flex-col">
+                  <h1 className="text-xl font-bold capitalize p-2">
+                    {profile.fullName}
+                  </h1>
+                  <h1 className="text-xl font-light capitalize p-2">
+                    @{profile.username}
+                  </h1>
+                </div>
                 <div className="flex  justify-center text-center text-xl gap-2">
                   <span className="font-bold">{profile.followers}</span>
                   <p>Followers </p>

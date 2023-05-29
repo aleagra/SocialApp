@@ -1,6 +1,6 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from "react";
 
-const Modal = ({ isOpen, closeModal, content, style }) => {
+const Modal = ({ isOpen, closeModal, content, style, title }) => {
   const modalRef = useRef(null);
 
   useEffect(() => {
@@ -27,9 +27,21 @@ const Modal = ({ isOpen, closeModal, content, style }) => {
         <div className="fixed inset-0 flex items-center z-10">
           <div ref={modalRef} className={style}>
             <div className="w-full relative py-4 flex justify-center border-b-2">
-              <p className="text-center dark:text-white">Seguidores</p>
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 cursor-pointer absolute left-10 dark:stroke-white" onClick={closeModal}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+              <p className="text-center dark:text-white">{title}</p>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-6 h-6 cursor-pointer absolute left-10 dark:stroke-white"
+                onClick={closeModal}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M6 18L18 6M6 6l12 12"
+                />
               </svg>
             </div>
             {content}
@@ -42,6 +54,3 @@ const Modal = ({ isOpen, closeModal, content, style }) => {
 };
 
 export default Modal;
-
-
-

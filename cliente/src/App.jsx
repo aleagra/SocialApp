@@ -1,13 +1,12 @@
 import React, { useContext } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { ThemeProvider } from "./components/Navbar/ThemeContext";
 import { AuthContext } from "./context/AuthContext";
-import { Chat, Login, MainHome, Register } from "./pages";
+import { Chat, Home, Login, Register } from "./pages";
 import { SetAvatar } from "./components/Register";
 import { Search } from "./components/Navbar/Search";
 import ProfileUsers from "./components/Post/UsersProfile";
 import Profile from "./pages/MyProfile";
-import Notifications from "./components/Navbar/Notifications";
 export default function App() {
   const { user } = useContext(AuthContext);
   return (
@@ -16,15 +15,42 @@ export default function App() {
         <ThemeProvider>
           <BrowserRouter>
             <Routes>
-              <Route path="/" element={<MainHome />} />
+              <Route
+                path="/"
+                element={!user ? <Navigate to="/login" replace /> : <Home />}
+              />
               <Route path="/register" element={<Register />} />
               <Route path="/login" element={<Login />} />
-              <Route path="/setAvatar" element={<SetAvatar />} />
-              <Route path="/search" element={<Search />} />
-              <Route path="/chat" element={[<Chat />]} />
-              <Route path="/notifications" element={[<Notifications />]} />
-              <Route path="/Profile/:id" element={[<ProfileUsers />]} />
-              <Route path="/profile" element={<Profile key={user?._id} />} />
+              <Route
+                path="/setAvatar"
+                element={
+                  !user ? <Navigate to="/login" replace /> : <SetAvatar />
+                }
+              />
+              <Route
+                path="/search"
+                element={!user ? <Navigate to="/login" replace /> : <Search />}
+              />
+              <Route
+                path="/chat"
+                element={!user ? <Navigate to="/login" replace /> : <Chat />}
+              />
+              <Route
+                path="/:id"
+                element={
+                  !user ? <Navigate to="/login" replace /> : <ProfileUsers />
+                }
+              />
+              <Route
+                path="/profile"
+                element={
+                  !user ? (
+                    <Navigate to="/login" replace />
+                  ) : (
+                    <Profile key={user?._id} />
+                  )
+                }
+              />
             </Routes>
           </BrowserRouter>
         </ThemeProvider>

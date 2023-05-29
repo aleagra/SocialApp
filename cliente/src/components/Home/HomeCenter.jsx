@@ -29,28 +29,23 @@ export function HomeCenter() {
         <div className="flex gap-y-12 flex-col w-full justify-center items-center">
           {data.map((post, key) => {
             return (
-              <>
+              <React.Fragment key={post.id}>
                 {post.video ? (
-                  <video controls width="auto" key={post.id}>
+                  <video controls width="auto">
                     <source src={post.video} />
                   </video>
                 ) : (
                   ""
                 )}
-
-                {post?.user?.map((user, key) => {
-                  return (
-                    <>
-                      <Post
-                        key={post.id}
-                        post={post}
-                        userprofile={user}
-                        video={post.video}
-                      />
-                    </>
-                  );
-                })}
-              </>
+                {post?.user?.map((user, key) => (
+                  <Post
+                    key={post.id}
+                    post={post}
+                    userprofile={user}
+                    video={post.video}
+                  />
+                ))}
+              </React.Fragment>
             );
           })}
         </div>

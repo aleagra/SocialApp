@@ -4,7 +4,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { AuthContext } from "../context/AuthContext";
-
+import icon from "../assets/icon.png";
 const Register = () => {
   const navigate = useNavigate();
   const { dispatch } = useContext(AuthContext);
@@ -18,6 +18,7 @@ const Register = () => {
 
   const [values, setValues] = useState({
     username: "",
+    fullName: "",
     email: "",
     password: "",
     confirmPassword: "",
@@ -58,12 +59,13 @@ const Register = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (handleValidation()) {
-      const { email, username, password } = values;
+      const { email, username, password, fullName } = values;
       const { data } = await axios.post(
         "http://localhost:5050/users/register",
         {
           username,
           email,
+          fullName,
           password,
         }
       );
@@ -81,40 +83,48 @@ const Register = () => {
 
   return (
     <>
-      <section className="flex flex-col w-full h-screen justify-center gap-[1rem] items-center bg-[#131324]">
+      <section className="flex flex-col w-full h-screen justify-center gap-[1rem] items-center bg-[#f7f7f7] dark:bg-[#131324]">
         <form
           action=""
-          className="flex flex-col gap-[2rem] rounded-lg  bg-[#00000076] p-[5rem] "
+          className="flex flex-col gap-[2rem] rounded-lg bg-white dark:bg-[#00000076] p-[5rem] "
           onSubmit={handleSubmit}
         >
           <div className="flex items-center gap-[1rem] justify-center">
-            <h1 className="text-white uppercase font-bold text-lg">
+            <img src={icon} alt="" className="w-10 h-auto" />
+            <h1 className="text-blacK dark:text-white uppercase font-bold text-lg">
               social media app
             </h1>
           </div>
           <input
-            className="bg-transparent p-[1rem] rounded-lg text-white w-full text-[1rem] border focus:outline-none"
+            className="bg-transparent p-[1rem] rounded-lg text-black dark:text-white w-full text-[1rem] border-color focus:outline-none"
             type="text"
             placeholder="Username"
             name="username"
             onChange={handleChange}
           />
           <input
-            className="bg-transparent p-[1rem] rounded-lg text-white w-full text-[1rem]  border focus:outline-none"
+            className="bg-transparent p-[1rem] rounded-lg text-black dark:text-white w-full text-[1rem] border-color focus:outline-none"
+            type="text"
+            placeholder="Full Name"
+            name="fullName"
+            onChange={handleChange}
+          />
+          <input
+            className="bg-transparent p-[1rem] rounded-lg text-black dark:text-white w-full text-[1rem]  border-color focus:outline-none"
             type="email"
             placeholder="Email"
             name="email"
             onChange={handleChange}
           />
           <input
-            className="bg-transparent p-[1rem] text-white rounded-lg w-full text-[1rem] border focus:outline-none"
+            className="bg-transparent p-[1rem] text-black dark:text-white rounded-lg w-full text-[1rem] border-color focus:outline-none"
             type="password"
             placeholder="Password"
             name="password"
             onChange={handleChange}
           />
           <input
-            className="bg-transparent p-[1rem] text-white rounded-lg w-full text-[1rem]  border focus:outline-none"
+            className="bg-transparent p-[1rem] text-black dark:text-white rounded-lg w-full text-[1rem] border-color border focus:outline-none"
             type="password"
             placeholder="Confirm Password"
             name="confirmPassword"
@@ -122,11 +132,11 @@ const Register = () => {
           />
           <button
             type="submit"
-            className="container text-white py-[1rem] border font-bold cursor-pointer uppercase text-[1rem] px-[2rem]"
+            className="color-item py-3 font-bold cursor-pointer  rounded-lg text-lg text-white uppercase"
           >
-            Create User
+            Create Account
           </button>
-          <span className="uppercase text-white">
+          <span className="uppercase text-black dark:text-white">
             Already have an account?{" "}
             <Link to="/login" className="text font-bold">
               Login.

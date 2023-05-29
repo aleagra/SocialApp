@@ -61,7 +61,7 @@ export default function ChatContainer({ currentChat, socket }) {
   }, [messages]);
 
   return (
-    <Container className="bg-white dark:bg-[#0a0a13]">
+    <Container className="bg-[#f5f4f2] dark:bg-[#0a0a13]">
       <div className="chat-messages">
         {messages.map((message) => {
           return (

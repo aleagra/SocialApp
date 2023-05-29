@@ -1,10 +1,9 @@
 import React from "react";
-import { Aside, AsideRight, HomeCenter } from "../components/Home";
+import { Aside, AsideRight, HomeCenter } from ".";
 
 const MainHome = () => {
   return (
     <>
-      {/* <Navbar /> */}
       <section className="flex min-h-screen h-full">
         <div className="fixed">
           <Aside />

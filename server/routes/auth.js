@@ -13,6 +13,7 @@ const {
   findByFollowing,
   getNotFollowingUsers,
   getFollowers,
+  findUser,
 } = require("../controllers/usersController");
 
 const router = require("express").Router();
@@ -32,6 +33,7 @@ router.put("/:id",uploadMulter.single("background"), updateUser);
 router.post("/follow/:id", FollowUser);
 router.post("/unfollow/:id", UnfollowUser);
 router.get("/followers/:id",getFollowers);
+router.get("/search/:username",findUser);
 
 
 

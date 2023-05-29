@@ -21,7 +21,7 @@ module.exports.login = async (req, res, next) => {
 
 module.exports.register = async (req, res, next) => {
   try {
-    const { username, email, password, avatarImage } = req.body;
+    const { username, email, password, avatarImage,fullName } = req.body;
     const usernameCheck = await User.findOne({ username });
     if (usernameCheck)
       return res.json({ msg: "Username already used", status: false });
@@ -32,6 +32,7 @@ module.exports.register = async (req, res, next) => {
     const user = await User.create({
       email,
       username,
+      fullName,
       password: hashedPassword,
     });
     delete user.password;
@@ -43,7 +44,7 @@ module.exports.register = async (req, res, next) => {
 
 module.exports.getFollowers = async (req, res, next) => {
   try {
-    const user = await User.findById(req.params.id).populate("follower", ["email", "username", "avatarImage", "_id"]);
+    const user = await User.findById(req.params.id).populate("follower", ["email", "username", "avatarImage", "_id","fullName"]);
     return res.json(user.following);
   } catch (ex) {
     next(ex);
@@ -56,6 +57,7 @@ module.exports.getAllUsers = async (req, res, next) => {
       "email",
       "username",
       "avatarImage",
+      "fullName",
       "_id",
     ]);
     return res.json(users);
@@ -68,7 +70,7 @@ module.exports.getNotFollowingUsers = async (req, res, next) => {
     const followingUsers = await User.findById(req.params.id).select("following");
     const notFollowingUsers = await User.find({
       _id: { $ne: req.params.id, $nin: followingUsers.following },
-    }).select(["email", "username", "avatarImage", "_id"]);
+    }).select(["email", "username", "avatarImage", "_id","fullName"]);
 
     return res.json(notFollowingUsers);
   } catch (ex) {
@@ -122,7 +124,19 @@ module.exports.findByUser = async (req, res) => {
       res.json({ message: "Id no encontrado" });
     });
 };
-
+module.exports.findUser = async (req, res) => {
+  const { username } = req.params;
+  try {
+    const user = await User.findOne({ username });
+    if (user) {
+      res.json(user);
+    } else {
+      res.json({ message: "Usuario no encontrado" });
+    }
+  } catch (error) {
+    res.json({ message: "Error al buscar usuario" });
+  }
+};
 module.exports.findByFollowers = async (req, res) => {
   const { id } = req.params;
   User.findById(id)
@@ -216,7 +230,7 @@ module.exports.updateUser = async (req, res) => {
   const url = req.protocol + "://" + req.get("host");
   const urlImage = url + "/upload/" + req.file.filename;
   let modelData = {
-    username: req.body.username,
+    fullName:req.body.fullName,
     background: urlImage,
     descripcion: req.body.descripcion,
   };

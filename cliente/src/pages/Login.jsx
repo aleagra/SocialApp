@@ -4,7 +4,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { AuthContext } from "../context/AuthContext";
-
+import icon from "../assets/icon.png";
 export default function Login() {
   const navigate = useNavigate();
   const { dispatch } = useContext(AuthContext);
@@ -38,7 +38,6 @@ export default function Login() {
     } else {
       const user = data.user;
       dispatch({ type: "LOGIN_SUCCESS", payload: user._id });
-      console.log(user._id);
       navigate("/");
     }
   };
@@ -56,7 +55,8 @@ export default function Login() {
             className="flex flex-col gap-[2rem] bg-white dark:bg-[#00000076] shadow-md rounded-lg p-[5rem]"
           >
             <div className="flex items-center gap-[1rem] justify-center">
-              <h1 className="font-semibold text-lg text-white ">
+              <img src={icon} alt="" className="w-10 h-auto" />
+              <h1 className="font-semibold text-lg text-black dark:text-white ">
                 SOCIAL MEDIA APP
               </h1>
             </div>
@@ -64,25 +64,25 @@ export default function Login() {
               type="text"
               placeholder="Username"
               name="username"
-              className="bg-transparent p-[1rem] border-solid rounded-lg w-full border-search outline-none dark:border  dark:text-white"
+              className="bg-transparent p-[1rem] border-solid rounded-lg w-full  border-color outline-none   dark:text-white"
               onChange={(e) => handleChange(e)}
               min="3"
             />
             <input
               type="password"
               placeholder="Password"
-              className="bg-transparent p-[1rem] border-solid rounded-lg border-search w-full dark:border  dark:text-white outline-none"
+              className="bg-transparent p-[1rem] border-solid rounded-lg  w-full  border-color dark:text-white outline-none"
               name="password"
               onChange={(e) => handleChange(e)}
             />
             <button
               type="submit"
-              className="container  px-[2rem] py-[1rem] border-none font-bold cursor-pointer rounded-lg text-lg text-white uppercase "
+              className="color-item py-3 font-bold cursor-pointer rounded-lg border-color text-lg text-white uppercase"
             >
               Log In
             </button>
             <span className="dark:text-white uppercase">
-              Don't have an account ?
+              Don't have an account?{" "}
               <Link to="/register" className="text">
                 Create One.
               </Link>

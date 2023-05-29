@@ -4,7 +4,6 @@ import { io } from "socket.io-client";
 import { AuthContext } from "../context/AuthContext";
 import { ChatContainer, Contacts, Welcome } from "../components/Chat";
 import { Aside } from "../components/Home";
-
 export default function Chat() {
   const socket = useRef();
   const [contacts, setContacts] = useState([]);

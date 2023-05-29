@@ -174,7 +174,7 @@ const Post = ({ post, userprofile }) => {
               />
               <input
                 className="w-full m-auto p-2 rounded-xl bg-gray-100 dark:bg-transparent dark:border dark:text-white dark:border-white/40  pl-3 pr-10 text-sm outline-none text-black"
-                placeholder="Escribi tu comentario"
+                placeholder="Write a comment"
                 onChange={(e) => setcommentwriting(e.target.value)}
               />
               <svg

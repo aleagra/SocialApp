@@ -103,13 +103,14 @@ const Aside = () => {
     {
       to: "/Profile",
       icon: <UserIcon />,
-      text: "perfil",
+      text: "Profile",
     },
   ];
   const colors = ["#ff6961", "#2ABA7D", "#84b6f4", "#dafc56"];
   const handleLogout = () => {
     dispatch({ type: "LOGOUT" });
     localStorage.removeItem("user");
+    location.reload();
   };
   const defaultColor = "#2ABA7D";
   let currentColor = defaultColor;
@@ -186,7 +187,7 @@ const Aside = () => {
               onClick={openModal}
             >
               <BarsIcon />
-              <span className="">mas</span>
+              <span className="">More</span>
             </li>
           </ul>
         </div>
@@ -217,7 +218,7 @@ const Aside = () => {
                   <p className="text-xl font-bold">View</p>
                 </Link>
                 <Link
-                  to="/login"
+                  to="/"
                   onClick={handleLogout}
                   className="flex items-center gap-4 p-4 hover:bg-black/10 dark:hover:bg-white/40"
                 >
@@ -300,7 +301,7 @@ const Aside = () => {
                 <div className="flex w-full items-center ">
                   <a
                     className="flex items-center justify-evenly w-full "
-                    href={"/Profile/" + element._id}
+                    href={"/" + element._id}
                   >
                     <div className="w-full flex items-center gap-4">
                       <ReactSVG
@@ -313,7 +314,7 @@ const Aside = () => {
                         <span className="text font-bold">
                           {element.username}
                         </span>{" "}
-                        a comenzado a seguirte.
+                        has started to follow you.
                       </h3>
                     </div>
                   </a>

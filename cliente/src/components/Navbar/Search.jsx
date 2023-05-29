@@ -17,6 +17,7 @@ export function Search() {
           "http://localhost:5050/users/allusers"
         );
         setUsers(response.data);
+        console.log(users);
       } catch (error) {
         console.error(error);
       }
@@ -34,7 +35,7 @@ export function Search() {
   }, [buscar, users]);
 
   function search(id) {
-    navigate("/Profile/" + id);
+    navigate("/" + id);
   }
   return (
     <>
@@ -44,7 +45,7 @@ export function Search() {
           <div className="flex flex-col items-center ">
             <div className="flex w-full justify-center py-12">
               <input
-                placeholder="Buscar"
+                placeholder="Search"
                 className="text-black dark:bg-transparent dark:text-white focus:outline-none px-6 py-2 mx-10 border-2 dark:border-white/20 w-full rounded-lg"
                 onChange={(e) => setBuscar(e.target.value)}
                 value={buscar}
@@ -72,11 +73,14 @@ export function Search() {
                               src={`data:image/svg+xml;base64,${btoa(
                                 Element.avatarImage
                               )}`}
-                              className="color-item  rounded-full w-16 h-auto"
+                              className="color-item  rounded-full w-20 h-auto"
                             />
                             <div className="flex flex-col px-6">
                               <h1 className="text-2xl font-semibold dark:text-white">
-                                {Element.username}
+                                {Element.fullName}
+                              </h1>
+                              <h1 className="text-2xl font-light capitalize dark:text-white">
+                                @{Element.username}
                               </h1>
                               <div className="flex items-center gap-4 text-black/50 dark:text-white">
                                 <h1 className="text-xl">
@@ -105,7 +109,7 @@ export function Search() {
                   ).test(Element.username.toLowerCase())
                 ) && (
                   <div className="h-[128px] bg-[#f7f7f7] flex items-center dark:text-white justify-center dark:bg-[#0a0a13]">
-                    <p className="text-xl">No se encontraron usuarios.</p>
+                    <p className="text-xl">User not found.</p>
                   </div>
                 )}
             </div>

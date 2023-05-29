@@ -3,6 +3,7 @@ import { AuthContext } from "../../context/AuthContext";
 import axios from "axios";
 import { ReactSVG } from "react-svg";
 import { io } from "socket.io-client";
+import { Link } from "react-router-dom";
 function Recomendations() {
   const {
     user,
@@ -107,45 +108,49 @@ function Recomendations() {
     }
   };
   return (
-    <section className="py-6 px-8 my-6 rounded-md shadow-lg bg-white dark:text-white dark:bg-[#0a0a13]">
-      <p className="font-semibold">RECOMMENDATION</p>
-      <div className="flex w-full flex-col">
-        {notFollowing.map((Element) => (
-          <div
-            className="flex justify-between pt-6 items-center max-xl:px-0 w-full"
-            key={Element._id}
-          >
-            <div className="flex w-full items-center">
-              <a
-                className="flex items-center justify-evenly w-full"
-                href={`/Profile/${Element._id}`}
+    <>
+      {notFollowing.length > 0 && (
+        <section className="py-6 px-8 my-6 rounded-md shadow-lg bg-white dark:text-white dark:bg-[#0a0a13]">
+          <p className="font-semibold">RECOMMENDATIONS</p>
+          <div className="flex w-full flex-col">
+            {notFollowing.slice(0, 3).map((Element) => (
+              <div
+                className="flex justify-between pt-6 items-center max-xl:px-0 w-full"
+                key={Element._id}
               >
-                <div className="w-full text-center flex items-center gap-4">
-                  <ReactSVG
-                    src={`data:image/svg+xml;base64,${btoa(
-                      Element.avatarImage
-                    )}`}
-                    className="color-item rounded-full w-16 h-auto"
-                  />
-                  <h3 className="dark:text-white/70 capitalize">
-                    {Element.username}
-                  </h3>
+                <div className="flex w-full items-center">
+                  <Link
+                    className="flex items-center justify-evenly w-full"
+                    to={`/${Element._id}`}
+                  >
+                    <div className="w-full text-center flex items-center gap-4">
+                      <ReactSVG
+                        src={`data:image/svg+xml;base64,${btoa(
+                          Element.avatarImage
+                        )}`}
+                        className="color-item rounded-full w-16 h-auto"
+                      />
+                      <h3 className="dark:text-white/70 capitalize">
+                        {Element.username}
+                      </h3>
+                    </div>
+                  </Link>
                 </div>
-              </a>
-            </div>
-            <div>
-              <button
-                className="color-item rounded-xl p-2 px-4 text-sm"
-                id={`follow-btn-${Element._id}`}
-                onClick={() => handleFollow(Element._id)}
-              >
-                Follow
-              </button>
-            </div>
+                <div>
+                  <button
+                    className="color-item rounded-xl p-2 px-4 text-sm"
+                    id={`follow-btn-${Element._id}`}
+                    onClick={() => handleFollow(Element._id)}
+                  >
+                    Follow
+                  </button>
+                </div>
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
-    </section>
+        </section>
+      )}
+    </>
   );
 }
 

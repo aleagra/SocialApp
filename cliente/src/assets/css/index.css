@@ -58,9 +58,6 @@
   background-color: var(--bg-color);
 }
 
-.container {
-  background-color: var(--bg-color);
-}
 .text {
   color: var(--bg-color);
 }
@@ -70,14 +67,14 @@
 .fondo {
   background-color: rgb(245, 244, 242);
 }
-.border {
-  border-color: transparent;
+.border-color {
+  border: 2px solid;
 }
 .border-search {
   border: 2px solid;
   border-color: var(--bg-color);
 }
-.border:focus {
+.border-color:focus {
   border: 2px solid;
   border-color: var(--bg-color);
 }

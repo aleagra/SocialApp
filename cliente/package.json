@@ -28,7 +28,7 @@
     "react-dom": "^18.2.0",
     "react-icons": "^4.7.1",
     "react-leaflet": "^4.2.0",
-    "react-router-dom": "^6.7.0",
+    "react-router-dom": "^6.11.2",
     "react-svg": "^16.1.13",
     "react-toastify": "^9.1.1",
     "socket.io": "^4.5.4",

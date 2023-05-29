@@ -19,9 +19,9 @@ const UserSchema = new Schema({
     type: String,
     default: "",
   },
-  background: {
+  fullName:{
     type: String,
-    default: "",
+    max: 50,
   },
   password: {
     type: String,
@@ -56,57 +56,3 @@ const UserSchema = new Schema({
 
 module.exports = mongoose.model("User", UserSchema);
 
-// const mongoose = require("mongoose");
-
-// const userSchema = new mongoose.Schema({
-//   username: {
-//     type: String,
-//     required: true,
-//     min: 3,
-//     max: 20,
-//     unique: true,
-//   },
-//   email: {
-//     type: String,
-//     required: true,
-//     unique: true,
-//     max: 50,
-//   },
-//   password: {
-//     type: String,
-//     required: true,
-//     min: 8,
-//   },
-//   isAvatarImageSet: {
-//     type: Boolean,
-//     default: false,
-//   },
-//   likes: {
-//     type: Array,
-//     default: []
-// },
-//   avatarImage: {
-//     type: String,
-//     default: "",
-//   },
-// });
-
-// const FollowSchema = new mongoose.Schema({
-//   follower: {
-//     type: mongoose.Schema.Types.ObjectId,
-//     ref: "User",
-//     required: true
-//   },
-//   following: {
-//     type: mongoose.Schema.Types.ObjectId,
-//     ref: "User",
-//     required: true
-//   }
-// });
-
-// module.exports = { User: mongoose.model("User", userSchema), Follow: mongoose.model("Follow", FollowSchema) };
-
-// module.exports = {
-//   User,
-//   Follow,
-// }

@@ -146,9 +146,9 @@ const AsideRight = () => {
   };
   return (
     <>
-      <section className="min-screen w-[18%] mt-[4rem] fixed right-[7rem] max-xl:hidden">
-        <div className="flex  h-fit justify-center rounded-lg bg-white p-3 shadow-lg dark:text-white dark:bg-[#0a0a13]">
-          <div className="flex flex-col">
+      <section className="min-screen w-[18%] mt-[4rem] fixed right-[7rem] max-xl:hidden ">
+        <div className="flex  h-fit justify-center rounded-lg bg-white  shadow-lg dark:text-white dark:bg-[#0a0a13]">
+          <div className="flex flex-col pt-6">
             <div className="relative flex justify-center">
               <ReactSVG
                 src={`data:image/svg+xml;base64,${btoa(userData?.avatarImage)}`}
@@ -157,7 +157,7 @@ const AsideRight = () => {
               />
             </div>
             <h1 className="text-center text-2xl my-2 mt-6 font-bold capitalize">
-              {userData?.username}
+              {userData?.fullName}
             </h1>
             <h3 className="text-center text-md font-extralight">
               @{userData?.username}
@@ -205,10 +205,11 @@ const AsideRight = () => {
       {isOpen && (
         <Modal
           isOpen={isOpen}
+          title={"Followers"}
           closeModal={closeModal}
-          style={`bg-white dark:bg-[#0a0a13] absolute right-28 top-16 py-6 rounded-lg shadow-sm modal-content z-20 w-[18%] max-xl:hidden h-[25rem] transition-opacity duration-300 ease-out`}
+          style={`bg-white dark:bg-[#0a0a13] absolute overflow-y-scroll right-28 top-16 py-6 rounded-lg shadow-sm modal-content z-20 w-[18%] max-xl:hidden h-[25rem] transition-opacity duration-300 ease-out `}
           content={followingUsers.map((element, key) => (
-            <a href={"/Profile/" + element._id}>
+            <a href={"/" + element._id}>
               <div
                 className="flex  py-6 px-6 pl-10 items-center max-xl:px-0 w-full dark:hover:bg-white/20 hover:bg-black/10 "
                 key={element._id}
@@ -232,8 +233,9 @@ const AsideRight = () => {
       {isOpen2 && (
         <Modal
           isOpen={isOpen2}
+          title={"Followig"}
           closeModal={closeModal2}
-          style={`bg-white dark:bg-[#0a0a13] absolute right-28 top-16 py-6 rounded-lg shadow-sm modal-content z-20 w-[18%] max-xl:hidden h-[25rem] transition-opacity duration-300 ease-out`}
+          style={`bg-white dark:bg-[#0a0a13] overflow-y-scroll absolute right-28 top-16  rounded-lg shadow-sm modal-content z-20 w-[18%] max-xl:hidden h-[25rem] transition-opacity duration-300 ease-out`}
           content={
             <div>
               {followersUsers.map((element, key) => (
@@ -241,7 +243,7 @@ const AsideRight = () => {
                   className="flex justify-between py-6 px-6 items-center max-xl:px-0 w-full dark:hover:bg-white/20 hover:bg-black/10 "
                   key={element._id}
                 >
-                  <a href={"/Profile/" + element._id}>
+                  <a href={"/" + element._id}>
                     <div className="text-center flex items-center gap-6">
                       <ReactSVG
                         src={`data:image/svg+xml;base64,${btoa(
@@ -270,7 +272,7 @@ const AsideRight = () => {
                   className="flex justify-between py-6 px-6 items-center max-xl:px-0 w-full dark:hover:bg-white/20 hover:bg-black/10 "
                   key={element._id}
                 >
-                  <a href={"/Profile/" + element._id}>
+                  <a href={"/" + element._id}>
                     <div className="text-center flex items-center gap-6">
                       <ReactSVG
                         src={`data:image/svg+xml;base64,${btoa(
