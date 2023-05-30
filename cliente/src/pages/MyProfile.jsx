@@ -5,6 +5,7 @@ import { Aside } from "../components/Home";
 import MyPosts from "../components/Profile/MyPosts";
 import { ReactSVG } from "react-svg";
 import Modal from "../components/Home/Modal";
+import { PenIcon, SettingsIcon } from "../utilities";
 
 export default function Profile() {
   const { userData, setUser, followingCount, followedUserData } =
@@ -95,29 +96,29 @@ export default function Profile() {
           className="w-full"
         >
           <div className="relative  w-full justify-center items-center min-h-screen h-screen ">
-            <div className="flex flex-col  h-full dark:text-white mt-12 ml-[35%] mr-[15%] max-lg:m-0 max-lg:overflow-hidden">
-              <div className="relative mb-[4rem] flex flex-col ">
-                <div className="flex flex-col pt-4 relative items-centee">
+            <div className="flex flex-col  h-full dark:text-white  ml-[35%] mr-[15%] max-lg:m-0 max-lg:overflow-hidden">
+              <div className="relative mb-[4rem] pt-20 flex flex-col ">
+                <div className="flex flex-col  relative items-centee">
                   <div
-                    className="w-full h-[7rem] justify-end px-2 rounded-md shadow-lg flex items-center bg-white dark:bg-[#0a0a13] gap-16
+                    className="w-full h-[10rem] justify-center px-2 rounded-lg shadow-md flex items-center bg-white dark:bg-[#0a0a13] gap-12
                     "
                   >
                     <ReactSVG
                       src={`data:image/svg+xml;base64,${btoa(
                         userData?.avatarImage
                       )}`}
-                      className="color-item  rounded-full w-[8rem] h-auto absolute left-10 bottom-10 "
+                      className="color-item  rounded-full w-[8rem] h-auto  "
                     />
 
-                    <div className="flex flex-col">
-                      <h1 className="text-xl font-bold capitalize p-2">
+                    <div className="flex flex-col p-2 text-xl ">
+                      <h1 className="font-bold capitalize whitespace-nowrap">
                         {userData?.fullName}
                       </h1>
-                      <h1 className="text-xl font-light capitalize p-2">
+                      <h1 className="font-light capitalize">
                         @{userData?.username}
                       </h1>
                     </div>
-                    <div className="flex  justify-center text-center text-xl gap-2">
+                    <div className="flex  justify-center text-center text-xl gap-2 flex-col">
                       <span className="font-bold">
                         {userData?.followers.length}
                       </span>
@@ -125,13 +126,13 @@ export default function Profile() {
                     </div>
                     <div
                       onClick={openModal}
-                      className="flex cursor-pointer justify-center text-center text-xl gap-2"
+                      className="flex cursor-pointer justify-center text-center text-xl gap-2 flex-col"
                     >
                       <span className="font-bold">{followingCount}</span>
                       <p>Followings </p>
                     </div>
-                    <button className="p-2 w-fit rounded-md text-xl h-fit text-white color-item mr-10 ">
-                      Edit profile
+                    <button className="p-1 w-fit rounded-lg text-xl h-fit text-white color-item mb-8">
+                      <PenIcon />
                     </button>
                   </div>
                 </div>

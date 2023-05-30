@@ -77,7 +77,7 @@ export default function Login() {
             />
             <button
               type="submit"
-              className="color-item py-3 font-bold cursor-pointer rounded-lg border-color text-lg text-white uppercase"
+              className="color-item py-3 font-bold cursor-pointer rounded-lg text-lg text-white uppercase"
             >
               Log In
             </button>

@@ -68,7 +68,8 @@
   background-color: rgb(245, 244, 242);
 }
 .border-color {
-  border: 2px solid;
+  border: 2px solid white;
+  opacity: 0.3;
 }
 .border-search {
   border: 2px solid;
@@ -76,6 +77,7 @@
 }
 .border-color:focus {
   border: 2px solid;
+  opacity: 100;
   border-color: var(--bg-color);
 }
 

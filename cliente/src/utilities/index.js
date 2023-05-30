@@ -5,5 +5,6 @@ export { default as CloseIcon } from './icons/CloseIcon';
 export { default as HomeIcon } from './icons/HomeIcon';
 export { default as PenIcon } from './icons/PenIcon';
 export { default as SearchIcon } from './icons/SearchIcon';
+export { default as SettingsIcon } from './icons/SettingsIcon';
 export { default as UserIcon } from './icons/UserIcon';
 export { default as UsersIcon } from './icons/UsersIcon';

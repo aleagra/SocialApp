@@ -89,14 +89,14 @@ const Register = () => {
           className="flex flex-col gap-[2rem] rounded-lg bg-white dark:bg-[#00000076] p-[5rem] "
           onSubmit={handleSubmit}
         >
-          <div className="flex items-center gap-[1rem] justify-center">
+          <div className="flex items-center gap-[1rem] justify-center ">
             <img src={icon} alt="" className="w-10 h-auto" />
             <h1 className="text-blacK dark:text-white uppercase font-bold text-lg">
               social media app
             </h1>
           </div>
           <input
-            className="bg-transparent p-[1rem] rounded-lg text-black dark:text-white w-full text-[1rem] border-color focus:outline-none"
+            className="bg-transparent p-[1rem] rounded-lg opacity-100  text-black dark:text-white w-full text-[1rem] border-color focus:outline-none"
             type="text"
             placeholder="Username"
             name="username"
