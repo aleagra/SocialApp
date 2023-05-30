@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { format } from "timeago.js";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import { ReactSVG } from "react-svg";
 
@@ -93,15 +94,21 @@ const Post = ({ post, userprofile }) => {
   return (
     <div className="max-ms:px-0 flex w-[100%] flex-col gap-y-8 ">
       <div className=" flex w-[100%] flex-col rounded-lg bg-white shadow-lg dark:bg-[#0a0a13] dark:text-white max-lg:p-0">
-        <div className="flex h-24 w-full px-6 py-2">
-          <div className="relative  flex w-full cursor-pointer items-center gap-3">
-            <ReactSVG
-              src={`data:image/svg+xml;base64,${btoa(userprofile.avatarImage)}`}
-              className="color-item  rounded-full w-16 h-auto "
-            />
+        <div className="flex h-24 w-full px-10">
+          <div className="relative  flex w-full items-center gap-3 pt-6">
+            <Link to={"/" + userprofile._id} className="flex">
+              <ReactSVG
+                src={`data:image/svg+xml;base64,${btoa(
+                  userprofile.avatarImage
+                )}`}
+                className="color-item  rounded-full w-16 h-auto "
+              />
+            </Link>
 
             <div className="flex flex-col text-md font-light capitalize">
-              <h2>{userprofile.username}</h2>
+              <Link to={"/" + userprofile._id} className="flex">
+                <h2>{userprofile.fullName}</h2>
+              </Link>
 
               <h4 className="text-md font-extralight opacity-70">
                 {format(post.createdAt)}
@@ -109,7 +116,7 @@ const Post = ({ post, userprofile }) => {
             </div>
           </div>
         </div>
-        <p className="px-12 pb-4  text-lg max-lg:text-base">{post.desc}</p>
+        <p className="px-11 py-4 text-lg max-lg:text-base">{post.desc}</p>
         <div className="w-full max-h-[400px] flex justify-center ">
           <img
             className="w-full object-cover"
@@ -118,7 +125,7 @@ const Post = ({ post, userprofile }) => {
           />
         </div>
 
-        <div className="flex w-full items-center justify-between px-11 py-6 ">
+        <div className="flex w-full items-center justify-between px-12 py-6 ">
           <div className="flex items-center gap-2">
             <svg
               xmlns="http://www.w3.org/2000/svg"

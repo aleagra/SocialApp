@@ -66,13 +66,18 @@ export default function SetAvatar() {
       );
 
       dispatch({ type: "SET_USER", payload: response.data });
+
+      await axios.put(`http://localhost:5050/posts/profilepicture/${user}`, {
+        avatarImage: selectedAvatar,
+      });
+
       dispatch(Fetching());
       navigate("/");
       location.reload();
     } catch (error) {
-      console.error("Error al establecer el avatar:", error);
+      console.error("Error al establecer la foto de perfil:", error);
       toast.error(
-        "Error al establecer el avatar. Por favor, inténtalo de nuevo.",
+        "Error al establecer la foto de perfil. Por favor, inténtalo de nuevo.",
         toastOptions
       );
     }

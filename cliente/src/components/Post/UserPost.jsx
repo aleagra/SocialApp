@@ -37,7 +37,7 @@ const userPost = () => {
         await axios.post("http://localhost:5050/upload", data);
       } catch (err) {}
     }
-    //video
+    video;
     if (video) {
       const fileName = new Date().getTime() + video.name;
       const storage = getStorage(app);
@@ -91,7 +91,7 @@ const userPost = () => {
     <>
       <div className="w-[100%] rounded-lg bg-white dark:text-white shadow-md dark:bg-[#0a0a13] py-5 mb-8">
         <div className="flex flex-col rounded-lg items-center">
-          <div className="flex w-full px-6 gap-3 items-center">
+          <div className="flex w-full px-10 gap-3 items-center">
             <ReactSVG
               src={`data:image/svg+xml;base64,${btoa(userData?.avatarImage)}`}
               className="color-item  rounded-full w-20 h-full"
@@ -105,7 +105,7 @@ const userPost = () => {
               onChange={(e) => setInputStr(e.target.value)}
             />
           </div>
-          <div className="flex justify-between w-full px-6 pt-6 items-center">
+          <div className="flex justify-between w-full pl-16 pr-10 pt-6 items-center">
             <div className="flex items-center gap-4">
               <label>
                 <svg
@@ -132,7 +132,7 @@ const userPost = () => {
                 />
               </label>
 
-              <label>
+              {/* <label>
                 <svg //video
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -153,7 +153,7 @@ const userPost = () => {
                   accept="video/*"
                   onChange={(e) => setVideo(e.target.files[0])}
                 />
-              </label>
+              </label> */}
             </div>
             <div className="flex justify-end">
               <button

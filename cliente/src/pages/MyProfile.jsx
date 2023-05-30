@@ -52,6 +52,13 @@ export default function Profile() {
     };
     updateMyData(newData);
     console.log(resp.data);
+    const response = await axios.put(
+      `http://localhost:5050/posts/profilename/${userData._id}`,
+      {
+        fullName: fullName,
+      }
+    );
+
     window.location.reload();
   };
   useEffect(() => {
@@ -199,7 +206,7 @@ export default function Profile() {
         </form>
         {showModal && (
           <div className="fixed top-0 left-[12rem] w-screen h-screen bg-black bg-opacity-50 flex justify-center ">
-            <div className="bg-white h-[26rem]  mt-20 w-[25%] rounded-lg relative py-6">
+            <div className="bg-white dark:bg-[#0a0a13] h-[26rem] dark:text-white mt-20 w-[25%] rounded-lg relative py-6">
               <div
                 className="absolute left-10 top-8 cursor-pointer"
                 onClick={closeModa}
@@ -229,7 +236,7 @@ export default function Profile() {
                     <p className="font-bold">Name:</p>
                     <input
                       type="text"
-                      className="border rounded-md px-5 text-center py-1"
+                      className="border rounded-md px-5 text-center py-1 dark:bg-transparent boder"
                       placeholder={userData?.fullName}
                       maxLength="20"
                       value={fullName}

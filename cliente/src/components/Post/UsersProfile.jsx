@@ -60,36 +60,32 @@ function ProfileUsers() {
         <Aside />
       </div>
       <div className="relative w-full justify-center items-center min-h-screen h-screen ">
-        <div className="flex flex-col dark:bg-[#131324] h-full dark:text-white mt-12 ml-[35%] mr-[15%] max-lg:m-0 max-lg:overflow-hidden">
-          <div className="relative mb-[4rem] flex flex-col">
-            <div className="flex flex-col pt-4 relative items-centee">
-              <div
-                className="w-full h-[7rem] justify-end px-2 rounded-md shadow-lg flex items-center bg-white dark:bg-[#0a0a13] gap-16
-                    "
-              >
-                <ReactSVG
-                  src={`data:image/svg+xml;base64,${btoa(profile.avatarImage)}`}
-                  className="color-item  rounded-full w-[8rem] h-auto absolute left-10 bottom-10 "
-                />
-                <div className="flex flex-col">
-                  <h1 className="text-xl font-bold capitalize p-2">
+        <div className="flex flex-col dark:bg-[#131324] h-full dark:text-white ml-[35%] mr-[15%] max-lg:m-0 max-lg:overflow-hidden">
+          <div className="relative mb-[4rem] pt-20 flex flex-col">
+            <div className="flex flex-col  relative bg-white dark:bg-[#0a0a13] rounded-lg shadow-md">
+              <div className="w-full h-fit py-12 justify-center relavite flex items-center gap-16">
+                <div className="flex items-end">
+                  <ReactSVG
+                    src={`data:image/svg+xml;base64,${btoa(
+                      profile.avatarImage
+                    )}`}
+                    className="color-item rounded-full w-[8rem] h-[8rem]"
+                  />
+                </div>
+                <div className="flex flex-col p-2 text-center text-xl w-[220px]">
+                  <h1 className="font-bold capitalize whitespace-nowrap">
                     {profile.fullName}
                   </h1>
-                  <h1 className="text-xl font-light capitalize p-2">
-                    @{profile.username}
-                  </h1>
+                  <h1 className="font-light capitalize">@{profile.username}</h1>
                 </div>
-                <div className="flex  justify-center text-center text-xl gap-2">
+                <div className="flex text-center text-xl gap-2 flex-col">
                   <span className="font-bold">{profile.followers}</span>
                   <p>Followers </p>
                 </div>
-                <div className="flex  justify-center text-center text-xl gap-2">
+                <div className="flex cursor-pointer text-center text-xl gap-2 flex-col">
                   <span className="font-bold">{profile.following}</span>
                   <p>Followings </p>
                 </div>
-                <button className="p-2 w-fit rounded-md h-fit text-xl text-white container mr-10 ">
-                  Follow
-                </button>
               </div>
             </div>
           </div>

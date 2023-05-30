@@ -81,6 +81,29 @@ const getPostsByUserID = async (req, res) => {
   }
 };
 
+const updatePostsFullname = async (userId, newFullname) => {
+  try {
+    await Post.update({ userId: userId }, { $set: { "user.$[].fullName": newFullname } }, { multi: true });
+    console.log('Se actualizaron todas las publicaciones correctamente.');
+  } catch (err) {
+    console.error('Error al actualizar las publicaciones:', err);
+  }
+};
+
+const updateProfileFullName = async (req, res) => {
+  const userId = req.params.userId;
+  const newFullname = req.body.fullName; // Asegúrate de que el campo en el cuerpo de la solicitud sea "fullname"
+
+  try {
+    await updatePostsFullname(userId, newFullname);
+    res.json({ message: 'Se actualizó el fullname en todas las publicaciones.' });
+    console.log(newFullname)
+  } catch (err) {
+    console.error('Error al actualizar el fullname:', err);
+    res.status(500).json({ error: 'Error al actualizar el fullname en las publicaciones.' });
+  }
+};
+
 const checkLike = async (req, res) => {
   try {
     const { id, userId } = req.params;
@@ -154,6 +177,6 @@ module.exports = {
   checkLike,
   getPostsByUserID,
   getPostDetails,
-
+  updateProfileFullName,
 
 };
