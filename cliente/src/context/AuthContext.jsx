@@ -58,7 +58,8 @@ export const AuthContextProvider = ({ children }) => {
         setFollowedUserData,
         followedUserData,
         updateFollowedUserData,
-        userData, // Agregar userData al value del contexto
+        userData,
+        setUserData, // Agregar userData al value del contexto
       }}
     >
       {children}

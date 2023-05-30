@@ -227,12 +227,8 @@ module.exports.UnfollowUser = async (req, res) => {
 
 module.exports.updateUser = async (req, res) => {
   const { id } = req.params;
-  const url = req.protocol + "://" + req.get("host");
-  const urlImage = url + "/upload/" + req.file.filename;
   let modelData = {
-    fullName:req.body.fullName,
-    background: urlImage,
-    descripcion: req.body.descripcion,
+    fullName:req.body.fullName, 
   };
   await User.updateOne({ _id: id }, modelData);
   res.json({ message: "Usuario Modificado" });
