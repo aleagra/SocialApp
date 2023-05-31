@@ -12,6 +12,7 @@ const {
   getPostsByUserID,
   getPostDetails,
   updateProfileFullName,
+  updateProfileAvatarImage,
 } = require("../controllers/postsController");
 
 routerPost.post("/posts/", createPost);
@@ -24,4 +25,6 @@ routerPost.get('/posts/:id/checkLike/:userId',checkLike);
 routerPost.get("/posts/user/:userId", getPostsByUserID)
 routerPost.get("/posts/details/:id", getPostDetails)
 routerPost.put('/posts/profilename/:userId', updateProfileFullName);
+routerPost.put('/posts/profileimg/:userId', updateProfileAvatarImage);
+
 module.exports = routerPost;

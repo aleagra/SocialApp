@@ -104,6 +104,29 @@ const updateProfileFullName = async (req, res) => {
   }
 };
 
+const updatePostsAvatarImage = async (userId, newAvatarImage) => {
+  try {
+    await Post.update({ userId: userId }, { $set: { "user.$[].avatarImage": newAvatarImage } }, { multi: true });
+    console.log('Se actualizaron todas las publicaciones correctamente.');
+  } catch (err) {
+    console.error('Error al actualizar las publicaciones:', err);
+  }
+};
+
+const updateProfileAvatarImage = async (req, res) => {
+  const userId = req.params.userId;
+  const newAvatarImage = req.body.avatarImage; // Asegúrate de que el campo en el cuerpo de la solicitud sea "avatarImage"
+
+  try {
+    await updatePostsAvatarImage(userId, newAvatarImage);
+    res.json({ message: 'Se actualizó el avatarImage en todas las publicaciones.' });
+    console.log(newAvatarImage);
+  } catch (err) {
+    console.error('Error al actualizar el avatarImage:', err);
+    res.status(500).json({ error: 'Error al actualizar el avatarImage en las publicaciones.' });
+  }
+};
+
 const checkLike = async (req, res) => {
   try {
     const { id, userId } = req.params;
@@ -178,5 +201,6 @@ module.exports = {
   getPostsByUserID,
   getPostDetails,
   updateProfileFullName,
+  updateProfileAvatarImage,
 
 };

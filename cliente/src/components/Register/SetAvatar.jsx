@@ -67,7 +67,7 @@ export default function SetAvatar() {
 
       dispatch({ type: "SET_USER", payload: response.data });
 
-      await axios.put(`http://localhost:5050/posts/profilepicture/${user}`, {
+      await axios.put(`http://localhost:5050/posts/profileimg/${user}`, {
         avatarImage: selectedAvatar,
       });
 
