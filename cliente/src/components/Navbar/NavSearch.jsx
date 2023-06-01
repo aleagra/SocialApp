@@ -1,13 +1,15 @@
 import React from "react";
 import { useState } from "react";
+import NavResponsive from "./NavResponsive";
 const NavSearch = () => {
   const [buscar, setBuscar] = useState("");
   return (
+    <>
     <div className=" relative rounded-full bg-[#F3F5F7] p-2 max-lg:hidden">
       <a
         className="absolute top-2 right-4 "
         href={buscar === "" ? "/" : "/Search/" + buscar}
-      >
+        >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -23,7 +25,7 @@ const NavSearch = () => {
           />
         </svg>
       </a>
-      <label className="flex ">
+      <label className="flex">
         <input
           placeholder="Buscar"
           className="bg-transparent pl-4 pr-10 text-black focus:outline-none "
@@ -32,7 +34,9 @@ const NavSearch = () => {
           type="text"
         />
       </label>
+      <NavResponsive/>
     </div>
+    </>
   );
 };
 

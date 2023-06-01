@@ -20,7 +20,7 @@ export default function ChatInput({ handleSendMsg }) {
   };
 
   return (
-    <section className="flex w-full px-12 items-center relative">
+    <section className="flex w-full px-12 max-xl:px-2 relative">
       <label>
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -28,7 +28,7 @@ export default function ChatInput({ handleSendMsg }) {
           viewBox="0 0 24 24"
           strokeWidth={1.5}
           stroke="currentColor"
-          className="w-8 h-8 fill cursor-pointer absolute top-14 left-16 hover:bg-white/30 hover:rounded-md"
+          className="w-8 h-8 fill cursor-pointer absolute max-xl:left-5 max-xl:top-4 top-4 left-16 hover:bg-white/30 hover:rounded-md"
           onClick={() => setShowPicker((val) => !val)}
         >
           <path
@@ -61,7 +61,7 @@ export default function ChatInput({ handleSendMsg }) {
             viewBox="0 0 24 24"
             strokeWidth={1.5}
             stroke="currentColor"
-            className="w-9 h-9 fill absolute top-14 right-16 z-10 hover:bg-white/30 hover:rounded-md"
+            className="w-9 h-9 fill absolute max-xl:top-4 max-xl:right-4 top-4 right-16 z-10 hover:bg-white/30 hover:rounded-md"
           >
             <path
               strokeLinecap="round"

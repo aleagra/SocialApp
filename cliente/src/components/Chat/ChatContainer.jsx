@@ -60,6 +60,7 @@ export default function ChatContainer({ currentChat, socket }) {
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
+
   return (
     <Container className="bg-[#f5f4f2] dark:bg-[#0a0a13]">
       <div className="chat-messages">
@@ -71,7 +72,7 @@ export default function ChatContainer({ currentChat, socket }) {
                   message.fromSelf ? "sended" : "recieved "
                 }`}
               >
-                <div className="content border-[1px] text-white dark:border-white/30 bg-black ">
+                <div className="content max-xl: border-[1px] text-white dark:border-white/30 bg-black ">
                   <p>{message.message}</p>
                 </div>
               </div>

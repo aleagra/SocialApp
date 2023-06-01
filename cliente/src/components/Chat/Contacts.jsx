@@ -22,7 +22,7 @@ export default function Contacts({ contacts, changeChat }) {
                 className={`contact ${
                   index === currentSelected
                     ? "dark:bg-white/20 bg-black/10 w-full px-3 py-6 text flex items-center gap-6 xl:pl-16 cursor-pointer"
-                    : " text-black dark:text-white px-3 py-6 flex items-center  gap-6 xl:pl-16 cursor-pointer"
+                    : " text-black dark:text-white px-3 py-6 max-xl:px-5 max-xl:py-4 max-xl:pl-5 flex items-center  gap-6 xl:pl-16 cursor-pointer"
                 }`}
                 onClick={() => changeCurrentChat(index, contact)}
               >
