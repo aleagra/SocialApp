@@ -117,9 +117,9 @@ const Post = ({ post, userprofile }) => {
           </div>
         </div>
         <p className="px-11 py-4 text-lg max-lg:text-base">{post.desc}</p>
-        <div className="w-full max-h-[400px] flex justify-center ">
+        <div className="max-h-[400px] flex justify-center">
           <img
-            className="w-full object-cover"
+            className="rounded-md object-cover"
             src={post.img && PF + post.img}
             alt=""
           />
