@@ -3,7 +3,7 @@ import { AuthContext } from "../../context/AuthContext";
 import { Link } from "react-router-dom";
 import icon from "../../assets/icon.png";
 import { Toggle } from "../Navbar";
-import ColorItem from "./colorItem";
+import ColorItem from "../Home/colorItem";
 import axios from "axios";
 import { ReactSVG } from "react-svg";
 import {
@@ -17,7 +17,7 @@ import {
   UsersIcon,
 } from "../../utilities";
 
-const Aside = () => {
+const NavResponsive = () => {
   let btn = document.getElementById("btn");
   let modal = document.getElementById("modal");
   let nav = document.getElementById("nav");
@@ -140,10 +140,9 @@ const Aside = () => {
         <Link
           onClick={link.onClick}
           to={link.to}
-          className="flex gap-4 p-8 max-lg:p-2 hover:bg-black/10 dark:hover:bg-white/20  px-12 max-2xl:px-6 w-full color font-bold"
+          className="flex p-5 hover:bg-black/10 dark:hover:bg-white/20  w-full color font-bold"
         >
           {link.icon}
-          <span>{link.text}</span>
         </Link>
       </li>
     ));
@@ -171,61 +170,29 @@ const Aside = () => {
 
   return (
     <>
-      <div className="flex-col max-xl:hidden z-10 flex h-screen shadow-md dark:text-white bg-white dark:bg-[#0a0a13]">
-        <div className="flex  px-12 max-2xl:px-4 max-lg:px-0 py-12 w-full ">
-          <Link to="/" className="flex gap-2 ">
-            <img src={icon} className="w-10 h-100" alt="" />
-            <p className="text-2xl uppercase dark:text-white ">SocialApp</p>
-          </Link>
-        </div>
-        <div className="w-full h-fit ">
-          <ul className="flex flex-col uppercase">
-            {renderNavLinks()}
+      <div className="items-end xl:hidden flex fixed bottom-0 w-full shadow-md dark:text-white bg-white dark:bg-[#0a0a13]">
+        <ul className="flex w-full z-50 justify-center items-center uppercase">
+          {renderNavLinks()}
 
-            <li
-              className="p-8 px-12 h-fit w-full mb-16 text-xl absolute bottom-0 flex gap-4 font-bold cursor-pointer hover:bg-black/10 dark:hover:bg-white/20 color"
-              onClick={openModal}
-            >
-              <BarsIcon />
-              <span>More</span>
-            </li>
-          </ul>
-        </div>
+          {/* <li
+                className="cursor-pointer hover:bg-black/10 dark:hover:bg-white/20 color"
+                onClick={() => {
+                    setSecondModalOpen(true);
+                    setIsOpen(false);
+                  }}
+              >
+                  <PenIcon />
+              
+              </li> */}
+        </ul>
+
         {isOpen && (
           <div className="fixed inset-0 flex items-center left-20 top-[28rem]">
             <div
               ref={modalRef}
               className={`dark:bg-[#0a0a13] dark:border bg-white px-6 py-6 rounded-xl shadow-xl modal-content z-20 w-[18rem] h-fit transition-opacity  duration-300 ease-out`}
             >
-              <div className="flex flex-col">
-                <Link className="flex items-center gap-4 p-4 hover:bg-black/10 dark:hover:bg-white/40">
-                  <UsersIcon />
-                  <span
-                    className="text-xl font-bold"
-                    onClick={() => setSearchActive(true)}
-                  >
-                    About me
-                  </span>
-                </Link>
-                <Link
-                  className="flex items-center gap-4 p-4 hover:bg-black/10 dark:hover:bg-white/40"
-                  onClick={() => {
-                    setSecondModalOpen(true);
-                    setIsOpen(false);
-                  }}
-                >
-                  <PenIcon />
-                  <p className="text-xl font-bold">View</p>
-                </Link>
-                <Link
-                  to="/"
-                  onClick={handleLogout}
-                  className="flex items-center gap-4 p-4 hover:bg-black/10 dark:hover:bg-white/40"
-                >
-                  <UserIcon />
-                  <span className="text-xl font-bold">Log out</span>
-                </Link>
-              </div>
+              <div className="flex flex-col"></div>
             </div>
             <div className="fixed inset-0 " onClick={closeModal}></div>
           </div>
@@ -234,7 +201,7 @@ const Aside = () => {
           <div className="fixed inset-0 flex items-center left-28 top-[30rem] ">
             <div
               ref={secondModalRef}
-              className="dark:bg-[#0a0a13] dark:border bg-white rounded-xl shadow-xl modal-content z-20 w-[19rem] h-fit"
+              className="dark:bg-[#0a0a13] dark:border bg-white rounded-xl shadow-xl modal-content w-[19rem] h-fit"
             >
               <div className="modal-body relative p-4">
                 <div className="flex flex-wrap gap-6 p-3 max-sm:py-0">
@@ -332,4 +299,4 @@ const setTheme = (color) => {
   document.documentElement.style.setProperty("--bg-color", color);
 };
 
-export default Aside;
+export default NavResponsive;

@@ -4,6 +4,7 @@ import { io } from "socket.io-client";
 import { AuthContext } from "../context/AuthContext";
 import { ChatContainer, Contacts, Welcome } from "../components/Chat";
 import { Aside } from "../components/Home";
+import NavResponsive from "../components/Navbar/NavResponsive";
 export default function Chat() {
   const socket = useRef();
   const [contacts, setContacts] = useState([]);
@@ -39,6 +40,7 @@ export default function Chat() {
     <>
       <section className="h-screen w-full flex justify-center items-center   ">
         <Aside />
+        <NavResponsive/>
         <div className="h-full w-full  bg-white shadow-md dark:bg-[#1e1f23] grid grid-cols-[25%,75%] ">
           <Contacts contacts={contacts} changeChat={handleChatChange} />
           {currentChat === undefined ? (
