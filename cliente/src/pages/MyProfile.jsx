@@ -10,12 +10,14 @@ import { Link } from "react-router-dom";
 import NavResponsive from "../components/Navbar/NavResponsive";
 
 export default function Profile() {
-  const { userData, setUserData, followingCount, followedUserData } =
+  const { user, userData, setUserData, followingCount, followedUserData } =
     useContext(AuthContext);
   const [fullName, setFullName] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [isOpen2, setIsOpen2] = useState(false);
   const [followersUsers, setFollowersUsers] = useState([]);
+  const url = `http://localhost:5050/posts/user/${user}`;
+  const [post, setPost] = useState([]);
 
   const openModal = () => {
     setIsOpen(true);
@@ -92,6 +94,14 @@ export default function Profile() {
     setShowModal(false);
   };
 
+  const fetchData = async () => {
+    const res = await axios.get(url);
+    setPost(res.data.length);
+  };
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   return (
     <>
       <section className="flex w-full">
@@ -104,46 +114,71 @@ export default function Profile() {
           encType="multipart/form-data"
           className="w-full"
         >
-          <div className="relative w-full justify-center max-md:px-4 items-center min-h-screen h-screen">
+          <div className="relative w-full justify-center max-md:px-0 items-center min-h-screen h-screen">
             <div className="flex flex-col h-full dark:text-white ml-[35%] mr-[15%] max-md:p-0 max-md:m-0">
               <div className="relative mb-[4rem] xl:pt-20 flex flex-col">
                 <div className="flex flex-col relative bg-white dark:bg-[#0a0a13] rounded-lg shadow-md">
-                  <div className="w-full flex-col h-fit py-12 justify-center relavite flex items-center gap-5">
-                    <div className="flex items-end">
+                  <div className="w-full flex-col h-fit py-12 max-md:py-8 justify-center relavite flex items-center gap-5 max-md:gap-0">
+                    <div className="flex items-center w-full justify-evenly mb-10 max-md:mb-4 px-20 max-md:px-0 max-md:flex-col max-md:gap-y-4">
                       <ReactSVG
                         src={`data:image/svg+xml;base64,${btoa(
                           userData?.avatarImage
                         )}`}
-                        className="color-item rounded-full w-[8rem] h-[8rem]"
+                        className="color-item rounded-full w-[7rem] h-auto"
                       />
+                      <div className="flex flex-col p-2 text-xl w-[220px] max-md:text-center">
+                        <h1 className="font-bold capitalize whitespace-nowrap">
+                          {userData?.fullName}
+                        </h1>
+                        {/* <h1 className="font-light capitalize">
+                          @{userData?.username}
+                        </h1> */}
+                      </div>
                       <div
-                        className="color-item rounded-full p-1 h-fit cursor-pointer"
+                        className="color-item rounded-lg flex p-2 h-fit cursor-pointer max-md:hidden"
                         onClick={openModa}
                       >
                         <PenIcon />
+                        <p>editar perfil</p>
                       </div>
                     </div>
-                    <div className="flex flex-col p-2 text-center text-xl w-[220px]">
-                      <h1 className="font-bold capitalize whitespace-nowrap">
-                        {userData?.fullName}
-                      </h1>
-                      <h1 className="font-light capitalize">
-                        @{userData?.username}
-                      </h1>
-                    </div>
-                    <div className="flex w-full justify-between px-14">
+                    <div className="flex w-full px-16 justify-evenly">
+                      <div className="flex text-center text-xl gap-2 flex-col">
+                        <span className="font-bold">{post}</span>
+                        <p className="text-white/40 text-xl max-md:text-sm">
+                          Posts{" "}
+                        </p>
+                      </div>
                       <div className="flex text-center text-xl gap-2 flex-col">
                         <span className="font-bold">
                           {userData?.followers.length}
                         </span>
-                        <p>Followers </p>
+                        <p className="text-white/40 text-xl max-md:text-sm">
+                          Followers{" "}
+                        </p>
                       </div>
                       <div
                         onClick={openModal}
                         className="flex cursor-pointer text-center text-xl gap-2 flex-col"
                       >
                         <span className="font-bold">{followingCount}</span>
-                        <p>Followings </p>
+                        <p className="text-white/40 text-xl max-md:text-sm">
+                          Followings{" "}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex gap-6">
+                      <div
+                        className="color-item rounded-lg flex p-2 px-4 h-fit cursor-pointer mt-8 md:hidden"
+                        onClick={openModa}
+                      >
+                        <p>Edit profile</p>
+                      </div>
+                      <div
+                        className="color-item rounded-lg flex p-2 px-4 h-fit cursor-pointer mt-8 md:hidden"
+                        onClick={openModa}
+                      >
+                        <p>Logout</p>
                       </div>
                     </div>
                   </div>
@@ -154,7 +189,7 @@ export default function Profile() {
                     title={"Following"}
                     isOpen={isOpen}
                     closeModal={closeModal}
-                    style={`bg-white dark:bg-[#0a0a13] overflow-y-scroll absolute right-[35rem] top-[15rem] py-6 rounded-lg shadow-sm modal-content z-20 w-[25%] max-xl:hidden h-[25rem] transition-opacity duration-300 ease-out`}
+                    className={`bg-white dark:bg-[#0a0a13] overflow-y-scroll absolute right-[35rem] top-[15rem] py-6 rounded-lg shadow-sm modal-content z-20 w-[25%] max-xl:hidden h-[25rem] transition-opacity duration-300 ease-out`}
                     content={
                       <div>
                         {" "}
@@ -209,8 +244,8 @@ export default function Profile() {
           </div>
         </form>
         {showModal && (
-          <div className="fixed top-0 left-[12rem] w-screen h-screen bg-black bg-opacity-50 flex justify-center ">
-            <div className="bg-white dark:bg-[#0a0a13] h-[26rem] dark:text-white mt-20 w-[25%] rounded-lg relative py-6">
+          <div className="fixed top-0 left-[12rem] max-xl:left-0 w-screen max-xl:px-8 h-screen bg-black bg-opacity-50 flex justify-center ">
+            <div className="bg-white dark:bg-[#0a0a13] h-[26rem] max-xl:w-full dark:text-white mt-20 w-[25%] rounded-lg relative py-6">
               <div
                 className="absolute left-10 top-8 cursor-pointer"
                 onClick={closeModa}
@@ -220,8 +255,8 @@ export default function Profile() {
               <h1 className=" text-xl capitalize text-center border-b-2 py-2">
                 edit profile
               </h1>
-              <div className="flex flex-col  pt-12 justify-center gap-y-6 px-16">
-                <div className="flex items-center gap-6">
+              <div className="flex flex-col  pt-12 justify-center gap-y-6 px-16 max-xl:px-0">
+                <div className="flex items-center gap-6 max-xl:justify-center">
                   <ReactSVG
                     src={`data:image/svg+xml;base64,${btoa(
                       userData?.avatarImage
@@ -236,7 +271,7 @@ export default function Profile() {
                   </div>
                 </div>
                 <form action="" onSubmit={handleClick}>
-                  <div className="flex gap-6 items-center py-8">
+                  <div className="flex gap-6 items-center py-8 max-xl:flex-col max-xl:py-2">
                     <p className="font-bold">Name:</p>
                     <input
                       type="text"

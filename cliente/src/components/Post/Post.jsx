@@ -92,7 +92,7 @@ const Post = ({ post, userprofile }) => {
     setTogle(!toggle);
   };
   return (
-    <div className="max-ms:px-0 flex w-[100%] flex-col gap-y-8">
+    <div className="flex w-[100%] flex-col gap-y-8">
       <div className=" flex w-[100%] flex-col rounded-lg bg-white shadow-lg dark:bg-[#0a0a13] dark:text-white max-lg:p-0">
         <div className="flex h-24 w-full px-10">
           <div className="relative flex w-full items-center gap-3 pt-6">
