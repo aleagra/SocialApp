@@ -171,7 +171,7 @@ const NavResponsive = () => {
   return (
     <>
       <div className="items-end xl:hidden flex fixed bottom-0 w-full shadow-md dark:text-white bg-white dark:bg-[#0a0a13]">
-        <ul className="flex w-full z-50 justify-center items-center uppercase">
+        <ul className="flex w-full justify-center items-center uppercase">
           {renderNavLinks()}
 
           {/* <li
@@ -190,7 +190,7 @@ const NavResponsive = () => {
           <div className="fixed inset-0 flex items-center left-20 top-[28rem]">
             <div
               ref={modalRef}
-              className={`dark:bg-[#0a0a13] dark:border bg-white px-6 py-6 rounded-xl shadow-xl modal-content z-20 w-[18rem] h-fit transition-opacity  duration-300 ease-out`}
+              className={`dark:bg-[#0a0a13] dark:border bg-white px-6 py-6 rounded-xl shadow-xl modal-content  w-[18rem] h-fit transition-opacity  duration-300 ease-out`}
             >
               <div className="flex flex-col"></div>
             </div>
@@ -221,7 +221,7 @@ const NavResponsive = () => {
       </div>
 
       {searchActive && (
-        <div className="flex absolute bg-black h-screen w-[15%] z-20 justify-center left-0">
+        <div className="flex absolute bg-black h-screen w-[15%]  justify-center left-0">
           <div className="flex-1">
             <input
               type="text"
@@ -235,7 +235,7 @@ const NavResponsive = () => {
       )}
 
       {isOpen2 && (
-        <div className="fixed inset-0 flex items-center z-20">
+        <div className="fixed inset-0 flex items-center ">
           <div
             ref={modalnotifications}
             className={`bg-white dark:bg-[#0a0a13] absolute shadow-sm modal-content z-20  w-[15%] max-xl:hidden h-full transition-opacity  duration-300 ease-out`}

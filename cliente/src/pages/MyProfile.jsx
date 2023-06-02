@@ -9,13 +9,14 @@ import { CloseIcon, PenIcon, SettingsIcon } from "../utilities";
 import { Link } from "react-router-dom";
 
 export default function Profile() {
-  const { userData, setUserData, followingCount, followedUserData } =
+  const { user, userData, setUserData, followingCount, followedUserData } =
     useContext(AuthContext);
   const [fullName, setFullName] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [isOpen2, setIsOpen2] = useState(false);
   const [followersUsers, setFollowersUsers] = useState([]);
-
+  const url = `http://localhost:5050/posts/user/${user}`;
+  const [post, setPost] = useState([]);
   const openModal = () => {
     setIsOpen(true);
   };
@@ -91,6 +92,14 @@ export default function Profile() {
     setShowModal(false);
   };
 
+  const fetchData = async () => {
+    const res = await axios.get(url);
+    setPost(res.data.length);
+  };
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   return (
     <>
       <section className="flex w-full">
@@ -105,14 +114,14 @@ export default function Profile() {
           <div className="relative w-full justify-center items-center min-h-screen h-screen">
             <div className="flex flex-col h-full dark:text-white ml-[35%] mr-[15%] max-lg:m-0 max-lg:overflow-hidden">
               <div className="relative mb-[4rem] pt-20 flex flex-col">
-                <div className="flex flex-col  relative bg-white dark:bg-[#0a0a13] rounded-lg shadow-md">
-                  <div className="w-full h-fit py-12 justify-center relavite flex items-center gap-16">
+                <div className="flex flex-col  relative bg-white dark:bg-[#0a0a13] rounded-full shadow-md">
+                  <div className="w-full h-fit py-12 justify-center relavite flex items-center gap-12">
                     <div className="flex items-end">
                       <ReactSVG
                         src={`data:image/svg+xml;base64,${btoa(
                           userData?.avatarImage
                         )}`}
-                        className="color-item rounded-full w-[8rem] h-[8rem]"
+                        className="color-item rounded-full w-[8rem] h-auto"
                       />
                       <div
                         className="color-item rounded-full p-1 h-fit cursor-pointer"
@@ -128,6 +137,10 @@ export default function Profile() {
                       <h1 className="font-light capitalize">
                         @{userData?.username}
                       </h1>
+                    </div>
+                    <div className="flex text-center text-xl gap-2 flex-col">
+                      <span className="font-bold">{post}</span>
+                      <p>Posts </p>
                     </div>
                     <div className="flex text-center text-xl gap-2 flex-col">
                       <span className="font-bold">

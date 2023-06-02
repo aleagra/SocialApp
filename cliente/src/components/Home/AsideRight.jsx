@@ -18,9 +18,27 @@ const AsideRight = () => {
   const [isOpen2, setIsOpen2] = useState(false);
   const [followingUsers, setFollowingUsers] = useState([]);
   const [followersUsers, setFollowersUsers] = useState([]);
+  const modalFollow = useRef(null);
+  const modalRef = useRef(null);
   const [hiddenButtons, setHiddenButtons] = useState([]);
-  const url = `http://localhost:5050/posts/user/${user}`;
-  const [data, setData] = useState([]);
+  // useEffect(() => {
+  //   const handleOutsideClick = (event) => {
+  //     if (
+  //       modalFollow.current &&
+  //       !modalFollow.current.contains(event.target) &&
+  //       !event.target.classList.contains("modal-content")
+  //     ) {
+  //       closeModal();
+  //     }
+  //   };
+
+  //   document.addEventListener("mousedown", handleOutsideClick);
+
+  //   return () => {
+  //     document.removeEventListener("mousedown", handleOutsideClick);
+  //   };
+  // }, []);
+
   const openModal = () => {
     setIsOpen(true);
   };
@@ -73,6 +91,9 @@ const AsideRight = () => {
     }
   };
 
+  const url = `http://localhost:5050/posts/user/${user}`;
+  const [data, setData] = useState([]);
+
   const fetchData = async () => {
     const res = await axios.get(url);
     setData(res.data.length);
@@ -98,16 +119,27 @@ const AsideRight = () => {
   }, [user]);
   const handleUnfollow = async (id) => {
     try {
+      // Realizar la petición para dejar de seguir a la persona
       await axios.post(`http://localhost:5050/users/unfollow/${user}`, {
         follower: id,
       });
+
+      // Actualizar el estado y ocultar los botones correspondientes
       setHiddenButtons((prevHiddenButtons) => [...prevHiddenButtons, id]);
+
+      // Restar 1 al número de seguidores
       setFollowingCount((prevCount) => prevCount - 1);
+
+      // Volver a cargar la lista de seguidores
       fetchFollowersUsers();
+
+      // Emitir el evento "unfollow-user" al servidor de sockets
       socket.current.emit("unfollow-user", {
         userId: user,
         followerId: id,
       });
+
+      // Realizar cualquier otra actualización necesaria
     } catch (error) {
       console.error(error);
     }

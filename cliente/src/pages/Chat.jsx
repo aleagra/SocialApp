@@ -39,8 +39,10 @@ export default function Chat() {
   return (
     <>
       <section className="h-screen w-full flex justify-center items-center   ">
-        <Aside />
-        <NavResponsive/>
+        <div className="z-20">
+          <Aside />
+          <NavResponsive />
+        </div>
         <div className="h-full w-full  bg-white shadow-md dark:bg-[#1e1f23] grid grid-cols-[25%,75%] ">
           <Contacts contacts={contacts} changeChat={handleChatChange} />
           {currentChat === undefined ? (
