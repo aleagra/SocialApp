@@ -92,10 +92,10 @@ const userPost = () => {
     <>
       <div className="w-[100%] rounded-lg bg-white dark:text-white shadow-md dark:bg-[#0a0a13] py-6 mb-10">
         <div className="flex flex-col rounded-lg items-center">
-          <div className="flex w-full pr-6 pl-4 gap-3 ">
+          <div className="flex w-full pr-6 pl-10 gap-3 ">
             <ReactSVG
               src={`data:image/svg+xml;base64,${btoa(userData?.avatarImage)}`}
-              className="color-item  rounded-full w-16 h-full"
+              className="color-item  rounded-full w-16 h-fit"
             />
 
             <div className="flex flex-col w-full">

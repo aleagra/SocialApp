@@ -119,52 +119,54 @@ export default function Profile() {
               <div className="relative mb-[4rem] xl:pt-20 flex flex-col">
                 <div className="flex flex-col relative bg-white dark:bg-[#0a0a13] rounded-lg shadow-md">
                   <div className="w-full flex-col h-fit py-12 max-md:py-8 justify-center relavite flex items-center gap-5 max-md:gap-0">
-                    <div className="flex items-center w-full justify-evenly mb-10 max-md:mb-4 px-20 max-md:px-0 max-md:flex-col max-md:gap-y-4">
+                    <div className="flex items-center gap-20 max-md:gap-4 max-md:flex-col">
                       <ReactSVG
                         src={`data:image/svg+xml;base64,${btoa(
                           userData?.avatarImage
                         )}`}
-                        className="color-item rounded-full w-[7rem] h-auto"
+                        className="color-item rounded-full w-[8rem] h-auto"
                       />
-                      <div className="flex flex-col p-2 text-xl w-[220px] max-md:text-center">
-                        <h1 className="font-bold capitalize whitespace-nowrap">
-                          {userData?.fullName}
-                        </h1>
-                        {/* <h1 className="font-light capitalize">
-                          @{userData?.username}
-                        </h1> */}
-                      </div>
-                      <div
-                        className="color-item rounded-lg flex p-2 h-fit cursor-pointer max-md:hidden"
-                        onClick={openModa}
-                      >
-                        <PenIcon />
-                        <p>editar perfil</p>
-                      </div>
-                    </div>
-                    <div className="flex w-full px-16 justify-evenly">
-                      <div className="flex text-center text-xl gap-2 flex-col">
-                        <span className="font-bold">{post}</span>
-                        <p className="text-white/40 text-xl max-md:text-sm">
-                          Posts{" "}
-                        </p>
-                      </div>
-                      <div className="flex text-center text-xl gap-2 flex-col">
-                        <span className="font-bold">
-                          {userData?.followers.length}
-                        </span>
-                        <p className="text-white/40 text-xl max-md:text-sm">
-                          Followers{" "}
-                        </p>
-                      </div>
-                      <div
-                        onClick={openModal}
-                        className="flex cursor-pointer text-center text-xl gap-2 flex-col"
-                      >
-                        <span className="font-bold">{followingCount}</span>
-                        <p className="text-white/40 text-xl max-md:text-sm">
-                          Followings{" "}
-                        </p>
+                      <div className="flex flex-col gap-y-6">
+                        <div className="flex  text-xl  items-center gap-6">
+                          <h1 className="font-bold capitalize max-w-[220px] whitespace-nowrap">
+                            {userData?.fullName}
+                          </h1>
+                          <div
+                            className="color-item rounded-lg flex p-1 px-4 h-fit cursor-pointer max-md:hidden"
+                            onClick={openModa}
+                          >
+                            <p className="whitespace-nowrap text-white">
+                              Edit profile
+                            </p>
+                          </div>
+                        </div>
+                        {/* <h1 className="font-light capitalize">@{profile.username}</h1> */}
+                        <div className="flex gap-10 max-md:px-12">
+                          <div className="flex cursor-pointer text-center text-xl gap-2">
+                            <span className="font-bold max-md:text-sm">
+                              {post}{" "}
+                              <span className="text-black/20 dark:text-white/30">
+                                Posts
+                              </span>
+                            </span>
+                          </div>
+                          <div className="flex text-center text-xl gap-2 flex-col">
+                            <span className="font-bold max-md:text-sm">
+                              {userData?.followers.length}{" "}
+                              <span className="text-black/20 dark:text-white/30">
+                                Followers
+                              </span>
+                            </span>
+                          </div>
+                          <div className="flex cursor-pointer text-center text-xl gap-2 flex-col">
+                            <span className="font-bold max-md:text-sm">
+                              {userData?.following.length}{" "}
+                              <span className="text-black/20 dark:text-white/30">
+                                Followings
+                              </span>
+                            </span>
+                          </div>
+                        </div>
                       </div>
                     </div>
                     <div className="flex gap-6">

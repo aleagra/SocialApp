@@ -178,12 +178,12 @@ const Aside = () => {
             <p className="text-2xl uppercase dark:text-white ">SocialApp</p>
           </Link>
         </div>
-        <div className="w-full h-fit ">
+        <div className="w-full h-full relative">
           <ul className="flex flex-col uppercase">
             {renderNavLinks()}
 
             <li
-              className="p-8 px-12 h-fit w-fit mb-16 text-xl absolute bottom-0 flex gap-4 font-bold cursor-pointer hover:bg-black/10 dark:hover:bg-white/20 color"
+              className="p-8 px-12 h-fit w-full mb-16 text-xl absolute bottom-0 flex gap-4 font-bold cursor-pointer hover:bg-black/10 dark:hover:bg-white/20 color"
               onClick={openModal}
             >
               <BarsIcon />

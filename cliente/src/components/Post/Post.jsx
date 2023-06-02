@@ -107,7 +107,7 @@ const Post = ({ post, userprofile }) => {
 
             <div className="flex flex-col text-md font-light capitalize">
               <Link to={"/" + userprofile._id} className="flex">
-                <h2>{userprofile.fullName}</h2>
+                <h2 className="text font-semibold">{userprofile.fullName}</h2>
               </Link>
 
               <h4 className="text-md font-extralight opacity-70">

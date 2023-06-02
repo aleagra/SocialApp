@@ -18,7 +18,8 @@ function ProfileUsers() {
     following: undefined,
     background: undefined,
   });
-
+  const urlPost = `http://localhost:5050/posts/user/${id}`;
+  const [post, setPost] = useState([]);
   useEffect(() => {
     async function fetchUser() {
       const { data } = await axios.get(url);
@@ -54,6 +55,14 @@ function ProfileUsers() {
   useEffect(() => {
     fetchData();
   }, []);
+
+  const fetchPost = async () => {
+    const res = await axios.get(urlPost);
+    setPost(res.data.length);
+  };
+  useEffect(() => {
+    fetchPost();
+  }, []);
   return (
     <section className="flex">
       <div className="fixed z-20">
@@ -63,28 +72,51 @@ function ProfileUsers() {
         <div className="flex flex-col dark:bg-[#131324] h-full dark:text-white ml-[35%] mr-[15%] max-lg:m-0 max-lg:overflow-hidden">
           <div className="relative mb-[4rem] pt-20 flex flex-col">
             <div className="flex flex-col  relative bg-white dark:bg-[#0a0a13] rounded-lg shadow-md">
-              <div className="w-full h-fit py-12 justify-center relavite flex items-center gap-16">
-                <div className="flex items-end">
+              <div className="w-full h-fit py-12 justify-center relavite flex items-center gap-16 flex-col">
+                <div className="flex items-center gap-20">
                   <ReactSVG
                     src={`data:image/svg+xml;base64,${btoa(
                       profile.avatarImage
                     )}`}
-                    className="color-item rounded-full w-[8rem] h-[8rem]"
+                    className="color-item rounded-full w-[8rem] h-auto"
                   />
-                </div>
-                <div className="flex flex-col p-2 text-center text-xl w-[220px]">
-                  <h1 className="font-bold capitalize whitespace-nowrap">
-                    {profile.fullName}
-                  </h1>
-                  <h1 className="font-light capitalize">@{profile.username}</h1>
-                </div>
-                <div className="flex text-center text-xl gap-2 flex-col">
-                  <span className="font-bold">{profile.followers}</span>
-                  <p>Followers </p>
-                </div>
-                <div className="flex cursor-pointer text-center text-xl gap-2 flex-col">
-                  <span className="font-bold">{profile.following}</span>
-                  <p>Followings </p>
+                  <div className="flex flex-col gap-y-6">
+                    <div className="flex  text-xl  items-center gap-6">
+                      <h1 className="font-bold capitalize max-w-[220px] whitespace-nowrap">
+                        {profile.fullName}
+                      </h1>
+                      <div className="color-item rounded-lg flex p-1 px-4 h-fit cursor-pointer max-md:hidden">
+                        <p className="whitespace-nowrap text-white">Follow</p>
+                      </div>
+                    </div>
+                    {/* <h1 className="font-light capitalize">@{profile.username}</h1> */}
+                    <div className="flex gap-10">
+                      <div className="flex cursor-pointer text-center text-xl gap-2 ">
+                        <span className="font-bold">
+                          {post}{" "}
+                          <span className="text-black/40 dark:text-white/30">
+                            Posts
+                          </span>
+                        </span>
+                      </div>
+                      <div className="flex text-center text-xl gap-2 flex-col">
+                        <span className="font-bold">
+                          {profile.followers}{" "}
+                          <span className="text-black/40 dark:text-white/30">
+                            Followers
+                          </span>
+                        </span>
+                      </div>
+                      <div className="flex cursor-pointer text-center text-xl gap-2 flex-col">
+                        <span className="font-bold">
+                          {profile.following}{" "}
+                          <span className="text-black/40 dark:text-white/30">
+                            Followings
+                          </span>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
