@@ -92,16 +92,16 @@ const Post = ({ post, userprofile }) => {
     setTogle(!toggle);
   };
   return (
-    <div className="max-ms:px-0 flex w-[100%] flex-col gap-y-8 ">
+    <div className="max-ms:px-0 flex w-[100%] flex-col gap-y-8">
       <div className=" flex w-[100%] flex-col rounded-lg bg-white shadow-lg dark:bg-[#0a0a13] dark:text-white max-lg:p-0">
         <div className="flex h-24 w-full px-10">
-          <div className="relative  flex w-full items-center gap-3 pt-6">
+          <div className="relative flex w-full items-center gap-3 pt-6">
             <Link to={"/" + userprofile._id} className="flex">
               <ReactSVG
                 src={`data:image/svg+xml;base64,${btoa(
                   userprofile.avatarImage
                 )}`}
-                className="color-item  rounded-full w-16 h-auto "
+                className="color-item rounded-full w-16 h-auto"
               />
             </Link>
 
@@ -190,7 +190,7 @@ const Post = ({ post, userprofile }) => {
                 viewBox="0 0 24 24"
                 strokeWidth={1.5}
                 stroke="currentColor"
-                className="absolute top-11 right-10 h-4 w-4 cursor-pointer opacity-70 "
+                className="absolute top-11 right-10 h-4 w-4 cursor-pointer opacity-70"
                 onClick={(e) => {
                   handleComment();
                   toggleComments();

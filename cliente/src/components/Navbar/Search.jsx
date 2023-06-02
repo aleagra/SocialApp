@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { Aside, AsideRight } from "../Home";
 import { AuthContext } from "../../context/AuthContext";
 import { ReactSVG } from "react-svg";
+import NavResponsive from "./NavResponsive";
 export function Search() {
   const [users, setUsers] = useState([]);
   const [buscar, setBuscar] = useState("");
@@ -41,7 +42,8 @@ export function Search() {
     <>
       <section className="flex h-fit">
         <Aside />
-        <section className="w-full ml-[8%] max-2xl:-[10%] rounded-md mr-[32%] max-2xl:mr-[10%] my-14 bg-white dark:bg-[#0a0a13]">
+        <NavResponsive />
+        <section className="w-full ml-[8%] max-2xl:-[10%] rounded-md mr-[32%] max-2xl:mr-[10%] my-14 bg-white dark:bg-[#0a0a13] max-md:p-2 max-md:m-0">
           <div className="flex flex-col items-center ">
             <div className="flex w-full justify-center py-12">
               <input

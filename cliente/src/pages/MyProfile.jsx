@@ -7,6 +7,7 @@ import { ReactSVG } from "react-svg";
 import Modal from "../components/Home/Modal";
 import { CloseIcon, PenIcon, SettingsIcon } from "../utilities";
 import { Link } from "react-router-dom";
+import NavResponsive from "../components/Navbar/NavResponsive";
 
 export default function Profile() {
   const { userData, setUserData, followingCount, followedUserData } =
@@ -96,17 +97,18 @@ export default function Profile() {
       <section className="flex w-full">
         <div className="fixed z-20">
           <Aside />
+          <NavResponsive />
         </div>
         <form
           onSubmit={handleClick}
           encType="multipart/form-data"
           className="w-full"
         >
-          <div className="relative w-full justify-center items-center min-h-screen h-screen">
-            <div className="flex flex-col h-full dark:text-white ml-[35%] mr-[15%] max-lg:m-0 max-lg:overflow-hidden">
-              <div className="relative mb-[4rem] pt-20 flex flex-col">
-                <div className="flex flex-col  relative bg-white dark:bg-[#0a0a13] rounded-lg shadow-md">
-                  <div className="w-full h-fit py-12 justify-center relavite flex items-center gap-16">
+          <div className="relative w-full justify-center max-md:px-4 items-center min-h-screen h-screen">
+            <div className="flex flex-col h-full dark:text-white ml-[35%] mr-[15%] max-md:p-0 max-md:m-0">
+              <div className="relative mb-[4rem] xl:pt-20 flex flex-col">
+                <div className="flex flex-col relative bg-white dark:bg-[#0a0a13] rounded-lg shadow-md">
+                  <div className="w-full flex-col h-fit py-12 justify-center relavite flex items-center gap-5">
                     <div className="flex items-end">
                       <ReactSVG
                         src={`data:image/svg+xml;base64,${btoa(
@@ -129,18 +131,20 @@ export default function Profile() {
                         @{userData?.username}
                       </h1>
                     </div>
-                    <div className="flex text-center text-xl gap-2 flex-col">
-                      <span className="font-bold">
-                        {userData?.followers.length}
-                      </span>
-                      <p>Followers </p>
-                    </div>
-                    <div
-                      onClick={openModal}
-                      className="flex cursor-pointer text-center text-xl gap-2 flex-col"
-                    >
-                      <span className="font-bold">{followingCount}</span>
-                      <p>Followings </p>
+                    <div className="flex w-full justify-between px-14">
+                      <div className="flex text-center text-xl gap-2 flex-col">
+                        <span className="font-bold">
+                          {userData?.followers.length}
+                        </span>
+                        <p>Followers </p>
+                      </div>
+                      <div
+                        onClick={openModal}
+                        className="flex cursor-pointer text-center text-xl gap-2 flex-col"
+                      >
+                        <span className="font-bold">{followingCount}</span>
+                        <p>Followings </p>
+                      </div>
                     </div>
                   </div>
                 </div>
