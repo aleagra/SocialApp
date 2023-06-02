@@ -30,7 +30,7 @@ const Aside = () => {
   const [isSecondModalOpen, setSecondModalOpen] = useState(false);
   const secondModalRef = useRef(null);
   const [searchQuery, setSearchQuery] = useState("");
-
+  const [searchActive, setSearchActive] = useState(false);
   const [followersUsers, setFollowersUsers] = useState([]);
 
   const handleOutsideClickSecondModal = (event) => {
@@ -178,12 +178,12 @@ const Aside = () => {
             <p className="text-2xl uppercase dark:text-white ">SocialApp</p>
           </Link>
         </div>
-        <div className="w-full h-screen relative">
+        <div className="w-full h-fit ">
           <ul className="flex flex-col uppercase">
             {renderNavLinks()}
 
             <li
-              className="p-8 px-12 h-fit w-full mb-16 text-xl absolute bottom-0 flex gap-4 font-bold cursor-pointer hover:bg-black/10 dark:hover:bg-white/20 color"
+              className="p-8 px-12 h-fit w-fit mb-16 text-xl absolute bottom-0 flex gap-4 font-bold cursor-pointer hover:bg-black/10 dark:hover:bg-white/20 color"
               onClick={openModal}
             >
               <BarsIcon />
@@ -200,7 +200,12 @@ const Aside = () => {
               <div className="flex flex-col">
                 <Link className="flex items-center gap-4 p-4 hover:bg-black/10 dark:hover:bg-white/40">
                   <UsersIcon />
-                  <span className="text-xl font-bold">About me</span>
+                  <span
+                    className="text-xl font-bold"
+                    onClick={() => setSearchActive(true)}
+                  >
+                    About me
+                  </span>
                 </Link>
                 <Link
                   className="flex items-center gap-4 p-4 hover:bg-black/10 dark:hover:bg-white/40"
@@ -247,6 +252,20 @@ const Aside = () => {
           </div>
         )}
       </div>
+
+      {searchActive && (
+        <div className="flex absolute bg-black h-screen w-[15%] z-20 justify-center left-0">
+          <div className="flex-1">
+            <input
+              type="text"
+              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-300"
+              placeholder="Buscar"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+          </div>
+        </div>
+      )}
 
       {isOpen2 && (
         <div className="fixed inset-0 flex items-center z-20">

@@ -6,9 +6,9 @@ const MainHome = () => {
   return (
     <>
       <section className="flex min-h-screen h-full">
-        <div className="fixed z-20">
+        <div className="fixed">
           <Aside />
-          <NavResponsive />
+          <NavResponsive/>
         </div>
         <HomeCenter />
         <AsideRight />
