@@ -1,16 +1,18 @@
 import React, { useContext } from "react";
-import Robot from "../../assets/robot.gif";
+import Icon from "../../assets/icon.png";
 import { AuthContext } from "../../context/AuthContext";
 export default function Welcome() {
   const { userData } = useContext(AuthContext);
 
   return (
-    <section className="flex justify-center items-center text-black dark:bg-[#0a0a13] border-l border-white/20 flex-col fondo dark:text-white">
-      <img src={Robot} alt="" className="h-[20rem]" />
-      <h1>
+    <section className="flex  gap-2 justify-center items-center p-10 text-black dark:bg-[#0a0a13] border-l border-white/20 flex-col fondo dark:text-white">
+      <div>
+      <img src={Icon}/>
+      </div>
+      <h1 className="font-bold">
         Welcome, <span className="text">{userData?.username}!</span>
       </h1>
-      <h3>Please select a chat to Start messaging.</h3>
+      <h3 className="text-center font-light">Please select a chat to start messaging.</h3>
     </section>
   );
 }

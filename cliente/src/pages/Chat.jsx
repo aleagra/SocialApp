@@ -9,7 +9,7 @@ export default function Chat() {
   const socket = useRef();
   const [contacts, setContacts] = useState([]);
   const [currentChat, setCurrentChat] = useState(undefined);
-  const { user } = useContext(AuthContext);
+  const { user,userData } = useContext(AuthContext);
 
   useEffect(() => {
     if (user) {
@@ -20,17 +20,20 @@ export default function Chat() {
 
   useEffect(() => {
     const fetchContacts = async () => {
-      if (user) {
-        const response = await axios.get(
-          `http://localhost:5050/users/allusers`
-        );
-        const users = response.data.filter((u) => u._id !== user);
-        setContacts(users);
+      if (Array.isArray(userData?.following)) {
+        const userPromises = userData.following.map((userId) =>
+        axios.get(`http://localhost:5050/users/${userId}`)
+      );
+      const users = await Promise.all(userPromises);
+      const followingUsersData = users.map((response) => response.data);
+      setContacts(followingUsersData);
       }
     };
 
     fetchContacts();
-  }, [user]);
+  }, [userData?.following]);
+  
+  
 
   const handleChatChange = (chat) => {
     setCurrentChat(chat);
