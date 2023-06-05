@@ -24,7 +24,7 @@ const Modal = ({ isOpen, closeModal, content, style, title }) => {
   return (
     <>
       {isOpen && (
-        <div className="fixed inset-0 flex items-center z-10">
+        <div className="fixed inset-0 flex items-center z-[100]">
           <div ref={modalRef} className={style}>
             <div className="w-full relative py-4 flex justify-center border-b-2">
               <p className="text-center dark:text-white">{title}</p>

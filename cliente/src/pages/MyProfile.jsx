@@ -5,12 +5,12 @@ import { Aside } from "../components/Home";
 import MyPosts from "../components/Profile/MyPosts";
 import { ReactSVG } from "react-svg";
 import Modal from "../components/Home/Modal";
-import { CloseIcon, PenIcon, SettingsIcon } from "../utilities";
+import { CloseIcon } from "../utilities";
 import { Link } from "react-router-dom";
 import NavResponsive from "../components/Navbar/NavResponsive";
 
 export default function Profile() {
-  const { user, userData, setUserData, followingCount, followedUserData } =
+  const { user, userData, followingCount, followedUserData } =
     useContext(AuthContext);
   const [fullName, setFullName] = useState("");
   const [isOpen, setIsOpen] = useState(false);
@@ -21,6 +21,7 @@ export default function Profile() {
 
   const openModal = () => {
     setIsOpen(true);
+    console.log("sazdas");
   };
 
   const closeModal = () => {
@@ -35,8 +36,6 @@ export default function Profile() {
     setIsOpen2(false);
   };
   const updateMyData = (newData) => {
-    // Actualiza el estado o realiza cualquier otra acción necesaria con los datos actualizados
-    setUserData(newData); // Suponiendo que tienes un estado llamado userData y una función setUserData para actualizarlo
     console.log("Datos actualizados:", newData);
   };
 
@@ -140,7 +139,7 @@ export default function Profile() {
                             </p>
                           </div>
                         </div>
-                        {/* <h1 className="font-light capitalize">@{profile.username}</h1> */}
+
                         <div className="flex gap-10 max-md:px-12">
                           <div className="flex cursor-pointer text-center text-xl gap-2">
                             <span className="font-bold max-md:text-sm">
@@ -158,7 +157,10 @@ export default function Profile() {
                               </span>
                             </span>
                           </div>
-                          <div className="flex cursor-pointer text-center text-xl gap-2 flex-col">
+                          <div
+                            className="flex cursor-pointer text-center text-xl gap-2 flex-col"
+                            onClick={openModal}
+                          >
                             <span className="font-bold max-md:text-sm">
                               {userData?.following.length}{" "}
                               <span className="text-black/20 dark:text-white/30">
@@ -191,7 +193,7 @@ export default function Profile() {
                     title={"Following"}
                     isOpen={isOpen}
                     closeModal={closeModal}
-                    className={`bg-white dark:bg-[#0a0a13] overflow-y-scroll absolute right-[35rem] top-[15rem] py-6 rounded-lg shadow-sm modal-content z-20 w-[25%] max-xl:hidden h-[25rem] transition-opacity duration-300 ease-out`}
+                    className={`bg-blue-800 dark:bg-[#0a0a13] overflow-y-scroll absolute  py-6 rounded-lg shadow-sm modal-content  w-[%]  h-[25rem] transition-opacity duration-300 ease-out`}
                     content={
                       <div>
                         {" "}
@@ -257,7 +259,7 @@ export default function Profile() {
               <h1 className=" text-xl capitalize text-center border-b-2 py-2">
                 edit profile
               </h1>
-              <div className="flex flex-col  pt-12 justify-center gap-y-6 px-16 max-xl:px-0">
+              <div className="flex flex-col pt-12 justify-center gap-y-6 px-16 max-xl:px-0 max-2xl:items-center">
                 <div className="flex items-center gap-6 max-xl:justify-center">
                   <ReactSVG
                     src={`data:image/svg+xml;base64,${btoa(

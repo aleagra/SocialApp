@@ -1,12 +1,17 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext, useRef } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import { io } from "socket.io-client";
 import { Aside } from "../Home";
 import Post from "./Post";
 import { ReactSVG } from "react-svg";
+import { AuthContext } from "../../context/AuthContext";
 function ProfileUsers() {
+  const { user, followingCount, setFollowingCount } = useContext(AuthContext);
+  const socket = useRef(null);
   const [data, setData] = useState([]);
+  const [isFollowing, setIsFollowing] = useState(false);
   let { id } = useParams();
   const posts = `http://localhost:5050/posts/user/${id}`;
   const url = `http://localhost:5050/users/${id}`;
@@ -63,6 +68,79 @@ function ProfileUsers() {
   useEffect(() => {
     fetchPost();
   }, []);
+
+  useEffect(() => {
+    socket.current = io("http://localhost:5050");
+    socket.current.emit("add-user", user);
+
+    socket.current.on("follower-count-updated", ({ userId, followerCount }) => {
+      if (userId === user) {
+        setFollowingCount(followerCount);
+      }
+    });
+
+    const checkFollowingStatus = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:5050/users/not-following/${user}`
+        );
+        const notFollowingList = response.data; // Lista de personas que no sigues
+
+        // Verificar si el _id de la persona de interés está en la lista de no seguidos
+        const isCurrentlyFollowing = !notFollowingList.some(
+          (person) => person._id === id
+        );
+        setIsFollowing(isCurrentlyFollowing);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    checkFollowingStatus();
+
+    return () => {
+      socket.current.disconnect();
+    };
+  }, [user, id]);
+
+  const handleFollow = async () => {
+    try {
+      if (isFollowing) {
+        await axios.post(`http://localhost:5050/users/unfollow/${user}`, {
+          follower: id,
+        });
+      } else {
+        await axios.post(`http://localhost:5050/users/follow/${user}`, {
+          follower: id,
+        });
+      }
+
+      socket.current.emit("follow-user", {
+        userId: user,
+        followerId: id,
+      });
+
+      setIsFollowing(!isFollowing);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleUnfollow = async () => {
+    try {
+      await axios.post(`http://localhost:5050/users/unfollow/${user}`, {
+        follower: id,
+      });
+      setFollowingCount((prevCount) => prevCount - 1);
+      socket.current.emit("unfollow-user", {
+        userId: user,
+        followerId: id,
+      });
+      setIsFollowing(!isFollowing);
+    } catch (error) {
+      console.error(error);
+    }
+  };
   return (
     <section className="flex">
       <div className="fixed z-20">
@@ -85,8 +163,15 @@ function ProfileUsers() {
                       <h1 className="font-bold capitalize max-w-[220px] whitespace-nowrap">
                         {profile.fullName}
                       </h1>
-                      <div className="color-item rounded-lg flex p-1 px-4 h-fit cursor-pointer max-md:hidden">
-                        <p className="whitespace-nowrap text-white">Follow</p>
+                      <div
+                        className="color-item rounded-lg flex p-1 px-4 h-fit cursor-pointer max-md:hidden"
+                        onClick={() => {
+                          isFollowing ? handleUnfollow(id) : handleFollow(id);
+                        }}
+                      >
+                        <p className="whitespace-nowrap text-white">
+                          {isFollowing ? "Unfollow" : "Follow"}
+                        </p>
                       </div>
                     </div>
                     {/* <h1 className="font-light capitalize">@{profile.username}</h1> */}
