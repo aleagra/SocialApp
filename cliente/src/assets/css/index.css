@@ -88,8 +88,8 @@
 
 aside.EmojiPickerReact.epr-main {
   position: absolute !important;
-  background-color: #17181c !important;
-  bottom: 130px !important;
+  @apply bg-white dark:bg-[#0a0a13] max-sm:w-[85%] w-[450px] h-[400px] !important;
+  @apply bottom-[70px] max-sm:bottom-[8rem] max-lg:bottom-[9rem] xl:bottom-[3rem] 2xl:bottom-[6rem] !important;
 }
 .color:hover {
   color: var(--bg-color);

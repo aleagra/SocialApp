@@ -20,7 +20,7 @@ export default function ChatInput({ handleSendMsg }) {
   };
 
   return (
-    <section className="flex w-full px-12 max-xl:px-5 relative z-0">
+    <section className="flex w-full px-12 max-xl:px-5 relative z-0 max-sm:mt-10 max-md:mt-16 max-lg:mt-28 lg:mt-[6rem]">
       <label>
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -39,14 +39,9 @@ export default function ChatInput({ handleSendMsg }) {
         </svg>
       </label>
 
-      {showPicker && (
-        <Picker
-          pickerStyle={{ width: "100%" }}
-          onEmojiClick={handleEmojiClick}
-        />
-      )}
+      {showPicker && <Picker onEmojiClick={handleEmojiClick} />}
 
-      <form className="flex h-16 w-full  " onSubmit={sendChat}>
+      <form className="flex h-16 w-full" onSubmit={sendChat}>
         <input
           type="text"
           onChange={(e) => setMsg(e.target.value)}
