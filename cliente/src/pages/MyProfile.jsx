@@ -127,7 +127,7 @@ export default function Profile() {
                         className="color-item rounded-full w-[8rem] h-auto"
                       />
                       <div className="flex flex-col gap-y-6">
-                        <div className="flex  text-xl  items-center gap-6">
+                        <div className="flex  text-xl justify-center  items-center gap-6">
                           <h1 className="font-bold capitalize max-w-[220px] whitespace-nowrap">
                             {userData?.fullName}
                           </h1>

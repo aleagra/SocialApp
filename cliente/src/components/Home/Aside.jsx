@@ -268,7 +268,7 @@ const Aside = () => {
       )}
 
       {isOpen2 && (
-        <div className="fixed inset-0 flex items-center z-20">
+        <div className="fixed max-xl:hidden inset-0 flex items-center z-20">
           <div
             ref={modalnotifications}
             className={`bg-white dark:bg-[#0a0a13] absolute shadow-sm modal-content z-20  w-[15%] max-xl:hidden h-full transition-opacity  duration-300 ease-out`}
@@ -322,7 +322,7 @@ const Aside = () => {
               </div>
             ))}
           </div>
-          <div className="fixed inset-0 " onClick={closeModal2}></div>
+          <div className="fixed inset-0 max-xl:hidden" onClick={closeModal2}></div>
         </div>
       )}
     </>

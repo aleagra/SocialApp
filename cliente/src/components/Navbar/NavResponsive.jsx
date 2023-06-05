@@ -234,11 +234,11 @@ const NavResponsive = () => {
         </div>
       )}
 
-      {isOpen2 && (
-        <div className="fixed inset-0 flex items-center z-20">
+    {isOpen2 && (
+        <div className="fixed xl:hidden flex justify-center w-full h-[93%] top-0 items-center">
           <div
             ref={modalnotifications}
-            className={`bg-white dark:bg-[#0a0a13] absolute shadow-sm modal-content z-20  w-[15%] max-xl:hidden h-full transition-opacity  duration-300 ease-out`}
+            className={`bg-white dark:bg-[#0a0a13] absolute p-2 shadow-sm modal-content w-full h-full top-0 transition-opacity  duration-300 ease-out`}
           >
             <div className="w-full relative py-12 mb-12 flex justify-center items-center border-b-2">
               <p className="text-center text-2xl dark:text-white">
@@ -262,7 +262,7 @@ const NavResponsive = () => {
             </div>
             {followersUsers.map((element, key) => (
               <div
-                className="flex justify-between  py-10 px-4 items-center max-xl:px-0 w-full dark:hover:bg-white/20 hover:bg-black/10"
+                className="flex justify-center w-full xl:hidden  dark:hover:bg-white/20 hover:bg-black/10"
                 key={element._id}
               >
                 <div className="flex w-full items-center ">
@@ -289,7 +289,7 @@ const NavResponsive = () => {
               </div>
             ))}
           </div>
-          <div className="fixed inset-0 " onClick={closeModal2}></div>
+          <div className="fixed xl:hidden" onClick={closeModal2}></div>
         </div>
       )}
     </>
