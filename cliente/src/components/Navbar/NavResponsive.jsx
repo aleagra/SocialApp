@@ -84,11 +84,13 @@ const NavResponsive = () => {
       to: "/",
       icon: <HomeIcon />,
       text: "home",
+      onClick: closeModal2,
     },
     {
       to: "/search",
       icon: <SearchIcon />,
       text: "search",
+      onClick: closeModal2,
     },
     {
       icon: <BellIcon />,
@@ -99,11 +101,13 @@ const NavResponsive = () => {
       to: "/chat",
       icon: <ChatIcon />,
       text: "chat",
+      onClick: closeModal2,
     },
     {
       to: "/Profile",
       icon: <UserIcon />,
       text: "Profile",
+      onClick: closeModal2,
     },
   ];
   const colors = ["#ff6961", "#2ABA7D", "#84b6f4", "#dafc56"];
@@ -170,7 +174,7 @@ const NavResponsive = () => {
 
   return (
     <>
-      <div className="items-end xl:hidden flex fixed bottom-0 w-full shadow-md dark:text-white bg-white dark:bg-[#0a0a13]">
+      <div className="items-end xl:hidden flex fixed bottom-0 z-50 w-full shadow-md dark:text-white bg-white dark:bg-[#0a0a13]">
         <ul className="flex w-full z-50 justify-center items-center uppercase">
           {renderNavLinks()}
 
@@ -178,7 +182,7 @@ const NavResponsive = () => {
                 className="cursor-pointer hover:bg-black/10 dark:hover:bg-white/20 color"
                 onClick={() => {
                     setSecondModalOpen(true);
-                    setIsOpen(false);
+                
                   }}
               >
                   <PenIcon />
@@ -234,8 +238,8 @@ const NavResponsive = () => {
         </div>
       )}
 
-    {isOpen2 && (
-        <div className="fixed xl:hidden flex justify-center w-full h-[93%] top-0 items-center">
+      {isOpen2 && (
+        <div className="fixed xl:hidden flex justify-center w-full h-full z-0 top-0 items-center">
           <div
             ref={modalnotifications}
             className={`bg-white dark:bg-[#0a0a13] absolute p-2 shadow-sm modal-content w-full h-full top-0 transition-opacity  duration-300 ease-out`}
@@ -244,21 +248,6 @@ const NavResponsive = () => {
               <p className="text-center text-2xl dark:text-white">
                 Notifications
               </p>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="w-6 h-6 cursor-pointer absolute left-7 dark:stroke-white"
-                onClick={closeModal2}
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              </svg>
             </div>
             {followersUsers.map((element, key) => (
               <div

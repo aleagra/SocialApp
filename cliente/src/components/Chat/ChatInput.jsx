@@ -20,7 +20,7 @@ export default function ChatInput({ handleSendMsg }) {
   };
 
   return (
-    <section className="flex w-full h-[20%] px-12 max-xl:px-2 relative">
+    <section className="flex w-full h-[20%] px-12 max-xl:px-2 relative z-0">
       <label>
         <svg
           xmlns="http://www.w3.org/2000/svg"

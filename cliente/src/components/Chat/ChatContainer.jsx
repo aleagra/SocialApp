@@ -60,7 +60,6 @@ export default function ChatContainer({ currentChat, socket }) {
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-
   return (
     <Container className="bg-[#f5f4f2] dark:bg-[#0a0a13]">
       <div className="chat-messages">
@@ -127,7 +126,7 @@ const Container = styled.div`
       display: flex;
       align-items: center;
       .content {
-        max-width: 40%;
+        max-width: 100%;
         overflow-wrap: break-word;
         padding: 1rem;
         font-size: 1.1rem;

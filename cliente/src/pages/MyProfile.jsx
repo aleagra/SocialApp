@@ -115,7 +115,7 @@ export default function Profile() {
           className="w-full"
         >
           <div className="relative w-full justify-center max-md:px-0 items-center min-h-screen h-screen">
-            <div className="flex flex-col h-full dark:text-white ml-[35%] mr-[15%] max-md:p-0 max-md:m-0">
+            <div className="flex flex-col h-full dark:text-white ml-[35%] mr-[15%] max-xl:p-0 max-xl:m-0 ">
               <div className="relative mb-[4rem] xl:pt-20 flex flex-col">
                 <div className="flex flex-col relative bg-white dark:bg-[#0a0a13] rounded-lg shadow-md">
                   <div className="w-full flex-col h-fit py-12 max-md:py-8 justify-center relavite flex items-center gap-5 max-md:gap-0">

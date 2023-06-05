@@ -6,7 +6,7 @@ const MainHome = () => {
   return (
     <>
       <section className="flex min-h-screen h-full">
-        <div className="fixed z-20">
+        <div className="fixed z-30">
           <Aside />
           <NavResponsive />
         </div>
