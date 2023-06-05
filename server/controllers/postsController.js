@@ -33,17 +33,10 @@ const friendPost = async (req, res) => {
   const userId = req.params.userId;
 
   try {
-    // Obtener los usuarios seguidos por el usuario dado
     const user = await User.findById(userId);
     const followedUserIds = user.following;
-
-    // Buscar las publicaciones de los usuarios seguidos
     const followedUserPosts = await Post.find({ userId: { $in: followedUserIds } });
-
-    // Buscar las publicaciones del usuario actual
     const userPosts = await Post.find({ userId });
-
-    // Combinar las publicaciones de los usuarios seguidos y las propias
     const posts = followedUserPosts.concat(userPosts);
 
     res.json(posts);
@@ -92,7 +85,7 @@ const updatePostsFullname = async (userId, newFullname) => {
 
 const updateProfileFullName = async (req, res) => {
   const userId = req.params.userId;
-  const newFullname = req.body.fullName; // Asegúrate de que el campo en el cuerpo de la solicitud sea "fullname"
+  const newFullname = req.body.fullName; 
 
   try {
     await updatePostsFullname(userId, newFullname);
@@ -115,7 +108,7 @@ const updatePostsAvatarImage = async (userId, newAvatarImage) => {
 
 const updateProfileAvatarImage = async (req, res) => {
   const userId = req.params.userId;
-  const newAvatarImage = req.body.avatarImage; // Asegúrate de que el campo en el cuerpo de la solicitud sea "avatarImage"
+  const newAvatarImage = req.body.avatarImage;
 
   try {
     await updatePostsAvatarImage(userId, newAvatarImage);
