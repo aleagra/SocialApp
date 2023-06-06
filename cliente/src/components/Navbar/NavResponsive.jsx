@@ -251,15 +251,15 @@ const NavResponsive = () => {
             </div>
             {followersUsers.map((element, key) => (
               <div
-                className="flex justify-center w-full xl:hidden  dark:hover:bg-white/20 hover:bg-black/10"
+                className="flex justify-center w-full xl:hidden  dark:hover:bg-white/20 hover:bg-black/10 my-6"
                 key={element._id}
               >
-                <div className="flex w-full items-center ">
+                <div className="flex w-full items-center">
                   <a
-                    className="flex items-center justify-evenly w-full "
+                    className="flex items-center justify-evenly w-full"
                     href={"/" + element._id}
                   >
-                    <div className="w-full flex items-center gap-4">
+                    <div className="w-full flex items-center gap-4 px-12">
                       <ReactSVG
                         src={`data:image/svg+xml;base64,${btoa(
                           element.avatarImage

@@ -7,6 +7,7 @@ import { AuthContext } from "../../context/AuthContext";
 import { ReactSVG } from "react-svg";
 import NavResponsive from "./NavResponsive";
 export function Search() {
+  const { user } = useContext(AuthContext);
   const [users, setUsers] = useState([]);
   const [buscar, setBuscar] = useState("");
   const [usuariosEncontrados, setUsuariosEncontrados] = useState(true);
@@ -17,8 +18,9 @@ export function Search() {
         const response = await axios.get(
           "http://localhost:5050/users/allusers"
         );
-        setUsers(response.data);
-        console.log(users);
+        const allUsers = response.data;
+        const filteredUsers = allUsers.filter((users) => users._id !== user);
+        setUsers(filteredUsers);
       } catch (error) {
         console.error(error);
       }
@@ -43,8 +45,8 @@ export function Search() {
       <section className="flex h-fit">
         <Aside />
         <NavResponsive />
-        <section className="w-full ml-[8%] max-2xl:-[10%] rounded-md mr-[32%] max-2xl:mr-[10%] my-14 bg-white dark:bg-[#0a0a13]  max-md:p-0 max-md:m-0">
-          <div className="flex flex-col items-center ">
+        <section className="w-full ml-[5%] mr-[30%] rounded-md my-14 bg-white dark:bg-[#0a0a13] max-xl:m-0">
+          <div className="flex flex-col items-center">
             <div className="flex w-full justify-center py-12">
               <input
                 placeholder="Search"

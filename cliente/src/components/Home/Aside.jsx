@@ -198,15 +198,6 @@ const Aside = () => {
               className={`dark:bg-[#0a0a13] dark:border bg-white px-6 py-6 rounded-xl shadow-xl modal-content z-20 w-[18rem] h-fit transition-opacity  duration-300 ease-out`}
             >
               <div className="flex flex-col">
-                <Link className="flex items-center gap-4 p-4 hover:bg-black/10 dark:hover:bg-white/40">
-                  <UsersIcon />
-                  <span
-                    className="text-xl font-bold"
-                    onClick={() => setSearchActive(true)}
-                  >
-                    About me
-                  </span>
-                </Link>
                 <Link
                   className="flex items-center gap-4 p-4 hover:bg-black/10 dark:hover:bg-white/40"
                   onClick={() => {
@@ -303,7 +294,7 @@ const Aside = () => {
                     className="flex items-center justify-evenly w-full "
                     href={"/" + element._id}
                   >
-                    <div className="w-full flex items-center gap-4">
+                    <div className="w-full flex items-center gap-4 ">
                       <ReactSVG
                         src={`data:image/svg+xml;base64,${btoa(
                           element.avatarImage
@@ -322,7 +313,10 @@ const Aside = () => {
               </div>
             ))}
           </div>
-          <div className="fixed inset-0 max-xl:hidden" onClick={closeModal2}></div>
+          <div
+            className="fixed inset-0 max-xl:hidden"
+            onClick={closeModal2}
+          ></div>
         </div>
       )}
     </>

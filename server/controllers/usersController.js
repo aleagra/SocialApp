@@ -53,7 +53,9 @@ module.exports.getFollowers = async (req, res, next) => {
 
 module.exports.getAllUsers = async (req, res, next) => {
   try {
-    const users = await User.find({ _id: { $ne: req.user.id } }).select([
+    const excludedUserId = req.body.id; 
+
+    const users = await User.find({ _id: { $ne: excludedUserId } }).select([
       "email",
       "username",
       "avatarImage",

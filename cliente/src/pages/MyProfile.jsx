@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext, useEffect, useRef } from "react";
 import axios from "axios";
 import { AuthContext } from "../context/AuthContext";
 import { Aside } from "../components/Home";
@@ -8,10 +8,16 @@ import Modal from "../components/Home/Modal";
 import { CloseIcon } from "../utilities";
 import { Link } from "react-router-dom";
 import NavResponsive from "../components/Navbar/NavResponsive";
+import { io } from "socket.io-client";
 
 export default function Profile() {
-  const { user, userData, followingCount, followedUserData } =
-    useContext(AuthContext);
+  const {
+    user,
+    userData,
+    followingCount,
+    followedUserData,
+    setFollowingCount,
+  } = useContext(AuthContext);
   const [fullName, setFullName] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [isOpen2, setIsOpen2] = useState(false);
@@ -19,6 +25,7 @@ export default function Profile() {
   const [followingUsers, setFollowingUsers] = useState([]);
   const url = `http://localhost:5050/posts/user/${user}`;
   const [post, setPost] = useState([]);
+  const socket = useRef(null);
 
   const openModal = () => {
     setIsOpen(true);
@@ -91,7 +98,6 @@ export default function Profile() {
           const userPromises = userData.followers.map((userId) =>
             axios.get(`http://localhost:5050/users/${userId}`)
           );
-          console.log(userPromises);
           const users = await Promise.all(userPromises);
           const followingUsersData = users.map((response) => response.data);
           setFollowingUsers(followingUsersData);
@@ -122,6 +128,33 @@ export default function Profile() {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    socket.current = io("http://localhost:5050");
+    socket.current.emit("add-user", user);
+
+    socket.current.on("follower-count-updated", ({ userId, followerCount }) => {
+      if (userId === user) {
+        setFollowingCount(followerCount);
+      }
+    });
+    return () => {
+      socket.current.disconnect();
+    };
+  }, [user]);
+  const handleUnfollow = async (id) => {
+    try {
+      await axios.post(`http://localhost:5050/users/unfollow/${user}`, {
+        follower: id,
+      });
+      setFollowingCount((prevCount) => prevCount - 1);
+      socket.current.emit("unfollow-user", {
+        userId: user,
+        followerId: id,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
   return (
     <>
       <section className="flex w-full">
@@ -135,8 +168,8 @@ export default function Profile() {
           className="w-full"
         >
           <div className="relative w-full justify-center max-md:px-0 items-center min-h-screen h-screen">
-            <div className="flex flex-col h-full dark:text-white ml-[35%] mr-[15%] max-xl:p-0 max-xl:m-0 ">
-              <div className="relative mb-[4rem] xl:pt-20 flex flex-col">
+            <div className="flex flex-col dark:bg-[#131324] h-full dark:text-white ml-[35%] mr-[15%] max-xl:m-0">
+              <div className="relative mb-[4rem] xl:pt-20 max-xl:pt-0 flex flex-col">
                 <div className="flex flex-col relative bg-white dark:bg-[#0a0a13] rounded-lg shadow-md">
                   <div className="w-full flex-col h-fit py-12 max-md:py-8 justify-center relavite flex items-center gap-5 max-md:gap-0">
                     <div className="flex items-center gap-20 max-md:gap-4 max-md:flex-col">
@@ -170,7 +203,10 @@ export default function Profile() {
                               </span>
                             </span>
                           </div>
-                          <div className="flex text-center cursor-pointer text-xl gap-2 flex-col" onClick={openModal2}>
+                          <div
+                            className="flex text-center cursor-pointer text-xl gap-2 flex-col"
+                            onClick={openModal2}
+                          >
                             <span className="font-bold max-md:text-sm">
                               {userData?.followers.length}{" "}
                               <span className="text-black/20 dark:text-white/30">
@@ -214,14 +250,55 @@ export default function Profile() {
                     title={"Following"}
                     isOpen={isOpen}
                     closeModal={closeModal}
-                    style={`bg-white dark:bg-[#0a0a13] absolute overflow-y-scroll right-[26%] top-40 py-6 rounded-lg shadow-sm modal-content z-20 w-[30%] max-xl:hidden h-[25rem] transition-opacity duration-300 ease-out`}
+                    style={`bg-white dark:bg-[#0a0a13] absolute right-[26%] top-40 py-6 rounded-lg shadow-sm modal-content z-20 w-[30%] h-[25rem] transition-opacity duration-300 ease-out max-md:w-full max-md:left-0 max-md:top-0 max-xl:w-[50%] max-md:h-[94%]`}
                     content={
                       <div>
                         {" "}
                         {followersUsers.map((element, key) => (
                           <a href={"/" + element._id}>
                             <div
-                              className="flex py-6 px-6 pl-10 items-center max-xl:px-0 w-full dark:hover:bg-white/20 hover:bg-black/10"
+                              className="flex py-6 px-6 pl-10 items-center w-full dark:hover:bg-white/20 hover:bg-black/10 justify-between"
+                              key={element._id}
+                            >
+                              <div className="text-center flex items-center gap-4">
+                                <ReactSVG
+                                  src={`data:image/svg+xml;base64,${btoa(
+                                    element.avatarImage
+                                  )}`}
+                                  className="color-item rounded-full w-16 h-16"
+                                />
+
+                                <h3 className="text capitalize font-bold text-xl">
+                                  {element.username}
+                                </h3>
+                              </div>
+                              <button
+                                className="color-item text-white rounded-xl p-2 px-4 text-sm z-30"
+                                id={element._id}
+                                onClick={() => handleUnfollow(element._id)}
+                              >
+                                Unfollow
+                              </button>
+                            </div>
+                          </a>
+                        ))}
+                      </div>
+                    }
+                  />
+                )}
+                {isOpen2 && (
+                  <Modal
+                    isOpen={isOpen2}
+                    title={"Followers"}
+                    closeModal={closeModal2}
+                    style={`bg-white dark:bg-[#0a0a13] absolute right-[26%] top-40 py-6 rounded-lg shadow-sm modal-content z-20 w-[30%] h-[25rem] transition-opacity duration-300 ease-out max-md:w-full max-md:left-0 max-md:top-0 max-xl:w-[50%] max-md:h-[94%]`}
+                    content={
+                      <div>
+                        {" "}
+                        {followingUsers.map((element, key) => (
+                          <a href={"/" + element._id}>
+                            <div
+                              className="flex py-6 px-6 pl-10 items-center w-full dark:hover:bg-white/20 hover:bg-black/10"
                               key={element._id}
                             >
                               <div className="text-center flex items-center gap-4">
@@ -240,40 +317,6 @@ export default function Profile() {
                           </a>
                         ))}
                       </div>
-                    }
-                  />
-                )}
-                {isOpen2 && (
-                  <Modal
-                    isOpen={isOpen2}
-                    title={"Followers"}
-                    closeModal={closeModal2}
-                    style={`bg-white dark:bg-[#0a0a13] absolute right-[26%] top-40 py-6 rounded-lg shadow-sm modal-content z-20 w-[30%] max-xl:hidden h-[25rem] transition-opacity duration-300 ease-out `}
-                    content={
-                    <div>
-                      {" "}
-                      {followingUsers.map((element, key) => (
-                        <a href={"/" + element._id}>
-                          <div
-                            className="flex py-6 px-6 pl-10 items-center max-xl:px-0 w-full dark:hover:bg-white/20 hover:bg-black/10"
-                            key={element._id}
-                          >
-                            <div className="text-center flex items-center gap-4">
-                              <ReactSVG
-                                src={`data:image/svg+xml;base64,${btoa(
-                                  element.avatarImage
-                                )}`}
-                                className="color-item rounded-full w-16 h-16"
-                              />
-
-                              <h3 className="text capitalize font-bold text-xl">
-                                {element.username}
-                              </h3>
-                            </div>
-                          </div>
-                        </a>
-                      ))}
-                    </div>
                     }
                   />
                 )}

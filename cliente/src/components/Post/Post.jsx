@@ -96,7 +96,10 @@ const Post = ({ post, userprofile }) => {
       <div className=" flex w-[100%] flex-col rounded-lg bg-white shadow-lg dark:bg-[#0a0a13] dark:text-white max-lg:p-0">
         <div className="flex h-24 w-full px-10">
           <div className="relative flex w-full items-center gap-3 pt-6">
-            <Link to={"/" + userprofile._id} className="flex">
+            <Link
+              to={userprofile._id === user ? "/Profile" : "/" + userprofile._id}
+              className="flex"
+            >
               <ReactSVG
                 src={`data:image/svg+xml;base64,${btoa(
                   userprofile.avatarImage
@@ -106,7 +109,12 @@ const Post = ({ post, userprofile }) => {
             </Link>
 
             <div className="flex flex-col text-md font-light capitalize">
-              <Link to={"/" + userprofile._id} className="flex">
+              <Link
+                to={
+                  userprofile._id === user ? "/Profile" : "/" + userprofile._id
+                }
+                className="flex"
+              >
                 <h2 className="text font-semibold">{userprofile.fullName}</h2>
               </Link>
 
@@ -145,7 +153,7 @@ const Post = ({ post, userprofile }) => {
             </svg>
 
             <h4 className="text-md font-extralight">{likesCount}</h4>
-            <p className="text-md">Likes</p>
+            <p className="text-md cursor-pointer">Likes</p>
           </div>
 
           <div

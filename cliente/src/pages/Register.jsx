@@ -83,32 +83,36 @@ const Register = () => {
 
   return (
     <>
-      <section className="flex flex-col w-full h-screen justify-center gap-[1rem] items-center bg-[#f7f7f7] dark:bg-[#131324]">
+      <section className="flex flex-col w-full h-screen justify-center gap-[1rem] items-center ">
+        <div className="flex items-center gap-[1rem] justify-center py-3">
+          <img src={icon} alt="" className="w-10 h-auto" />
+          <h1 className="text-blacK dark:text-white uppercase font-bold text-xl">
+            social media app
+          </h1>
+        </div>
         <form
           action=""
-          className="flex flex-col gap-[2rem] rounded-lg bg-white dark:bg-[#00000076] p-[5rem] "
+          className="flex flex-col gap-[2rem] rounded-lg  p-[2rem]"
           onSubmit={handleSubmit}
         >
-          <div className="flex items-center gap-[1rem] justify-center ">
-            <img src={icon} alt="" className="w-10 h-auto" />
-            <h1 className="text-blacK dark:text-white uppercase font-bold text-lg">
-              social media app
-            </h1>
+          <div className="flex gap-4">
+            <input
+              className="bg-transparent p-[1rem] rounded-lg opacity-100  text-black dark:text-white w-full text-[1rem] border-color focus:outline-none"
+              type="text"
+              placeholder="Username"
+              name="username"
+              maxLength="20"
+              onChange={handleChange}
+            />
+            <input
+              className="bg-transparent p-[1rem] rounded-lg text-black dark:text-white w-full text-[1rem] border-color focus:outline-none"
+              type="text"
+              placeholder="Full Name"
+              name="fullName"
+              maxLength="20"
+              onChange={handleChange}
+            />
           </div>
-          <input
-            className="bg-transparent p-[1rem] rounded-lg opacity-100  text-black dark:text-white w-full text-[1rem] border-color focus:outline-none"
-            type="text"
-            placeholder="Username"
-            name="username"
-            onChange={handleChange}
-          />
-          <input
-            className="bg-transparent p-[1rem] rounded-lg text-black dark:text-white w-full text-[1rem] border-color focus:outline-none"
-            type="text"
-            placeholder="Full Name"
-            name="fullName"
-            onChange={handleChange}
-          />
           <input
             className="bg-transparent p-[1rem] rounded-lg text-black dark:text-white w-full text-[1rem]  border-color focus:outline-none"
             type="email"
@@ -116,27 +120,31 @@ const Register = () => {
             name="email"
             onChange={handleChange}
           />
-          <input
-            className="bg-transparent p-[1rem] text-black dark:text-white rounded-lg w-full text-[1rem] border-color focus:outline-none"
-            type="password"
-            placeholder="Password"
-            name="password"
-            onChange={handleChange}
-          />
-          <input
-            className="bg-transparent p-[1rem] text-black dark:text-white rounded-lg w-full text-[1rem] border-color border focus:outline-none"
-            type="password"
-            placeholder="Confirm Password"
-            name="confirmPassword"
-            onChange={handleChange}
-          />
+          <div className="flex gap-4">
+            <input
+              className="bg-transparent p-[1rem] text-black dark:text-white rounded-lg w-full text-[1rem] border-color focus:outline-none"
+              type="password"
+              placeholder="Password"
+              maxLength="20"
+              name="password"
+              onChange={handleChange}
+            />
+            <input
+              className="bg-transparent p-[1rem] text-black dark:text-white rounded-lg w-full text-[1rem] border-color border focus:outline-none"
+              type="password"
+              placeholder="Confirm Password"
+              maxLength="20"
+              name="confirmPassword"
+              onChange={handleChange}
+            />
+          </div>
           <button
             type="submit"
-            className="color-item py-3 font-bold cursor-pointer  rounded-lg text-lg text-white uppercase"
+            className="color-item py-3 my-3 font-bold cursor-pointer  rounded-lg text-lg text-white uppercase"
           >
             Create Account
           </button>
-          <span className="uppercase text-black dark:text-white">
+          <span className="capitalize text-black dark:text-white text-center">
             Already have an account?{" "}
             <Link to="/login" className="text font-bold">
               Login.

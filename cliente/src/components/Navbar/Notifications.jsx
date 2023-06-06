@@ -36,7 +36,7 @@ function Notifications() {
                 className=""
                 key={Element._id}
               >
-                <div className="relative flex w-full py-3 border-notificacion gap-5 p-[2%] items-center text-black dark:text-white ">
+                <div className="relative flex w-full py-3 border-notificacion p-[2%] items-center text-black dark:text-white">
                   <div className="w-[15%]">
                     <img
                       src={`data:image/svg+xml;base64,${Element.avatarImage}`}
