@@ -136,6 +136,22 @@ const checkLike = async (req, res) => {
   }
 }
 
+const getLikes = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const post = await Post.findById(id).populate('likes', 'name'); // Suponiendo que el campo de likes en el modelo Post está referenciado a los usuarios que han dado like y tiene un campo 'name' para el nombre del usuario.
+
+    if (!post) {
+      return res.status(404).json({ message: 'Post not found' });
+    }
+    const likes = post.likes;
+    res.json(likes);
+  } catch (err) {
+    console.error('Error fetching likes:', err);
+    res.status(500).json({ message: 'Server error' });
+  }
+}
+
 const comentPost = async (req, res) => {
   const post = await Post.findById(req.params.id);
   // console.log(req.body);
@@ -191,6 +207,7 @@ module.exports = {
   getAllPosts,
   findByPost,
   checkLike,
+  getLikes,
   getPostsByUserID,
   getPostDetails,
   updateProfileFullName,

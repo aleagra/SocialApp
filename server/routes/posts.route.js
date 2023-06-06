@@ -9,6 +9,7 @@ const {
   getAllPosts,
   friendPost,
   checkLike,
+  getLikes,
   getPostsByUserID,
   getPostDetails,
   updateProfileFullName,
@@ -18,6 +19,7 @@ const {
 routerPost.post("/posts/", createPost);
 routerPost.get("/posts/", getAllPosts);
 routerPost.get("posts/:username", getPost);
+routerPost.get("/posts/:id/likes",getLikes);
 routerPost.get("/posts/friends/:userId", friendPost);
 routerPost.put("/posts/:id/like", likePost);
 routerPost.put("/posts/:id/comment", comentPost);

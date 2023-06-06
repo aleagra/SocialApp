@@ -4,6 +4,7 @@ import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { format } from "timeago.js";
 import { Link } from "react-router-dom";
+import { Modal } from "../Home";
 import axios from "axios";
 import { ReactSVG } from "react-svg";
 
@@ -11,6 +12,9 @@ const Post = ({ post, userprofile }) => {
   const [isLiked, setIsLiked] = useState();
   const [comments, setComments] = useState(post.comments);
   const [commentwriting, setcommentwriting] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
+  const [likes, setLikes] = useState([]);
+  const [likesUsers, setLikesUsers] = useState([]);
   const { userData, user } = useContext(AuthContext);
   const PF = "http://localhost:5050/images/";
   const [toggle, setTogle] = useState(true);
@@ -91,6 +95,40 @@ const Post = ({ post, userprofile }) => {
   const toggleComments = () => {
     setTogle(!toggle);
   };
+
+  const openModal = () => {
+    setIsOpen(true);
+    console.log("open");
+  };
+
+  const closeModal = () => {
+    setIsOpen(false);
+    console.log("close");
+  };
+
+  useEffect(() => {
+    const fetchLikes = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:5050/posts/${post?._id}/likes`
+        );
+        setLikes(response.data);
+        if (Array.isArray(likes)) {
+          const userPromises = likes.map((userId) =>
+            axios.get(`http://localhost:5050/users/${userId}`)
+          );
+
+          const users = await Promise.all(userPromises);
+          const likesUsersData = users.map((response) => response.data);
+          setLikesUsers(likesUsersData);
+        }
+      } catch (err) {
+        console.error("Error fetching likes:", err);
+      }
+    };
+
+    fetchLikes();
+  }, [post?._id, likesUsers]);
   return (
     <div className="flex w-[100%] flex-col gap-y-8">
       <div className=" flex w-[100%] flex-col rounded-lg bg-white shadow-lg dark:bg-[#0a0a13] dark:text-white max-lg:p-0">
@@ -152,8 +190,10 @@ const Post = ({ post, userprofile }) => {
               />
             </svg>
 
-            <h4 className="text-md font-extralight">{likesCount}</h4>
-            <p className="text-md cursor-pointer">Likes</p>
+            <div className="flex gap-2 m-1 cursor-pointer" onClick={openModal}>
+              <h4 className="text-md font-extralight">{likesCount}</h4>
+              <p className="text-md">Likes</p>
+            </div>
           </div>
 
           <div
@@ -229,6 +269,40 @@ const Post = ({ post, userprofile }) => {
           </div>
         )}
       </div>
+      {isOpen && (
+    <Modal
+    title={"Likes"}
+    isOpen={isOpen}
+    closeModal={closeModal}
+    style={`bg-red-900 dark:bg-[#0a0a13] absolute overflow-y-scroll right-[26%] top-40 py-6 rounded-lg shadow-sm modal-content w-[30%] h-[25rem] max-xl:hidden transition-opacity duration-300 ease-out`}
+    content={
+      <div>
+       {" "}
+                {likesUsers.map((element, key) => (
+                  <a href={"/" + element._id}>
+                    <div
+                      className="flex py-6 px-6 pl-10  items-center max-xl:px-0 w-full dark:hover:bg-white/20 hover:bg-black/10"
+                      key={element._id}
+                    >
+                      <div className="text-center flex items-center gap-4">
+                        <ReactSVG
+                          src={`data:image/svg+xml;base64,${btoa(
+                            element.avatarImage
+                          )}`}
+                          className="color-item rounded-full w-16 h-16"
+                        />
+
+                        <h3 className="text capitalize font-bold text-xl">
+                          {element.username}
+                        </h3>
+                      </div>
+                    </div>
+                  </a>
+                ))}
+      </div>
+    }
+  />
+    )}
     </div>
   );
 };
