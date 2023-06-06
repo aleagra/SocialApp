@@ -274,14 +274,14 @@ const Post = ({ post, userprofile }) => {
     title={"Likes"}
     isOpen={isOpen}
     closeModal={closeModal}
-    style={`bg-red-900 dark:bg-[#0a0a13] absolute overflow-y-scroll right-[26%] top-40 py-6 rounded-lg shadow-sm modal-content w-[30%] h-[25rem] max-xl:hidden transition-opacity duration-300 ease-out`}
+    style={`bg-white dark:bg-[#0a0a13] border border-black/10 dark:border-white/20 absolute overflow-y-scroll right-[40%] top-30 py-6 rounded-lg modal-content w-[30%] h-[25rem] max-xl:hidden transition-opacity duration-300 ease-out`}
     content={
       <div>
        {" "}
                 {likesUsers.map((element, key) => (
                   <a href={"/" + element._id}>
                     <div
-                      className="flex py-6 px-6 pl-10  items-center max-xl:px-0 w-full dark:hover:bg-white/20 hover:bg-black/10"
+                      className="flex  py-6 px-6 pl-10  items-center max-xl:px-0 w-full dark:hover:bg-white/20 hover:bg-black/10"
                       key={element._id}
                     >
                       <div className="text-center flex items-center gap-4">

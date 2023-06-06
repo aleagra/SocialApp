@@ -106,13 +106,13 @@ const Aside = () => {
       text: "Profile",
     },
   ];
-  const colors = ["#ff6961", "#2ABA7D", "#84b6f4", "#dafc56"];
+  const colors = ["#E10606", "#0F9130", "#3579FA", "#913CA0"];
   const handleLogout = () => {
     dispatch({ type: "LOGOUT" });
     localStorage.removeItem("user");
     location.reload();
   };
-  const defaultColor = "#2ABA7D";
+  const defaultColor = "#E10606";
   let currentColor = defaultColor;
 
   const setColor = (event) => {
