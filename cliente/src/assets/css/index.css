@@ -2,25 +2,29 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url("https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap");
 
 /* Estilo del scrollbar */
 ::-webkit-scrollbar {
   width: 10px; /* Ancho del scrollbar */
 }
 
- ::-webkit-scrollbar-thumb {
+::-webkit-scrollbar-thumb {
   background-color: var(--bg-color); /* Color del pulgar del scrollbar */
   border-radius: 4px; /* Borde redondeado del pulgar del scrollbar */
 }
 
 /* Estilo de la pista (track) del scrollbar */
- ::-webkit-scrollbar-track {
+::-webkit-scrollbar-track {
   background-color: transparent; /* Color de la pista del scrollbar */
   border-radius: 5px; /* Borde redondeado de la pista del scrollbar */
 }
 
-
+@layer base {
+  html {
+    font-family: "Inter", sans-serif;
+  }
+}
 /* 
       .emoji-picker-react {
         position: absolute;
@@ -50,7 +54,7 @@
   } */
 
 :root {
-  --bg-color: #E10606;
+  --bg-color: #e10606;
 }
 .display-none {
   @apply hidden;
@@ -85,8 +89,7 @@
   background-color: rgb(245, 244, 242);
 }
 .border-color {
-  border: 2px solid white;
-  opacity: 0.3;
+  @apply border-[2px] border-black/30 dark:border-white opacity-90;
 }
 .border-search {
   border: 2px solid;
@@ -120,4 +123,8 @@ aside.EmojiPickerReact.epr-main {
 }
 .EmojiPickerReact:focus .epr-search-container:focus input.epr-search:focus {
   background-color: transparent !important;
+}
+.active {
+  color: var(--bg-color);
+  @apply bg-gray-100 dark:bg-white/10 font-semibold;
 }

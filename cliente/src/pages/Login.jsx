@@ -58,13 +58,13 @@ export default function Login() {
           </div>
           <form
             onSubmit={(event) => handleSubmit(event)}
-            className="flex flex-col gap-[2rem]  shadow-md rounded-lg p-[2rem] "
+            className="flex flex-col gap-[2rem] rounded-lg p-[2rem]"
           >
             <input
               type="text"
               placeholder="Username"
               name="username"
-              className="bg-transparent p-[1rem] border-solid rounded-lg w-full  border-color outline-none   dark:text-white"
+              className="bg-transparent p-[1rem] border-solid rounded-lg w-full  border-color outline-none dark:text-white"
               onChange={(e) => handleChange(e)}
               min="3"
             />

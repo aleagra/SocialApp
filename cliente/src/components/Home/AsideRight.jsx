@@ -114,7 +114,7 @@ const AsideRight = () => {
   };
   return (
     <>
-      <section className="min-screen w-[18%] mt-[4rem] fixed right-[7rem] max-xl:hidden ">
+      <section className="min-screen w-[18%] mt-[4rem] fixed  max-xl:hidden ">
         <div className="flex  h-fit justify-center rounded-lg bg-white  shadow-lg dark:text-white dark:bg-[#0a0a13]">
           <div className="flex flex-col pt-6">
             <div className="relative flex justify-center">
@@ -167,7 +167,9 @@ const AsideRight = () => {
             </div>
           </div>
         </div>
-        <Recomendations />
+        <div className="my-6">
+          <Recomendations />
+        </div>
       </section>
 
       {isOpen && (

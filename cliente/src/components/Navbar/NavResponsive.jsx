@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import icon from "../../assets/icon.png";
 import { Toggle } from "../Navbar";
 import ColorItem from "../Home/colorItem";
@@ -84,30 +84,31 @@ const NavResponsive = () => {
       to: "/",
       icon: <HomeIcon />,
       text: "home",
-      onClick: closeModal2,
+      activeClassName: "active",
     },
     {
       to: "/search",
       icon: <SearchIcon />,
       text: "search",
-      onClick: closeModal2,
+      activeClassName: "active",
     },
     {
       icon: <BellIcon />,
       text: "Notifications",
-      onClick: openModal2, // Agregar el onClick para abrir el modal
+      onClick: openModal2,
+      // Agregar el onClick para abrir el modal
     },
     {
       to: "/chat",
       icon: <ChatIcon />,
       text: "chat",
-      onClick: closeModal2,
+      activeClassName: "active",
     },
     {
       to: "/Profile",
       icon: <UserIcon />,
       text: "Profile",
-      onClick: closeModal2,
+      activeClassName: "active",
     },
   ];
   const colors = ["#ff6961", "#2ABA7D", "#84b6f4", "#dafc56"];
@@ -139,15 +140,25 @@ const NavResponsive = () => {
     return navLinks.map((link, index) => (
       <li
         key={index}
-        className="cursor-pointer text-xl max-2xl:text-sm font-bold flex items-center"
+        className="cursor-pointer text-xl max-2xl:text-sm flex items-center"
       >
-        <Link
-          onClick={link.onClick}
-          to={link.to}
-          className="flex p-5 hover:bg-black/10 dark:hover:bg-white/20  w-full color font-bold"
-        >
-          {link.icon}
-        </Link>
+        {link.to ? (
+          <NavLink
+            onClick={link.onClick}
+            to={link.to}
+            activeClassName={link.activeClassName}
+            className="flex p-5 hover:bg-black/10 dark:hover:bg-white/10  w-full color font-bold"
+          >
+            {link.icon}
+          </NavLink>
+        ) : (
+          <button
+            onClick={link.onClick}
+            className="flex p-5 hover:bg-black/10 dark:hover:bg-white/20  w-full color font-bold"
+          >
+            {link.icon}
+          </button>
+        )}
       </li>
     ));
   };
@@ -177,17 +188,6 @@ const NavResponsive = () => {
       <div className="items-end xl:hidden flex fixed bottom-0 z-50 w-full shadow-md dark:text-white bg-white dark:bg-[#0a0a13]">
         <ul className="flex w-full z-50 justify-center items-center uppercase">
           {renderNavLinks()}
-
-          {/* <li
-                className="cursor-pointer hover:bg-black/10 dark:hover:bg-white/20 color"
-                onClick={() => {
-                    setSecondModalOpen(true);
-                
-                  }}
-              >
-                  <PenIcon />
-              
-              </li> */}
         </ul>
 
         {isOpen && (

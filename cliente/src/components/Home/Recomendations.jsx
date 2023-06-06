@@ -110,7 +110,7 @@ function Recomendations() {
   return (
     <>
       {notFollowing.length > 0 && (
-        <section className="py-6 px-8 my-6 rounded-md shadow-lg bg-white dark:text-white dark:bg-[#0a0a13]">
+        <section className="py-6 px-8 rounded-md shadow-lg bg-white dark:text-white dark:bg-[#0a0a13]">
           <p className="font-semibold">RECOMMENDATIONS</p>
           <div className="flex w-full flex-col">
             {notFollowing.slice(0, 3).map((Element) => (

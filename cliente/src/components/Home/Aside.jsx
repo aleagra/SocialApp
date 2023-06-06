@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
-import { Link } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 import icon from "../../assets/icon.png";
 import { Toggle } from "../Navbar";
 import ColorItem from "./colorItem";
@@ -84,26 +84,31 @@ const Aside = () => {
       to: "/",
       icon: <HomeIcon />,
       text: "home",
+      activeClassName: "active",
     },
     {
       to: "/search",
       icon: <SearchIcon />,
       text: "search",
+      activeClassName: "active",
     },
     {
       icon: <BellIcon />,
       text: "Notifications",
-      onClick: openModal2, // Agregar el onClick para abrir el modal
+      onClick: openModal2,
+      // Agregar el onClick para abrir el modal
     },
     {
       to: "/chat",
       icon: <ChatIcon />,
       text: "chat",
+      activeClassName: "active",
     },
     {
       to: "/Profile",
       icon: <UserIcon />,
       text: "Profile",
+      activeClassName: "active",
     },
   ];
   const colors = ["#E10606", "#0F9130", "#3579FA", "#913CA0"];
@@ -135,16 +140,27 @@ const Aside = () => {
     return navLinks.map((link, index) => (
       <li
         key={index}
-        className="cursor-pointer text-xl max-2xl:text-sm font-bold flex items-center"
+        className="cursor-pointer text-xl max-2xl:text-sm  flex items-center"
       >
-        <Link
-          onClick={link.onClick}
-          to={link.to}
-          className="flex gap-4 p-8 max-lg:p-2 hover:bg-black/10 dark:hover:bg-white/20  px-12 max-2xl:px-6 w-full color font-bold"
-        >
-          {link.icon}
-          <span>{link.text}</span>
-        </Link>
+        {link.to ? (
+          <NavLink
+            onClick={link.onClick}
+            to={link.to}
+            activeClassName={link.activeClassName}
+            className="flex gap-4 p-8 max-lg:p-2 hover:bg-gray-100 dark:hover:bg-white/10  px-12 max-2xl:px-6 w-full color capitalize"
+          >
+            {link.icon}
+            <span>{link.text}</span>
+          </NavLink>
+        ) : (
+          <button
+            onClick={link.onClick}
+            className="flex gap-4 p-8 max-lg:p-2 hover:bg-gray-100 dark:hover:bg-white/10  px-12 max-2xl:px-6 w-full color capitalize"
+          >
+            {link.icon}
+            <span>{link.text}</span>
+          </button>
+        )}
       </li>
     ));
   };
@@ -171,7 +187,7 @@ const Aside = () => {
 
   return (
     <>
-      <div className="flex-col max-xl:hidden z-10 flex h-screen shadow-md dark:text-white bg-white dark:bg-[#0a0a13]">
+      <div className="flex-col max-xl:hidden z-10 flex h-screen shadow-md dark:text-white bg-white dark:bg-[#0a0a13] ">
         <div className="flex  px-12 max-2xl:px-4 max-lg:px-0 py-12 w-full ">
           <Link to="/" className="flex gap-2 ">
             <img src={icon} className="w-10 h-100" alt="" />
@@ -183,7 +199,7 @@ const Aside = () => {
             {renderNavLinks()}
 
             <li
-              className="p-8 px-12 h-fit w-full mb-16 text-xl absolute bottom-0 flex gap-4 font-bold cursor-pointer hover:bg-black/10 dark:hover:bg-white/20 color"
+              className="p-8 px-12 h-fit w-full mb-16 text-xl absolute bottom-0 flex gap-4 capitalize cursor-pointer hover:bg-black/10 dark:hover:bg-white/20 color -tracking-tighter"
               onClick={openModal}
             >
               <BarsIcon />

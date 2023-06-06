@@ -87,11 +87,9 @@ export default function SetAvatar() {
     <>
       <section className="flex justify-center items-center flex-col gap-[3rem] bg-[#f7f7f7]  dark:bg-[#0a0a13] h-[100vh] w-[100vw]">
         <div className="flex flex-col w-full h-full gap-y-20 justify-center items-center">
-          <div className="text">
-            <h1 className="text-5xl font-semibold">
-              Select an avatar as your profile image
-            </h1>
-          </div>
+          <h1 className="text-5xl capitalize font-semibold dark:text-white">
+            Select an avatar as your profile image
+          </h1>
           <div className="w-full justify-center flex gap-5">
             {avatars.map((avatar, index) => (
               <ReactSVG

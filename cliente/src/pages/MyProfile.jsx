@@ -1,7 +1,7 @@
 import { useState, useContext, useEffect, useRef } from "react";
 import axios from "axios";
 import { AuthContext } from "../context/AuthContext";
-import { Aside } from "../components/Home";
+import { Aside, Recomendations } from "../components/Home";
 import MyPosts from "../components/Profile/MyPosts";
 import { ReactSVG } from "react-svg";
 import Modal from "../components/Home/Modal";
@@ -157,19 +157,19 @@ export default function Profile() {
   };
   return (
     <>
-      <section className="flex w-full">
-        <div className="fixed z-20">
+      <section className="min-h-screen relative h-full grid grid-cols-[300px,1fr,400px] gap-[4rem]">
+        <div className="w-[300px] fixed">
           <Aside />
           <NavResponsive />
         </div>
         <form
           onSubmit={handleClick}
           encType="multipart/form-data"
-          className="w-full"
+          className="w-full col-start-2"
         >
           <div className="relative w-full justify-center max-md:px-0 items-center min-h-screen h-screen">
-            <div className="flex flex-col dark:bg-[#131324] h-full dark:text-white ml-[35%] mr-[15%] max-xl:m-0">
-              <div className="relative mb-[4rem] xl:pt-20 max-xl:pt-0 flex flex-col">
+            <div className="flex flex-col dark:bg-[#131324] h-full dark:text-white max-xl:m-0">
+              <div className="relative mb-[4rem] xl:pt-[4rem] max-xl:pt-0 flex flex-col">
                 <div className="flex flex-col relative bg-white dark:bg-[#0a0a13] rounded-lg shadow-md">
                   <div className="w-full flex-col h-fit py-12 max-md:py-8 justify-center relavite flex items-center gap-5 max-md:gap-0">
                     <div className="flex items-center gap-20 max-md:gap-4 max-md:flex-col">
@@ -378,6 +378,9 @@ export default function Profile() {
             </div>
           </div>
         )}
+        <div className="col-start-3 pr-[4rem] pt-[4rem]">
+          <Recomendations />
+        </div>
       </section>
     </>
   );
