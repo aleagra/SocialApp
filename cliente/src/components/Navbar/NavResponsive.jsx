@@ -242,7 +242,7 @@ const NavResponsive = () => {
         <div className="fixed xl:hidden flex justify-center w-full h-full z-0 top-0 items-center">
           <div
             ref={modalnotifications}
-            className={`bg-white dark:bg-[#0a0a13] absolute p-2 shadow-sm modal-content w-full h-full top-0 transition-opacity  duration-300 ease-out`}
+            className={`bg-white dark:bg-[#0a0a13] absolute p-2 shadow-sm modal-content w-full h-full top-0 transition-opacity duration-300 ease-out`}
           >
             <div className="w-full relative py-12 mb-12 flex justify-center items-center border-b-2">
               <p className="text-center text-2xl dark:text-white">

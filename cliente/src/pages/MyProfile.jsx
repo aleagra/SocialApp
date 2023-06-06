@@ -16,6 +16,7 @@ export default function Profile() {
   const [isOpen, setIsOpen] = useState(false);
   const [isOpen2, setIsOpen2] = useState(false);
   const [followersUsers, setFollowersUsers] = useState([]);
+  const [followingUsers, setFollowingUsers] = useState([]);
   const url = `http://localhost:5050/posts/user/${user}`;
   const [post, setPost] = useState([]);
 
@@ -83,6 +84,26 @@ export default function Profile() {
     fetchFollowingUsers();
   }, [userData?.following]);
 
+  useEffect(() => {
+    const fetchFollowingUsers = async () => {
+      try {
+        if (Array.isArray(userData?.followers)) {
+          const userPromises = userData.followers.map((userId) =>
+            axios.get(`http://localhost:5050/users/${userId}`)
+          );
+          console.log(userPromises);
+          const users = await Promise.all(userPromises);
+          const followingUsersData = users.map((response) => response.data);
+          setFollowingUsers(followingUsersData);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchFollowingUsers();
+  }, [userData?.followers]);
+
   const [showModal, setShowModal] = useState(false);
 
   const openModa = () => {
@@ -141,7 +162,7 @@ export default function Profile() {
                         </div>
 
                         <div className="flex gap-10 max-md:px-12">
-                          <div className="flex cursor-pointer text-center text-xl gap-2">
+                          <div className="flex text-center text-xl gap-2">
                             <span className="font-bold max-md:text-sm">
                               {post}{" "}
                               <span className="text-black/20 dark:text-white/30">
@@ -149,7 +170,7 @@ export default function Profile() {
                               </span>
                             </span>
                           </div>
-                          <div className="flex text-center text-xl gap-2 flex-col">
+                          <div className="flex text-center cursor-pointer text-xl gap-2 flex-col" onClick={openModal2}>
                             <span className="font-bold max-md:text-sm">
                               {userData?.followers.length}{" "}
                               <span className="text-black/20 dark:text-white/30">
@@ -193,7 +214,7 @@ export default function Profile() {
                     title={"Following"}
                     isOpen={isOpen}
                     closeModal={closeModal}
-                    className={`bg-blue-800 dark:bg-[#0a0a13] overflow-y-scroll absolute  py-6 rounded-lg shadow-sm modal-content  w-[%]  h-[25rem] transition-opacity duration-300 ease-out`}
+                    style={`bg-white dark:bg-[#0a0a13] absolute overflow-y-scroll right-[26%] top-40 py-6 rounded-lg shadow-sm modal-content z-20 w-[30%] max-xl:hidden h-[25rem] transition-opacity duration-300 ease-out`}
                     content={
                       <div>
                         {" "}
@@ -218,27 +239,41 @@ export default function Profile() {
                             </div>
                           </a>
                         ))}
-                        {followedUserData?.map((element, key) => (
-                          <a href={"/Profile/" + element._id}>
-                            <div
-                              className="flex py-6 px-6 pl-10 items-center max-xl:px-0 w-full dark:hover:bg-white/20 hover:bg-black/10"
-                              key={element._id}
-                            >
-                              <div className="text-center flex items-center gap-4">
-                                <ReactSVG
-                                  src={`data:image/svg+xml;base64,${btoa(
-                                    element.avatarImage
-                                  )}`}
-                                  className="color-item rounded-full w-16 h-16"
-                                />
-                                <h3 className="text capitalize font-bold text-xl">
-                                  {element.username}
-                                </h3>
-                              </div>
-                            </div>
-                          </a>
-                        ))}
                       </div>
+                    }
+                  />
+                )}
+                {isOpen2 && (
+                  <Modal
+                    isOpen={isOpen2}
+                    title={"Followers"}
+                    closeModal={closeModal2}
+                    style={`bg-white dark:bg-[#0a0a13] absolute right-[26%] top-40 py-6 rounded-lg shadow-sm modal-content z-20 w-[30%] max-xl:hidden h-[25rem] transition-opacity duration-300 ease-out `}
+                    content={
+                    <div>
+                      {" "}
+                      {followingUsers.map((element, key) => (
+                        <a href={"/" + element._id}>
+                          <div
+                            className="flex py-6 px-6 pl-10 items-center max-xl:px-0 w-full dark:hover:bg-white/20 hover:bg-black/10"
+                            key={element._id}
+                          >
+                            <div className="text-center flex items-center gap-4">
+                              <ReactSVG
+                                src={`data:image/svg+xml;base64,${btoa(
+                                  element.avatarImage
+                                )}`}
+                                className="color-item rounded-full w-16 h-16"
+                              />
+
+                              <h3 className="text capitalize font-bold text-xl">
+                                {element.username}
+                              </h3>
+                            </div>
+                          </div>
+                        </a>
+                      ))}
+                    </div>
                     }
                   />
                 )}
