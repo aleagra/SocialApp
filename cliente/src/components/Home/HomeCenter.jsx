@@ -23,7 +23,7 @@ export function HomeCenter() {
   }, []);
   return (
     <>
-      <div className="mt-[4rem] max-md:mt-0">
+      <div className="my-[4rem] max-md:mb-28 max-md:mt-0">
         <UserPost />
         <div className="flex gap-y-12 flex-col w-full justify-center items-center">
           {data.map((post, key) => {

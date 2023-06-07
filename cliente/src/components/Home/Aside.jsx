@@ -85,12 +85,14 @@ const Aside = () => {
       icon: <HomeIcon />,
       text: "home",
       activeClassName: "active",
+      onClick: closeModal2,
     },
     {
       to: "/search",
       icon: <SearchIcon />,
       text: "search",
       activeClassName: "active",
+      onClick: closeModal2,
     },
     {
       icon: <BellIcon />,
@@ -103,12 +105,14 @@ const Aside = () => {
       icon: <ChatIcon />,
       text: "chat",
       activeClassName: "active",
+      onClick: closeModal2,
     },
     {
       to: "/Profile",
       icon: <UserIcon />,
       text: "Profile",
       activeClassName: "active",
+      onClick: closeModal2,
     },
   ];
   const colors = ["#E10606", "#0F9130", "#3579FA", "#913CA0"];

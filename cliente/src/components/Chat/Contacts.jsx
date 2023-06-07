@@ -10,13 +10,13 @@ export default function Contacts({ contacts, changeChat }) {
   };
   return (
     <>
-      <section className=" grid 2xl:grid-rows-[10%,75%,15%] grid-rows-[20%,75%,5%] max-xl:grid-rows-[75%,10%] overflow-hidden bg-white dark:bg-[#131324]">
+      <section className=" grid 2xl:grid-rows-[10%,85%,5%] grid-rows-[20%,75%] max-xl:grid-rows-[90%,10%] bg-white dark:bg-[#131324]">
         <div className="flex justify-center items-center my-4 gap-[2rem] max-xl:hidden  border-b border-white/30">
           <h3 className="text-black dark:text-white font-bold max-xl:hidden ">
             CHATS
           </h3>
         </div>
-        <div className="flex flex-col overflow-auto gap-[0.8rem] max-xl:overflow-y-scroll">
+        <div className="flex flex-col max-xl:overflow-x-hidden gap-[0.8rem] max-xl:overflow-y-scroll">
           {contacts.map((contact, index) => {
             return (
               <div

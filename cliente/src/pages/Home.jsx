@@ -10,7 +10,7 @@ function Home() {
         <Aside />
         <NavResponsive />
       </div>
-      <div className="xl:col-start-2 max-xl:px-6 max-md:p-0">
+      <div className="xl:col-start-2 max-xl:px-6 max-md:p-0 ">
         <HomeCenter />
       </div>
       <div className="xl:col-start-3 max-xl:hidden">

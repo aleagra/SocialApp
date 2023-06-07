@@ -41,7 +41,7 @@ function Chat() {
   return (
     <>
       <Aside />
-      <div className=" bg-white shadow-md dark:bg-[#1e1f23] grid grid-cols-[25%,75%] xl:col-start-2 max-xl:row-start-1 ">
+      <div className=" bg-white shadow-md overflow-y-hidden dark:bg-[#1e1f23] grid grid-cols-[25%,75%] xl:col-start-2 max-xl:row-start-1 ">
         <Contacts contacts={contacts} changeChat={handleChatChange} />
         {currentChat === undefined ? (
           <Welcome />

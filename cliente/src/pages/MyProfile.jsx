@@ -24,6 +24,7 @@ function Profile() {
   const [isOpen2, setIsOpen2] = useState(false);
   const [followersUsers, setFollowersUsers] = useState([]);
   const [followingUsers, setFollowingUsers] = useState([]);
+  const [hiddenButtons, setHiddenButtons] = useState([]);
   const url = `http://localhost:5050/posts/user/${user}`;
   const [post, setPost] = useState([]);
   const socket = useRef(null);
@@ -69,7 +70,6 @@ function Profile() {
         fullName: fullName,
       }
     );
-
     window.location.reload();
   };
   useEffect(() => {
@@ -147,6 +147,7 @@ function Profile() {
       await axios.post(`http://localhost:5050/users/unfollow/${user}`, {
         follower: id,
       });
+      setHiddenButtons((prevHiddenButtons) => [...prevHiddenButtons, id]);
       setFollowingCount((prevCount) => prevCount - 1);
       socket.current.emit("unfollow-user", {
         userId: user,
@@ -162,11 +163,7 @@ function Profile() {
         <Aside />
         <NavResponsive />
       </div>
-      <form
-        onSubmit={handleClick}
-        encType="multipart/form-data"
-        className="w-full col-start-2 max-xl:col-start-1 max-2xl:pr-[4rem] max-xl:pr-0"
-      >
+      <div className="w-full col-start-2 max-xl:col-start-1 max-2xl:pr-[4rem] max-xl:pr-0">
         <div className="relative w-full justify-center max-md:px-0 items-center min-h-screen h-screen">
           <div className="flex flex-col dark:bg-[#131324] h-full dark:text-white max-xl:m-0">
             <div className="relative mb-[4rem] xl:pt-[4rem] max-xl:pt-0 flex flex-col">
@@ -251,37 +248,41 @@ function Profile() {
                   isOpen={isOpen}
                   closeModal={closeModal}
                   bg={"bg-black/60"}
-                  style={`bg-white dark:bg-[#0a0a13] absolute right-[36%] max-2xl:right-[25%] top-[16rem] max-2xl:top-[8rem] border border-gray-100 dark:border-white/10 pb-6 rounded-lg shadow-sm modal-content z-20 w-[25%] h-[25rem] transition-opacity duration-300 ease-out max-md:w-[70%] max-md:left-[15%] max-md:top-[27%] max-xl:w-[50%] max-md:h-[50%]`}
+                  style={`bg-white overflow-y-scroll  dark:bg-[#0a0a13] absolute right-[36%] max-2xl:right-[25%] top-[16rem] max-2xl:top-[8rem] border border-gray-100 dark:border-white/10 pb-6 rounded-lg shadow-sm modal-content z-20 w-[25%] h-[25rem] transition-opacity duration-300 ease-out max-md:w-[90%] max-md:left-[5%] max-md:top-[27%] max-xl:w-[50%] max-md:h-[50%]`}
                   content={
                     <div>
                       {" "}
                       {followersUsers.map((element, key) => (
-                        <a href={"/" + element._id}>
-                          <div
-                            className="flex py-6 px-6 pl-10 items-center w-full dark:hover:bg-white/20 hover:bg-black/10 justify-between"
-                            key={element._id}
-                          >
-                            <div className="text-center flex items-center gap-4">
-                              <ReactSVG
-                                src={`data:image/svg+xml;base64,${btoa(
-                                  element.avatarImage
-                                )}`}
-                                className="color-item rounded-full w-16 h-16"
-                              />
+                        <div className="flex w-full px-3 items-center justify-between dark:hover:bg-white/20 hover:bg-black/10 ">
+                          <a href={"/" + element._id}>
+                            <div
+                              className="flex py-6 px-6 pl-10 items-center w-full justify-between"
+                              key={element._id}
+                            >
+                              <div className="text-center flex items-center gap-4">
+                                <ReactSVG
+                                  src={`data:image/svg+xml;base64,${btoa(
+                                    element.avatarImage
+                                  )}`}
+                                  className="color-item rounded-full w-16 h-16"
+                                />
 
-                              <h3 className="text capitalize font-bold text-xl">
-                                {element.username}
-                              </h3>
+                                <h3 className="text capitalize font-bold text-xl">
+                                  {element.username}
+                                </h3>
+                              </div>
                             </div>
+                          </a>
+                          {!hiddenButtons.includes(element._id) && (
                             <button
-                              className="color-item text-white rounded-xl p-2 px-4 text-sm z-30"
+                              className="color-item h-fit text-white rounded-xl p-2 px-4 text-sm z-30"
                               id={element._id}
                               onClick={() => handleUnfollow(element._id)}
                             >
                               Unfollow
                             </button>
-                          </div>
-                        </a>
+                          )}
+                        </div>
                       ))}
                     </div>
                   }
@@ -293,7 +294,7 @@ function Profile() {
                   title={"Followers"}
                   closeModal={closeModal2}
                   bg={"bg-black/60"}
-                  style={`bg-white dark:bg-[#0a0a13] absolute right-[36%] max-2xl:right-[25%] top-[16rem] max-2xl:top-[8rem] border border-gray-100 dark:border-white/10 pb-6 rounded-lg shadow-sm modal-content z-20 w-[25%] h-[25rem] transition-opacity duration-300 ease-out max-md:w-[70%] max-md:left-[15%] max-md:top-[27%] max-xl:w-[50%] max-md:h-[50%]`}
+                  style={`bg-white overflow-y-scroll  dark:bg-[#0a0a13] absolute right-[36%] max-2xl:right-[25%] top-[16rem] max-2xl:top-[8rem] border border-gray-100 dark:border-white/10 pb-6 rounded-lg shadow-sm modal-content z-20 w-[25%] h-[25rem] transition-opacity duration-300 ease-out max-md:w-[90%] max-md:left-[5%] max-md:top-[27%] max-xl:w-[50%] max-md:h-[50%]`}
                   content={
                     <div>
                       {" "}
@@ -326,7 +327,7 @@ function Profile() {
             <MyPosts />
           </div>
         </div>
-      </form>
+      </div>
       {showModal && (
         <div className="fixed top-0 left-[2rem] max-xl:left-0 w-screen max-xl:px-8 h-screen bg-black bg-opacity-50 flex justify-center ">
           <div className="bg-white dark:bg-[#0a0a13] h-[26rem] max-xl:w-full dark:text-white mt-20 w-[25%] rounded-lg relative py-6">

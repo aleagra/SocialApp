@@ -47,7 +47,7 @@ function Search() {
         <Aside />
         <NavResponsive />
       </div>
-      <section className="w-full rounded-md my-[4rem] bg-white dark:bg-[#0a0a13] max-xl:m-0 xl:col-start-2">
+      <section className="w-full h-fit rounded-md my-[4rem] bg-white dark:bg-[#0a0a13] max-xl:m-0 xl:col-start-2">
         <div className="flex flex-col items-center">
           <div className="flex w-full justify-center py-12">
             <input
@@ -58,7 +58,7 @@ function Search() {
               type="search"
             />
           </div>
-          <div className=" flex flex-col w-full rounded-lg justify-center cursor-pointer">
+          <div className="flex flex-col w-full h-[660px] max-md:h-[700px] overflow-y-scroll rounded-lg cursor-pointer">
             {buscar &&
               users?.map((Element, index) => {
                 const regex = new RegExp(
@@ -68,13 +68,13 @@ function Search() {
                 if (regex.test(Element.username.toLowerCase())) {
                   return (
                     <a
-                      className="w-full border border-gray-200 dark:border-gray-100/20 hover:bg-gray-100 dark:hover:bg-white/10"
+                      className="w-full dark:border-gray-100/20 hover:bg-gray-100 dark:hover:bg-white/10"
                       onClick={(e) => {
                         search(Element._id);
                       }}
                     >
                       <div className="w-full m-auto">
-                        <div className="flex items-center gap-2 py-6 justify-center">
+                        <div className="flex items-center gap-2 justify-center py-6">
                           <ReactSVG
                             src={`data:image/svg+xml;base64,${btoa(
                               Element.avatarImage

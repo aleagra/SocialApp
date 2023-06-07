@@ -197,7 +197,7 @@ function ProfileUsers() {
   }, [profile.following]);
   return (
     <>
-      <div className="w-[300px] fixed">
+      <div className="w-[300px] fixed z-30">
         <Aside />
         <NavResponsive />
       </div>
@@ -303,7 +303,7 @@ function ProfileUsers() {
             isOpen={isOpen}
             closeModal={closeModal}
             bg={"bg-black/60"}
-            style={`bg-white dark:bg-[#0a0a13] absolute right-[36%] max-2xl:right-[25%] top-[16rem] max-2xl:top-[8rem] border border-gray-100 dark:border-white/10 pb-6 rounded-lg shadow-sm modal-content z-20 w-[25%] h-[25rem] transition-opacity duration-300 ease-out max-md:w-[70%] max-md:left-[15%] max-md:top-[27%] max-xl:w-[50%] max-md:h-[50%]`}
+            style={`bg-white overflow-y-scroll dark:bg-[#0a0a13] absolute right-[36%] max-2xl:right-[25%] top-[16rem] max-2xl:top-[8rem] border border-gray-100 dark:border-white/10 pb-6 rounded-lg shadow-sm modal-content z-20 w-[25%] h-[25rem] transition-opacity duration-300 ease-out max-md:w-[70%] max-md:left-[15%] max-md:top-[27%] max-xl:w-[50%] max-md:h-[50%]`}
             content={
               <div>
                 {" "}
@@ -338,7 +338,7 @@ function ProfileUsers() {
             title={"Followers"}
             closeModal={closeModal1}
             bg={"bg-black/60"}
-            style={`bg-white dark:bg-[#0a0a13] absolute right-[36%] max-2xl:right-[25%] top-[16rem] max-2xl:top-[8rem] border border-gray-100 dark:border-white/10 pb-6 rounded-lg shadow-sm modal-content z-20 w-[25%] h-[25rem] transition-opacity duration-300 ease-out max-md:w-[70%] max-md:left-[15%] max-md:top-[27%] max-xl:w-[50%] max-md:h-[50%]`}
+            style={`bg-white overflow-y-scroll  dark:bg-[#0a0a13] absolute right-[36%] max-2xl:right-[25%] top-[16rem] max-2xl:top-[8rem] border border-gray-100 dark:border-white/10 pb-6 rounded-lg shadow-sm modal-content z-20 w-[25%] h-[25rem] transition-opacity duration-300 ease-out max-md:w-[90%] max-md:left-[5%] max-md:top-[27%] max-xl:w-[50%] max-md:h-[50%]`}
             content={
               <div>
                 {" "}

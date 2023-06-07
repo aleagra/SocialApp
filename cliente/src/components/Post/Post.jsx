@@ -131,7 +131,7 @@ const Post = ({ post, userprofile }) => {
   }, [post?._id, likesUsers]);
   return (
     <div className="flex w-[100%] flex-col gap-y-8">
-      <div className=" flex w-[100%] flex-col rounded-lg bg-white shadow-lg dark:bg-[#0a0a13] dark:text-white max-lg:p-0">
+      <div className=" flex w-[100%] flex-col rounded-lg bg-white shadow-lg dark:bg-[#0a0a13] dark:text-white max-lg:py-0">
         <div className="flex h-24 w-full px-10">
           <div className="relative flex w-full items-center gap-3 pt-6">
             <Link
@@ -282,14 +282,14 @@ const Post = ({ post, userprofile }) => {
           isOpen={isOpen}
           closeModal={closeModal}
           bg={"bg-black/60"}
-          style={`bg-white dark:bg-[#0a0a13] border border-black/10 dark:border-white/20 absolute overflow-y-scroll right-[40%] z-30 max-2xl:right-[25%] top-30 py-6 rounded-lg modal-content w-[30%] h-[25rem] transition-opacity duration-300 ease-out max-md:w-full max-md:left-0 max-md:top-[25%] max-xl:w-[50%] max-md:h-[50%]`}
+          style={`bg-white overflow-y-scroll  dark:bg-[#0a0a13] absolute right-[36%] max-2xl:right-[25%] top-[16rem] max-2xl:top-[8rem] border border-gray-100 dark:border-white/10 pb-6 rounded-lg shadow-sm modal-content z-20 w-[25%] h-[25rem] transition-opacity duration-300 ease-out max-md:w-[90%] max-md:left-[5%] max-md:top-[27%] max-xl:w-[50%] max-md:h-[50%]`}
           content={
             <div>
               {" "}
               {likesUsers.map((element, key) => (
                 <a href={"/" + element._id}>
                   <div
-                    className="flex  py-6 px-6 pl-10 max-md:pl-8 max-md:py-20 items-center max-xl:px-0 w-full dark:hover:bg-white/20 hover:bg-black/10"
+                    className="flex py-6 px-6 pl-10 max-md:pl-8 max-md:py-5 items-center max-xl:px-0 w-full dark:hover:bg-white/20 hover:bg-black/10"
                     key={element._id}
                   >
                     <div className="text-center flex items-center gap-4 max-md:gap-12">
