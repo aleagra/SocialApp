@@ -22,7 +22,6 @@ export function HomeCenter() {
     fetchData();
   }, []);
   return (
-    //trae todos los posts de los users
     <>
       <div className="mt-[4rem]">
         <UserPost />

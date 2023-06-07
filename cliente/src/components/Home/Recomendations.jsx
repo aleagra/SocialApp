@@ -138,7 +138,7 @@ function Recomendations() {
                 </div>
                 <div>
                   <button
-                    className="color-item rounded-xl p-2 px-4 text-sm"
+                    className="color-item rounded-xl p-2 px-4 text-sm text-white"
                     id={`follow-btn-${Element._id}`}
                     onClick={() => handleFollow(Element._id)}
                   >

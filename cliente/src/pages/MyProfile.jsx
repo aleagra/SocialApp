@@ -180,7 +180,7 @@ export default function Profile() {
                         className="color-item rounded-full w-[8rem] h-auto"
                       />
                       <div className="flex flex-col gap-y-6">
-                        <div className="flex  text-xl justify-center  items-center gap-6">
+                        <div className="flex  text-xl items-center gap-6">
                           <h1 className="font-bold capitalize max-w-[220px] whitespace-nowrap">
                             {userData?.fullName}
                           </h1>
@@ -250,7 +250,7 @@ export default function Profile() {
                     title={"Following"}
                     isOpen={isOpen}
                     closeModal={closeModal}
-                    style={`bg-white dark:bg-[#0a0a13] absolute right-[26%] top-40 py-6 rounded-lg shadow-sm modal-content z-20 w-[30%] h-[25rem] transition-opacity duration-300 ease-out max-md:w-full max-md:left-0 max-md:top-0 max-xl:w-[50%] max-md:h-[94%]`}
+                    style={`bg-white dark:bg-[#0a0a13] absolute right-[36%] top-[16rem] border border-white py-6 rounded-lg shadow-sm modal-content z-20 w-[25%] h-[25rem] transition-opacity duration-300 ease-out max-md:w-full max-md:left-0 max-md:top-0 max-xl:w-[50%] max-md:h-[94%]`}
                     content={
                       <div>
                         {" "}
@@ -291,7 +291,7 @@ export default function Profile() {
                     isOpen={isOpen2}
                     title={"Followers"}
                     closeModal={closeModal2}
-                    style={`bg-white dark:bg-[#0a0a13] absolute right-[26%] top-40 py-6 rounded-lg shadow-sm modal-content z-20 w-[30%] h-[25rem] transition-opacity duration-300 ease-out max-md:w-full max-md:left-0 max-md:top-0 max-xl:w-[50%] max-md:h-[94%]`}
+                    style={`bg-white dark:bg-[#0a0a13] absolute right-[36%] top-[16rem] border border-white py-6 rounded-lg shadow-sm modal-content z-20 w-[25%] h-[25rem] transition-opacity duration-300 ease-out max-md:w-full max-md:left-0 max-md:top-0 max-xl:w-[50%] max-md:h-[94%]`}
                     content={
                       <div>
                         {" "}

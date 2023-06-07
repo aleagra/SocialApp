@@ -114,8 +114,8 @@ const AsideRight = () => {
   };
   return (
     <>
-      <section className="min-screen w-[18%] mt-[4rem] fixed  max-xl:hidden ">
-        <div className="flex  h-fit justify-center rounded-lg bg-white  shadow-lg dark:text-white dark:bg-[#0a0a13]">
+      <section className="mt-[4rem] fixed flex justify-center flex-col w-[400px] pr-[4rem] max-xl:hidden">
+        <div className="flex w-full justify-center rounded-lg bg-white shadow-lg dark:text-white dark:bg-[#0a0a13]">
           <div className="flex flex-col pt-6">
             <div className="relative flex justify-center">
               <ReactSVG
@@ -177,11 +177,11 @@ const AsideRight = () => {
           isOpen={isOpen}
           title={"Followers"}
           closeModal={closeModal}
-          style={`bg-white dark:bg-[#0a0a13] absolute overflow-y-scroll right-28 top-16 py-6 rounded-lg shadow-sm modal-content z-20 w-[18%] max-xl:hidden h-[25rem] transition-opacity duration-300 ease-out `}
+          style={`bg-white dark:bg-[#0a0a13] absolute overflow-y-scroll right-16 top-16 py-6 rounded-lg shadow-sm modal-content z-20 w-[336px] max-xl:hidden h-[438px] transition-opacity duration-300 ease-out `}
           content={followingUsers.map((element, key) => (
             <a href={"/" + element._id}>
               <div
-                className="flex  py-6 px-6 pl-10 items-center max-xl:px-0 w-full dark:hover:bg-white/20 hover:bg-black/10 "
+                className="flex  py-6 px-6 items-center max-xl:px-0 w-full dark:hover:bg-white/20 hover:bg-black/10 "
                 key={element._id}
               >
                 <div className=" text-center flex items-center gap-4">
@@ -205,7 +205,7 @@ const AsideRight = () => {
           isOpen={isOpen2}
           title={"Followig"}
           closeModal={closeModal2}
-          style={`bg-white dark:bg-[#0a0a13] overflow-y-scroll absolute right-28 top-16  rounded-lg shadow-sm modal-content z-20 w-[18%] max-xl:hidden h-[25rem] transition-opacity duration-300 ease-out`}
+          style={`bg-white dark:bg-[#0a0a13] absolute overflow-y-scroll right-16 top-16 py-6 rounded-lg shadow-sm modal-content z-20 w-[336px] max-xl:hidden h-[438px] transition-opacity duration-300 ease-out`}
           content={
             <div>
               {followersUsers.map((element, key) => (

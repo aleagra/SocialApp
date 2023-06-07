@@ -208,7 +208,7 @@ const Aside = () => {
           </ul>
         </div>
         {isOpen && (
-          <div className="fixed inset-0 flex items-center left-20 top-[28rem]">
+          <div className="fixed inset-0 flex items-center left-2 top-[28rem]">
             <div
               ref={modalRef}
               className={`dark:bg-[#0a0a13] dark:border bg-white px-6 py-6 rounded-xl shadow-xl modal-content z-20 w-[18rem] h-fit transition-opacity  duration-300 ease-out`}
@@ -238,13 +238,13 @@ const Aside = () => {
           </div>
         )}
         {isSecondModalOpen && (
-          <div className="fixed inset-0 flex items-center left-28 top-[30rem] ">
+          <div className="fixed inset-0 flex items-center left-2 top-[30rem] z-40 ">
             <div
               ref={secondModalRef}
-              className="dark:bg-[#0a0a13] dark:border bg-white rounded-xl shadow-xl modal-content z-20 w-[19rem] h-fit"
+              className="dark:bg-[#0a0a13] dark:border bg-white rounded-xl shadow-xl modal-content z-20 w-[17.5rem] h-fit"
             >
               <div className="modal-body relative p-4">
-                <div className="flex flex-wrap gap-6 p-3 max-sm:py-0">
+                <div className="flex flex-wrap gap-4 p-3 max-sm:py-0">
                   <h1>Colors:</h1>
                   {colors.map((color, idx) => (
                     <ColorItem key={idx} setColor={setColor} color={color} />
@@ -278,7 +278,7 @@ const Aside = () => {
         <div className="fixed max-xl:hidden inset-0 flex items-center z-20">
           <div
             ref={modalnotifications}
-            className={`bg-white dark:bg-[#0a0a13] absolute shadow-sm modal-content z-20  w-[15%] max-xl:hidden h-full transition-opacity  duration-300 ease-out`}
+            className={`bg-white dark:bg-[#0a0a13] absolute shadow-sm modal-content z-20  w-[300px] max-xl:hidden h-full transition-opacity  duration-300 ease-out`}
           >
             <div className="w-full relative py-12 mb-12 flex justify-center items-center border-b-2">
               <p className="text-center text-2xl dark:text-white">

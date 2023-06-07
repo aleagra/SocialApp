@@ -118,7 +118,7 @@ const userPost = () => {
                     className="max-w-[800px] max-h-[500px] object-cover rounded-lg mt-6 max-md:max-w-[245px] max-md:min-w-[200px]"
                   />
                   <div
-                    className="absolute top-10 left-4 p-2 bg-black/40 rounded-full cursor-pointer"
+                    className="absolute top-10 left-4 p-2 bg-white/30 dark:bg-black/40 rounded-full cursor-pointer"
                     onClick={() => setFile("")}
                   >
                     <CloseIcon />

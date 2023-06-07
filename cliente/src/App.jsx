@@ -4,9 +4,10 @@ import { ThemeProvider } from "./components/Navbar/ThemeContext";
 import { AuthContext } from "./context/AuthContext";
 import { Chat, Home, Login, Register } from "./pages";
 import { SetAvatar } from "./components/Register";
-import { Search } from "./components/Navbar/Search";
+
 import ProfileUsers from "./components/Post/UsersProfile";
 import Profile from "./pages/MyProfile";
+import Search from "./components/Navbar/Search";
 export default function App() {
   const { user } = useContext(AuthContext);
   return (
