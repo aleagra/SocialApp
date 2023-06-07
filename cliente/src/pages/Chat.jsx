@@ -53,4 +53,7 @@ function Chat() {
     </>
   );
 }
-export default Wrapper(Chat, "relative h-screen grid grid-cols-[300px,1fr]");
+export default Wrapper(
+  Chat,
+  "relative h-screen grid grid-cols-[300px,1fr] max-xl:grid-cols-[1fr]"
+);

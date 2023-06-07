@@ -133,5 +133,5 @@ function Search() {
 }
 export default Wrapper(
   Search,
-  "relative h-screen grid grid-cols-[300px,1fr,400px,] gap-[4rem]"
+  "relative h-screen grid grid-cols-[300px,1fr,400px,] gap-[4rem] max-2xl:grid-cols-[300px,1fr] max-xl:max-2xl:grid-cols-[1fr]"
 );

@@ -140,14 +140,14 @@ const Aside = () => {
     return navLinks.map((link, index) => (
       <li
         key={index}
-        className="cursor-pointer text-xl max-2xl:text-sm  flex items-center"
+        className="cursor-pointer text-xl max-2xl:text-sm flex items-center"
       >
         {link.to ? (
           <NavLink
             onClick={link.onClick}
             to={link.to}
             activeClassName={link.activeClassName}
-            className="flex gap-4 p-8 max-lg:p-2 hover:bg-gray-100 dark:hover:bg-white/10  px-12 max-2xl:px-6 w-full color capitalize"
+            className="flex gap-4 p-8 max-lg:p-2 hover:bg-gray-100 dark:hover:bg-white/10 max-2xl:justify-center  px-12 max-2xl:px-6 w-full color capitalize"
           >
             {link.icon}
             <span>{link.text}</span>
@@ -155,7 +155,7 @@ const Aside = () => {
         ) : (
           <button
             onClick={link.onClick}
-            className="flex gap-4 p-8 max-lg:p-2 hover:bg-gray-100 dark:hover:bg-white/10  px-12 max-2xl:px-6 w-full color capitalize"
+            className="flex gap-4 p-8 max-lg:p-2 hover:bg-gray-100 dark:hover:bg-white/10 max-2xl:justify-center px-12 max-2xl:px-6 w-full color capitalize"
           >
             {link.icon}
             <span>{link.text}</span>
@@ -188,10 +188,10 @@ const Aside = () => {
   return (
     <>
       <div className="flex-col max-xl:hidden z-10 flex h-screen shadow-md dark:text-white bg-white dark:bg-[#0a0a13] ">
-        <div className="flex  px-12 max-2xl:px-4 max-lg:px-0 py-12 w-full ">
-          <Link to="/" className="flex gap-2 items-center ">
+        <div className="flex px-12 max-2xl:px-4 max-lg:px-0 max-2xl:py-8 py-12 w-full max-2xl:justify-center">
+          <Link to="/" className="flex gap-2 items-center">
             <img src={icon} className="w-10 h-100" alt="" />
-            <p className="text-2xl uppercase dark:text-white ">SocialApp</p>
+            <p className="text-2xl uppercase dark:text-white">SocialApp</p>
           </Link>
         </div>
         <div className="w-full h-full relative">
@@ -199,7 +199,7 @@ const Aside = () => {
             {renderNavLinks()}
 
             <li
-              className="p-8 px-12 h-fit w-full mb-16 text-xl absolute bottom-0 flex gap-4 capitalize cursor-pointer hover:bg-black/10 dark:hover:bg-white/20 color -tracking-tighter"
+              className="p-8 px-12 h-fit w-full mb-16 max-2xl:mb-[15px] max-2xl:px-6 max-2xl:text-sm  text-xl absolute bottom-0 flex gap-4 capitalize cursor-pointer hover:bg-black/30 dark:hover:bg-white/10 color max-2xl:justify-center -tracking-tighter"
               onClick={openModal}
             >
               <BarsIcon />

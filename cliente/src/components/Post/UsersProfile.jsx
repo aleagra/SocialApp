@@ -211,7 +211,7 @@ function ProfileUsers() {
         <NavResponsive />
       </div>
 
-      <div className="relative w-full justify-center items-center min-h-screen h-screen xl:col-start-2">
+      <div className="relative w-full justify-center items-center min-h-screen h-screen xl:col-start-2 max-2xl:pr-[4rem] max-xl:pr-0">
         <div className="flex flex-col dark:bg-[#131324] h-full dark:text-white max-xl:m-0 max-lg:overflow-hidden">
           <div className="relative mb-[4rem] max-xl:pt-0 pt-[4rem] flex flex-col">
             <div className="flex flex-col  relative bg-white dark:bg-[#0a0a13] rounded-lg shadow-md">
@@ -311,7 +311,7 @@ function ProfileUsers() {
             title={"Following"}
             isOpen={isOpen}
             closeModal={closeModal}
-            style={`bg-white dark:bg-[#0a0a13] absolute overflow-y-scroll right-[36%] top-[16rem] border border-white py-6 rounded-lg shadow-sm modal-content z-20 w-[25%] max-xl:hidden h-[25rem] transition-opacity duration-300 ease-out`}
+            style={`bg-white dark:bg-[#0a0a13] absolute overflow-y-scroll right-[36%] max-2xl:right-[20%] top-[16rem] max-2xl:top-[8rem] border border-white py-6 rounded-lg shadow-sm modal-content z-20 w-[25%] max-xl:hidden h-[25rem] transition-opacity duration-300 ease-out`}
             content={
               <div>
                 {" "}
@@ -345,7 +345,7 @@ function ProfileUsers() {
             isOpen={isOpen2}
             title={"Followers"}
             closeModal={closeModal1}
-            style={`bg-white dark:bg-[#0a0a13] absolute right-[36%] top-[16rem] border border-white py-6 rounded-lg shadow-sm modal-content z-20 w-[25%] max-xl:hidden h-[25rem] transition-opacity duration-300 ease-out `}
+            style={`bg-white dark:bg-[#0a0a13] absolute right-[36%] max-2xl:right-[20%] top-[16rem] max-2xl:top-[8rem] border border-white py-6 rounded-lg shadow-sm modal-content z-20 w-[25%] max-xl:hidden h-[25rem] transition-opacity duration-300 ease-out `}
             content={
               <div>
                 {" "}
@@ -384,5 +384,5 @@ function ProfileUsers() {
 
 export default Wrapper(
   ProfileUsers,
-  "relative h-screen grid grid-cols-[300px,1fr,400px] gap-[4rem]"
+  "relative h-screen grid grid-cols-[300px,1fr,400px] gap-[4rem] max-xl:gap-[2rem]  max-2xl:grid-cols-[300px,1fr] max-xl:grid-cols-[1fr]"
 );

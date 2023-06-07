@@ -81,7 +81,7 @@ export default function Login() {
             >
               Log In
             </button>
-            <span className="dark:text-white uppercase">
+            <span className="dark:text-white capitalize">
               Don't have an account?{" "}
               <Link to="/register" className="text">
                 Create One.
