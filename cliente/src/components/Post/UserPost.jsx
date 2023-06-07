@@ -106,6 +106,7 @@ const userPost = () => {
                 type="text"
                 placeholder="What's on your mind?"
                 className="rounded-md flex justify-center m-auto bg-transparent w-full text-xl outline-none"
+                maxLength={100}
                 required
                 value={inputStr}
                 onChange={(e) => setInputStr(e.target.value)}
