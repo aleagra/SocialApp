@@ -49,8 +49,8 @@ function ProfileUsers() {
         currentUserName: username,
         description: descripcion,
         background: background,
-        followers: followers.length,
-        following: following.length,
+        followers: followers,
+        following: following,
       });
     }
     fetchUser();
@@ -150,63 +150,54 @@ function ProfileUsers() {
   };
   const openModal = () => {
     setIsOpen(true);
-    console.log("open");
   };
 
   const closeModal = () => {
     setIsOpen(false);
-    console.log("close");
   };
   const openModal1 = () => {
     setIsOpen2(true);
-    console.log("open");
   };
 
   const closeModal1 = () => {
     setIsOpen2(false);
-    console.log("close");
   };
 
   useEffect(() => {
     const fetchFollowingUsers = async () => {
       try {
-        if (Array.isArray(userData?.following)) {
-          const userPromises = userData.following.map((userId) =>
-            axios.get(`http://localhost:5050/users/${userId}`)
-          );
+        const userPromises = profile.followers.map((userId) =>
+          axios.get(`http://localhost:5050/users/${userId}`)
+        );
 
-          const users = await Promise.all(userPromises);
-          const followingUsersData = users.map((response) => response.data);
-          setFollowersUsers(followingUsersData);
-        }
+        const users = await Promise.all(userPromises);
+        const followingUsersData = users.map((response) => response.data);
+        setFollowersUsers(followingUsersData);
       } catch (error) {
         console.error(error);
       }
     };
 
     fetchFollowingUsers();
-  }, [userData?.following]);
-
+  }, [profile.followers]);
   useEffect(() => {
     const fetchFollowingUsers = async () => {
       try {
-        if (Array.isArray(userData?.followers)) {
-          const userPromises = userData.followers.map((userId) =>
-            axios.get(`http://localhost:5050/users/${userId}`)
-          );
-          const users = await Promise.all(userPromises);
-          const followingUsersData = users.map((response) => response.data);
-          setFollowingUsers(followingUsersData);
-        }
+        const userPromises = profile.following.map((userId) =>
+          axios.get(`http://localhost:5050/users/${userId}`)
+        );
+        const users = await Promise.all(userPromises);
+        const followingUsersData = users.map((response) => response.data);
+        setFollowingUsers(followingUsersData);
       } catch (error) {
         console.error(error);
       }
     };
     fetchFollowingUsers();
-  }, [userData?.followers]);
+  }, [profile.following]);
   return (
     <>
-      <div className="w-[300px] fixed ">
+      <div className="w-[300px] fixed">
         <Aside />
         <NavResponsive />
       </div>
@@ -254,7 +245,7 @@ function ProfileUsers() {
                         onClick={openModal1}
                       >
                         <span className="font-bold max-md:text-sm">
-                          {profile.followers}{" "}
+                          {profile.followers?.length}{" "}
                           <span className="text-black/20 dark:text-white/30">
                             Followers
                           </span>
@@ -265,7 +256,7 @@ function ProfileUsers() {
                         onClick={openModal}
                       >
                         <span className="font-bold max-md:text-sm">
-                          {profile.following}{" "}
+                          {profile.following?.length}{" "}
                           <span className="text-black/20 dark:text-white/30">
                             Followings
                           </span>
@@ -311,14 +302,15 @@ function ProfileUsers() {
             title={"Following"}
             isOpen={isOpen}
             closeModal={closeModal}
-            style={`bg-white dark:bg-[#0a0a13] absolute overflow-y-scroll right-[36%] max-2xl:right-[20%] top-[16rem] max-2xl:top-[8rem] border border-white py-6 rounded-lg shadow-sm modal-content z-20 w-[25%] max-xl:hidden h-[25rem] transition-opacity duration-300 ease-out`}
+            bg={"bg-black/60"}
+            style={`bg-white dark:bg-[#0a0a13] absolute right-[36%] max-2xl:right-[25%] top-[16rem] max-2xl:top-[8rem] border border-gray-100 dark:border-white/10 pb-6 rounded-lg shadow-sm modal-content z-20 w-[25%] h-[25rem] transition-opacity duration-300 ease-out max-md:w-[70%] max-md:left-[15%] max-md:top-[27%] max-xl:w-[50%] max-md:h-[50%]`}
             content={
               <div>
                 {" "}
                 {followingUsers.map((element, key) => (
                   <a href={"/" + element._id}>
                     <div
-                      className="flex py-6 px-6 pl-10 items-center max-xl:px-0 w-full dark:hover:bg-white/20 hover:bg-black/10"
+                      className="flex py-6 px-6 pl-10 items-center w-full dark:hover:bg-white/20 hover:bg-black/10"
                       key={element._id}
                     >
                       <div className="text-center flex items-center gap-4">
@@ -345,14 +337,15 @@ function ProfileUsers() {
             isOpen={isOpen2}
             title={"Followers"}
             closeModal={closeModal1}
-            style={`bg-white dark:bg-[#0a0a13] absolute right-[36%] max-2xl:right-[20%] top-[16rem] max-2xl:top-[8rem] border border-white py-6 rounded-lg shadow-sm modal-content z-20 w-[25%] max-xl:hidden h-[25rem] transition-opacity duration-300 ease-out `}
+            bg={"bg-black/60"}
+            style={`bg-white dark:bg-[#0a0a13] absolute right-[36%] max-2xl:right-[25%] top-[16rem] max-2xl:top-[8rem] border border-gray-100 dark:border-white/10 pb-6 rounded-lg shadow-sm modal-content z-20 w-[25%] h-[25rem] transition-opacity duration-300 ease-out max-md:w-[70%] max-md:left-[15%] max-md:top-[27%] max-xl:w-[50%] max-md:h-[50%]`}
             content={
               <div>
                 {" "}
                 {followersUsers.map((element, key) => (
                   <a href={"/" + element._id}>
                     <div
-                      className="flex py-6 px-6 pl-10 items-center max-xl:px-0 w-full dark:hover:bg-white/20 hover:bg-black/10"
+                      className="flex py-6 px-6 pl-10 items-center  w-full dark:hover:bg-white/20 hover:bg-black/10"
                       key={element._id}
                     >
                       <div className="text-center flex items-center gap-4">
@@ -375,7 +368,7 @@ function ProfileUsers() {
           />
         )}
       </div>
-      <div className="pr-[4rem] pt-[4rem]">
+      <div className="pr-[4rem] pt-[4rem] max-2xl:hidden">
         <Recomendations />
       </div>
     </>

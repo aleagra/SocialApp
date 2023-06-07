@@ -41,7 +41,7 @@ function Chat() {
   return (
     <>
       <Aside />
-      <div className=" bg-white shadow-md dark:bg-[#1e1f23] grid grid-cols-[25%,75%] xl:col-start-2">
+      <div className=" bg-white shadow-md dark:bg-[#1e1f23] grid grid-cols-[25%,75%] xl:col-start-2 max-xl:row-start-1 ">
         <Contacts contacts={contacts} changeChat={handleChatChange} />
         {currentChat === undefined ? (
           <Welcome />
@@ -49,11 +49,13 @@ function Chat() {
           <ChatContainer currentChat={currentChat} socket={socket} />
         )}
       </div>
-      <NavResponsive />
+      <div className="row-start-2">
+        <NavResponsive />
+      </div>
     </>
   );
 }
 export default Wrapper(
   Chat,
-  "relative h-screen grid grid-cols-[300px,1fr] max-xl:grid-cols-[1fr]"
+  "relative h-screen grid grid-cols-[300px,1fr] max-xl:grid-cols-[1fr] max-xl:grid-rows-[1fr,50px]"
 );

@@ -147,7 +147,7 @@ const Aside = () => {
             onClick={link.onClick}
             to={link.to}
             activeClassName={link.activeClassName}
-            className="flex gap-4 p-8 max-lg:p-2 hover:bg-gray-100 dark:hover:bg-white/10 max-2xl:justify-center  px-12 max-2xl:px-6 w-full color capitalize"
+            className="flex gap-4 p-8 max-lg:p-2 hover:bg-gray-100 dark:hover:bg-white/10 max-2xl:pl-16 px-12 max-2xl:px-6 w-full color capitalize"
           >
             {link.icon}
             <span>{link.text}</span>
@@ -155,7 +155,7 @@ const Aside = () => {
         ) : (
           <button
             onClick={link.onClick}
-            className="flex gap-4 p-8 max-lg:p-2 hover:bg-gray-100 dark:hover:bg-white/10 max-2xl:justify-center px-12 max-2xl:px-6 w-full color capitalize"
+            className="flex gap-4 p-8 max-lg:p-2 hover:bg-gray-100 dark:hover:bg-white/10 max-2xl:pl-16 px-12 max-2xl:px-6 w-full color capitalize"
           >
             {link.icon}
             <span>{link.text}</span>
@@ -199,7 +199,7 @@ const Aside = () => {
             {renderNavLinks()}
 
             <li
-              className="p-8 px-12 h-fit w-full mb-16 max-2xl:mb-[15px] max-2xl:px-6 max-2xl:text-sm  text-xl absolute bottom-0 flex gap-4 capitalize cursor-pointer hover:bg-black/30 dark:hover:bg-white/10 color max-2xl:justify-center -tracking-tighter"
+              className="p-8 px-12 h-fit w-full mb-16 max-2xl:mb-[15px] max-2xl:px-6 max-2xl:text-sm  max-2xl:pl-16 text-xl absolute bottom-0 flex gap-4 capitalize cursor-pointer hover:bg-gray-100 dark:hover:bg-white/10 color -tracking-tighter"
               onClick={openModal}
             >
               <BarsIcon />

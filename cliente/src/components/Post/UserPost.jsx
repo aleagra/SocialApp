@@ -102,14 +102,14 @@ const userPost = () => {
               <p className="whitespace-nowrap text-lg capitalize text font-semibold">
                 {userData?.fullName}
               </p>
-              <input
-                type="text"
+              <textarea
                 placeholder="What's on your mind?"
-                className="rounded-md flex justify-center m-auto bg-transparent w-full text-xl outline-none"
-                maxLength={100}
+                className="rounded-md flex justify-center mt-2 h-[75px] bg-transparent px-4 w-full text-xl outline-none border border-gray-100 dark:border-white/10"
+                maxLength={200}
                 required
                 value={inputStr}
                 onChange={(e) => setInputStr(e.target.value)}
+                style={{ resize: "none" }}
               />
               {file && (
                 <div className="relative">

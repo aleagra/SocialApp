@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 
-const Modal = ({ isOpen, closeModal, content, style, title }) => {
+const Modal = ({ isOpen, closeModal, content, style, title, bg }) => {
   const modalRef = useRef(null);
 
   useEffect(() => {
@@ -24,9 +24,9 @@ const Modal = ({ isOpen, closeModal, content, style, title }) => {
   return (
     <>
       {isOpen && (
-        <div className="fixed inset-0 flex items-center z-[100] bg-black/50">
+        <div className={`fixed inset-0 flex items-center z-[100] ${bg} `}>
           <div ref={modalRef} className={style}>
-            <div className="w-full relative py-4 flex justify-center border-b-2">
+            <div className="w-full relative py-4 flex justify-center border-b-2 dark:border-white/10 border-gray-100">
               <p className="text-center dark:text-white">{title}</p>
               <svg
                 xmlns="http://www.w3.org/2000/svg"

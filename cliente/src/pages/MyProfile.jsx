@@ -250,7 +250,8 @@ function Profile() {
                   title={"Following"}
                   isOpen={isOpen}
                   closeModal={closeModal}
-                  style={`bg-white dark:bg-[#0a0a13] absolute right-[36%] max-2xl:right-[20%] top-[16rem] max-2xl:top-[8rem] border border-white py-6 rounded-lg shadow-sm modal-content z-20 w-[25%] h-[25rem] transition-opacity duration-300 ease-out max-md:w-full max-md:left-0 max-md:top-0 max-xl:w-[50%] max-md:h-[94%]`}
+                  bg={"bg-black/60"}
+                  style={`bg-white dark:bg-[#0a0a13] absolute right-[36%] max-2xl:right-[25%] top-[16rem] max-2xl:top-[8rem] border border-gray-100 dark:border-white/10 pb-6 rounded-lg shadow-sm modal-content z-20 w-[25%] h-[25rem] transition-opacity duration-300 ease-out max-md:w-[70%] max-md:left-[15%] max-md:top-[27%] max-xl:w-[50%] max-md:h-[50%]`}
                   content={
                     <div>
                       {" "}
@@ -291,7 +292,8 @@ function Profile() {
                   isOpen={isOpen2}
                   title={"Followers"}
                   closeModal={closeModal2}
-                  style={`bg-white dark:bg-[#0a0a13] absolute right-[36%] max-2xl:right-[20%] top-[16rem] max-2xl:top-[8rem] border border-white py-6 rounded-lg shadow-sm modal-content z-20 w-[25%] h-[25rem] transition-opacity duration-300 ease-out max-md:w-full max-md:left-0 max-md:top-0 max-xl:w-[50%] max-md:h-[94%]`}
+                  bg={"bg-black/60"}
+                  style={`bg-white dark:bg-[#0a0a13] absolute right-[36%] max-2xl:right-[25%] top-[16rem] max-2xl:top-[8rem] border border-gray-100 dark:border-white/10 pb-6 rounded-lg shadow-sm modal-content z-20 w-[25%] h-[25rem] transition-opacity duration-300 ease-out max-md:w-[70%] max-md:left-[15%] max-md:top-[27%] max-xl:w-[50%] max-md:h-[50%]`}
                   content={
                     <div>
                       {" "}
@@ -326,7 +328,7 @@ function Profile() {
         </div>
       </form>
       {showModal && (
-        <div className="fixed top-0 left-[12rem] max-xl:left-0 w-screen max-xl:px-8 h-screen bg-black bg-opacity-50 flex justify-center ">
+        <div className="fixed top-0 left-[2rem] max-xl:left-0 w-screen max-xl:px-8 h-screen bg-black bg-opacity-50 flex justify-center ">
           <div className="bg-white dark:bg-[#0a0a13] h-[26rem] max-xl:w-full dark:text-white mt-20 w-[25%] rounded-lg relative py-6">
             <div
               className="absolute left-10 top-8 cursor-pointer"

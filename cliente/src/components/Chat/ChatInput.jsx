@@ -20,28 +20,27 @@ export default function ChatInput({ handleSendMsg }) {
   };
 
   return (
-    <section className="flex w-full px-12 max-xl:px-5 relative z-0 max-sm:mt-10 max-md:mt-16 max-lg:mt-28 lg:mt-[6rem]">
-      <label>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth={1.5}
-          stroke="currentColor"
-          className="w-8 h-8 fill cursor-pointer absolute max-xl:left-8 max-xl:top-4 top-4 left-16 hover:bg-white/30 hover:rounded-md"
-          onClick={() => setShowPicker((val) => !val)}
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M15.182 15.182a4.5 4.5 0 01-6.364 0M21 12a9 9 0 11-18 0 9 9 0 0118 0zM9.75 9.75c0 .414-.168.75-.375.75S9 10.164 9 9.75 9.168 9 9.375 9s.375.336.375.75zm-.375 0h.008v.015h-.008V9.75zm5.625 0c0 .414-.168.75-.375.75s-.375-.336-.375-.75.168-.75.375-.75.375.336.375.75zm-.375 0h.008v.015h-.008V9.75z"
-          />
-        </svg>
-      </label>
-
+    <section className="flex w-full px-12 max-xl:px-5 relative z-0 items-end">
       {showPicker && <Picker onEmojiClick={handleEmojiClick} />}
 
-      <form className="flex h-16 w-full" onSubmit={sendChat}>
+      <form className="flex h-16 w-full relative" onSubmit={sendChat}>
+        <label>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="w-8 h-8 fill cursor-pointer absolute max-xl:left-2 xl:left-4 top-4 left-16 hover:bg-white/30 hover:rounded-md"
+            onClick={() => setShowPicker((val) => !val)}
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M15.182 15.182a4.5 4.5 0 01-6.364 0M21 12a9 9 0 11-18 0 9 9 0 0118 0zM9.75 9.75c0 .414-.168.75-.375.75S9 10.164 9 9.75 9.168 9 9.375 9s.375.336.375.75zm-.375 0h.008v.015h-.008V9.75zm5.625 0c0 .414-.168.75-.375.75s-.375-.336-.375-.75.168-.75.375-.75.375.336.375.75zm-.375 0h.008v.015h-.008V9.75z"
+            />
+          </svg>
+        </label>
         <input
           type="text"
           onChange={(e) => setMsg(e.target.value)}
@@ -55,7 +54,7 @@ export default function ChatInput({ handleSendMsg }) {
             viewBox="0 0 24 24"
             strokeWidth={1.5}
             stroke="currentColor"
-            className="w-9 h-9 fill absolute max-xl:top-4 max-xl:right-8 top-4 right-16 z-10 hover:bg-white/30 hover:rounded-md"
+            className="w-9 h-9 fill absolute max-xl:right-3 xl:right-4 top-3 right-16 z-10 hover:bg-white/30 hover:rounded-md"
           >
             <path
               strokeLinecap="round"

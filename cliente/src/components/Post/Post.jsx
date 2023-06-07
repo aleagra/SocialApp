@@ -162,7 +162,14 @@ const Post = ({ post, userprofile }) => {
             </div>
           </div>
         </div>
-        <p className="px-11 py-4 text-lg max-lg:text-base">{post.desc}</p>
+        <div className="flex w-full flex-col flex-wrap">
+          <p
+            className="px-11 py-4 text-lg max-lg:text-base break-words"
+            style={{ wordBreak: "break-word" }}
+          >
+            {post.desc}
+          </p>
+        </div>
         <div className="max-h-[400px] flex justify-center">
           <img
             className="rounded-md object-cover"
@@ -270,39 +277,40 @@ const Post = ({ post, userprofile }) => {
         )}
       </div>
       {isOpen && (
-    <Modal
-    title={"Likes"}
-    isOpen={isOpen}
-    closeModal={closeModal}
-    style={`bg-white dark:bg-[#0a0a13] border border-black/10 dark:border-white/20 absolute overflow-y-scroll right-[40%] top-30 py-6 rounded-lg modal-content w-[30%] h-[25rem] max-xl:hidden transition-opacity duration-300 ease-out`}
-    content={
-      <div>
-       {" "}
-                {likesUsers.map((element, key) => (
-                  <a href={"/" + element._id}>
-                    <div
-                      className="flex  py-6 px-6 pl-10  items-center max-xl:px-0 w-full dark:hover:bg-white/20 hover:bg-black/10"
-                      key={element._id}
-                    >
-                      <div className="text-center flex items-center gap-4">
-                        <ReactSVG
-                          src={`data:image/svg+xml;base64,${btoa(
-                            element.avatarImage
-                          )}`}
-                          className="color-item rounded-full w-16 h-16"
-                        />
+        <Modal
+          title={"Likes"}
+          isOpen={isOpen}
+          closeModal={closeModal}
+          bg={"bg-black/60"}
+          style={`bg-white dark:bg-[#0a0a13] border border-black/10 dark:border-white/20 absolute overflow-y-scroll right-[40%] z-30 max-2xl:right-[25%] top-30 py-6 rounded-lg modal-content w-[30%] h-[25rem] transition-opacity duration-300 ease-out max-md:w-full max-md:left-0 max-md:top-[25%] max-xl:w-[50%] max-md:h-[50%]`}
+          content={
+            <div>
+              {" "}
+              {likesUsers.map((element, key) => (
+                <a href={"/" + element._id}>
+                  <div
+                    className="flex  py-6 px-6 pl-10 max-md:pl-8 max-md:py-20 items-center max-xl:px-0 w-full dark:hover:bg-white/20 hover:bg-black/10"
+                    key={element._id}
+                  >
+                    <div className="text-center flex items-center gap-4 max-md:gap-12">
+                      <ReactSVG
+                        src={`data:image/svg+xml;base64,${btoa(
+                          element.avatarImage
+                        )}`}
+                        className="color-item rounded-full w-16 h-16"
+                      />
 
-                        <h3 className="text capitalize font-bold text-xl">
-                          {element.username}
-                        </h3>
-                      </div>
+                      <h3 className="text capitalize font-bold text-xl">
+                        {element.username}
+                      </h3>
                     </div>
-                  </a>
-                ))}
-      </div>
-    }
-  />
-    )}
+                  </div>
+                </a>
+              ))}
+            </div>
+          }
+        />
+      )}
     </div>
   );
 };

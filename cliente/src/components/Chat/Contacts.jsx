@@ -23,7 +23,7 @@ export default function Contacts({ contacts, changeChat }) {
                 key={contact._id}
                 className={`contact max-xl:flex-col max-xl:gap-2 max-xl:p-2 max-xl:my-4 pl-10 ${
                   index === currentSelected
-                    ? "dark:bg-white/20 bg-black/10 w-full px-3 py-6 text flex items-center gap-6  cursor-pointer "
+                    ? "dark:bg-white/10 bg-gray-100 w-full px-3 py-6 text flex items-center gap-6  cursor-pointer "
                     : " text-black dark:text-white px-3 py-6 flex items-center gap-6 cursor-pointer "
                 }`}
                 onClick={() => changeCurrentChat(index, contact)}

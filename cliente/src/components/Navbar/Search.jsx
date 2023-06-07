@@ -68,7 +68,7 @@ function Search() {
                 if (regex.test(Element.username.toLowerCase())) {
                   return (
                     <a
-                      className="w-full hover:bg-black/10 hover:shadow-md dark:hover:bg-[#131324] dark:border dark:hover:border dark:hover:border-white/20"
+                      className="w-full border border-gray-200 dark:border-gray-100/20 hover:bg-gray-100 dark:hover:bg-white/10"
                       onClick={(e) => {
                         search(Element._id);
                       }}
@@ -118,7 +118,7 @@ function Search() {
                   "i"
                 ).test(Element.username.toLowerCase())
               ) && (
-                <div className="h-[128px] bg-[#f7f7f7] flex items-center dark:text-white justify-center dark:bg-[#0a0a13]">
+                <div className="h-[128px]  flex items-center dark:text-white justify-center">
                   <p className="text-xl">User not found.</p>
                 </div>
               )}

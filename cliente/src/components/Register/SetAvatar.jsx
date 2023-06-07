@@ -86,17 +86,16 @@ export default function SetAvatar() {
   return (
     <>
       <section className="flex justify-center items-center flex-col gap-[3rem] bg-[#f7f7f7]  dark:bg-[#0a0a13] h-[100vh] w-[100vw]">
-        <div className="flex flex-col w-full h-full gap-y-20 justify-center items-center">
-          <h1 className="text-5xl capitalize font-semibold dark:text-white">
+        <div className="flex flex-col w-full h-full gap-y-20 max-md:gap-12 justify-center items-center">
+          <h1 className="text-5xl capitalize font-semibold dark:text-white max-xl:text-2xl max-md:px-12 max-md:text-center">
             Select an avatar as your profile image
           </h1>
-          <div className="w-full justify-center flex gap-5">
+          <div className="w-full justify-center flex flex-wrap gap-5">
             {avatars.map((avatar, index) => (
               <ReactSVG
                 key={index}
                 src={`data:image/svg+xml;base64,${btoa(avatar)}`}
-                style={{ width: "10%", height: "auto" }}
-                className={`p-7 pb-9 rounded-full cursor-pointer bg-white  shadow-sm ${
+                className={`p-7 pb-9 rounded-full cursor-pointer w-[10%] h-auto max-md:w-[27%] max-xl:w-[15%] bg-white shadow-sm max-xl:p-4 ${
                   avatar === selectedAvatar ? "color-item z-20" : ""
                 }`}
                 onClick={() => setSelectedAvatar(avatar)}
