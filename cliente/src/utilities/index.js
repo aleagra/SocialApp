@@ -4,6 +4,7 @@ export { default as ChatIcon } from './icons/ChatIcon';
 export { default as CloseIcon } from './icons/CloseIcon';
 export { default as EmojiIcon } from './icons/EmojiIcon';
 export { default as HomeIcon } from './icons/HomeIcon';
+export { default as ImgIcon } from './icons/ImgIcon';
 export { default as PenIcon } from './icons/PenIcon';
 export { default as SearchIcon } from './icons/SearchIcon';
 export { default as SendIcon } from './icons/SendIcon';

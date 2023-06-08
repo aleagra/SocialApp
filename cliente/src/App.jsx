@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { ThemeProvider } from "./components/Navbar/ThemeContext";
+import { ThemeProvider } from "./context/ThemeContext";
 import { AuthContext } from "./context/AuthContext";
 import { Chat, Home, Login, Register } from "./pages";
 import { SetAvatar } from "./components/Register";

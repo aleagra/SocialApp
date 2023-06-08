@@ -1,26 +1,13 @@
 import React from "react";
-import { useState, useEffect, useContext } from "react";
-import axios from "axios";
+import { useContext } from "react";
 import Post from "../Post/Post";
 import UserPost from "../Post/UserPost";
 import { AuthContext } from "../../context/AuthContext";
+import { FetchData } from "../User";
 
 export function HomeCenter() {
   const { user } = useContext(AuthContext);
-  const url = `http://localhost:5050/posts/friends/${user}`;
-  const [data, setData] = useState([]);
-
-  const fetchData = async () => {
-    const res = await axios.get(url);
-    setData(
-      res.data.sort((p1, p2) => {
-        return new Date(p2.createdAt) - new Date(p1.createdAt);
-      })
-    );
-  };
-  useEffect(() => {
-    fetchData();
-  }, []);
+  const data = FetchData(`http://localhost:5050/posts/friends/${user}`);
   return (
     <>
       <div className="my-[4rem] max-md:mb-28 max-md:mt-0">

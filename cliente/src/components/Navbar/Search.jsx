@@ -13,6 +13,7 @@ function Search() {
   const [buscar, setBuscar] = useState("");
   const [usuariosEncontrados, setUsuariosEncontrados] = useState(true);
   const navigate = useNavigate();
+
   useEffect(() => {
     async function obtenerUsuarios() {
       try {
@@ -31,7 +32,6 @@ function Search() {
   }, []);
 
   useEffect(() => {
-    // Verificar si se encontraron usuarios
     const usuariosFiltrados = users.filter((Element) =>
       Element.username.trim().toLowerCase().startsWith(buscar.toLowerCase())
     );

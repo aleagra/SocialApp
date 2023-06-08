@@ -10,15 +10,10 @@ import { Link } from "react-router-dom";
 import NavResponsive from "../components/Navbar/NavResponsive";
 import { io } from "socket.io-client";
 import Wrapper from "../wrapper/wrapper";
+import { FetchFollowersUsers, FetchFollowingUsers } from "../components/User";
 
 function Profile() {
-  const {
-    user,
-    userData,
-    followingCount,
-    followedUserData,
-    setFollowingCount,
-  } = useContext(AuthContext);
+  const { user, userData, setFollowingCount } = useContext(AuthContext);
   const [fullName, setFullName] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [isOpen2, setIsOpen2] = useState(false);
@@ -31,7 +26,6 @@ function Profile() {
 
   const openModal = () => {
     setIsOpen(true);
-    console.log("sazdas");
   };
 
   const closeModal = () => {
@@ -72,44 +66,9 @@ function Profile() {
     );
     window.location.reload();
   };
-  useEffect(() => {
-    const fetchFollowingUsers = async () => {
-      try {
-        if (Array.isArray(userData?.following)) {
-          const userPromises = userData.following.map((userId) =>
-            axios.get(`http://localhost:5050/users/${userId}`)
-          );
 
-          const users = await Promise.all(userPromises);
-          const followingUsersData = users.map((response) => response.data);
-          setFollowersUsers(followingUsersData);
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    fetchFollowingUsers();
-  }, [userData?.following]);
-
-  useEffect(() => {
-    const fetchFollowingUsers = async () => {
-      try {
-        if (Array.isArray(userData?.followers)) {
-          const userPromises = userData.followers.map((userId) =>
-            axios.get(`http://localhost:5050/users/${userId}`)
-          );
-          const users = await Promise.all(userPromises);
-          const followingUsersData = users.map((response) => response.data);
-          setFollowingUsers(followingUsersData);
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    fetchFollowingUsers();
-  }, [userData?.followers]);
+  FetchFollowersUsers(userData, setFollowersUsers);
+  FetchFollowingUsers(userData, setFollowingUsers);
 
   const [showModal, setShowModal] = useState(false);
 
@@ -252,7 +211,7 @@ function Profile() {
                   content={
                     <div>
                       {" "}
-                      {followersUsers.map((element, key) => (
+                      {followingUsers.map((element, key) => (
                         <div className="flex w-full px-3 items-center justify-between dark:hover:bg-white/20 hover:bg-black/10 ">
                           <a href={"/" + element._id}>
                             <div
@@ -298,7 +257,7 @@ function Profile() {
                   content={
                     <div>
                       {" "}
-                      {followingUsers.map((element, key) => (
+                      {followersUsers.map((element, key) => (
                         <a href={"/" + element._id}>
                           <div
                             className="flex py-6 px-6 pl-10 items-center w-full dark:hover:bg-white/20 hover:bg-black/10"

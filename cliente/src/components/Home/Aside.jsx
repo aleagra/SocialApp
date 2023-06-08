@@ -14,8 +14,7 @@ import {
   SearchIcon,
   UserIcon,
 } from "../../utilities";
-import FetchFollowersUsers from "../User/FetchFollowingUsers";
-import FetchFollowingUsers from "../User/FetchFollowingUsers";
+import { FetchFollowingUsers } from "../User";
 
 const Aside = () => {
   let btn = document.getElementById("btn");

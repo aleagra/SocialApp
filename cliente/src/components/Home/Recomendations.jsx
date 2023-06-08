@@ -5,26 +5,20 @@ import { ReactSVG } from "react-svg";
 import { io } from "socket.io-client";
 import { Link } from "react-router-dom";
 function Recomendations() {
-  const {
-    user,
-    setFollowingCount,
-    userData,
-    setFollowedUserData,
-    updateFollowedUserData,
-  } = useContext(AuthContext);
+  const { user, setFollowingCount, userData, updateFollowedUserData } =
+    useContext(AuthContext);
   const [notFollowing, setNotFollowing] = useState([]);
   const [followersUsers, setFollowersUsers] = useState([userData?.following]);
   const socket = useRef(null);
+
   useEffect(() => {
     socket.current = io("http://localhost:5050");
     socket.current.emit("add-user", user);
-
     socket.current.on("follower-count-updated", ({ userId, followerCount }) => {
       if (userId === user) {
         setFollowingCount(followerCount);
       }
     });
-
     return () => {
       socket.current.disconnect();
     };
@@ -75,17 +69,11 @@ function Recomendations() {
 
   const handleFollow = async (id) => {
     try {
-      // Obtener los datos de la persona que se va a seguir
       const response = await axios.get(`http://localhost:5050/users/${id}`);
       const followedUserData = response.data;
-
-      // Realizar la actualización en la base de datos y en el estado de seguimiento
-
       await axios.post(`http://localhost:5050/users/follow/${user}`, {
         follower: id,
       });
-
-      // Utilizar los datos almacenados para mostrar la información actualizada
       setFollowersUsers((prevFollowers) => {
         const updatedList = [...prevFollowers];
         updatedList.push(followedUserData);
@@ -101,12 +89,12 @@ function Recomendations() {
         userId: user,
         followerId: id,
       });
-
       updateFollowedUserData((prevData) => [...prevData, followedUserData]);
     } catch (error) {
       console.error(error);
     }
   };
+
   return (
     <>
       {notFollowing.length > 0 && (

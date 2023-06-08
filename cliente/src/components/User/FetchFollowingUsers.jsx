@@ -6,7 +6,7 @@ const FetchFollowingUsers = (userData, setFollowingUsers) => {
     const fetchFollowingUsers = async () => {
       try {
         if (Array.isArray(userData?.following)) {
-          const userPromises = userData.followers.map((userId) =>
+          const userPromises = userData.following.map((userId) =>
             axios.get(`http://localhost:5050/users/${userId}`)
           );
 

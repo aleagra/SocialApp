@@ -26,8 +26,6 @@ export default function SetAvatar() {
       try {
         const totalAvatars = 100;
         const selectedIndices = [];
-
-        // Generar 5 índices aleatorios únicos
         while (selectedIndices.length < 5) {
           const randomIndex = Math.floor(Math.random() * totalAvatars);
           if (!selectedIndices.includes(randomIndex)) {
@@ -103,7 +101,7 @@ export default function SetAvatar() {
             ))}
           </div>
           <button
-            onClick={() => setProfilePicture(dispatch)} // Llamada a setProfilePicture con el dispatch como argumento
+            onClick={() => setProfilePicture(dispatch)}
             className="text-white py-[1rem] px-[2rem] border-none font-bold text-[1rem] rounded-xl uppercase color-item"
           >
             Finish

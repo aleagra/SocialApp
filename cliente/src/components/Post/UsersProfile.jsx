@@ -9,14 +9,12 @@ import { ReactSVG } from "react-svg";
 import { AuthContext } from "../../context/AuthContext";
 import { NavResponsive } from "../Navbar";
 import Wrapper from "../../wrapper/wrapper";
+import { FetchData, FetchFollowersUsers, FetchFollowingUsers } from "../User";
 function ProfileUsers() {
-  const { user, userData, followingCount, setFollowingCount } =
-    useContext(AuthContext);
+  const { user, setFollowingCount } = useContext(AuthContext);
   const socket = useRef(null);
-  const [data, setData] = useState([]);
   const [isFollowing, setIsFollowing] = useState(false);
   let { id } = useParams();
-  const posts = `http://localhost:5050/posts/user/${id}`;
   const url = `http://localhost:5050/users/${id}`;
   const [isOpen, setIsOpen] = useState(false);
   const [isOpen2, setIsOpen2] = useState(false);
@@ -56,17 +54,7 @@ function ProfileUsers() {
     fetchUser();
   }, []);
 
-  const fetchData = async () => {
-    const res = await axios.get(posts);
-    setData(
-      res.data.sort((p1, p2) => {
-        return new Date(p2.createdAt) - new Date(p1.createdAt);
-      })
-    );
-  };
-  useEffect(() => {
-    fetchData();
-  }, []);
+  const data = FetchData(`http://localhost:5050/posts/user/${id}`);
 
   const fetchPost = async () => {
     const res = await axios.get(urlPost);
@@ -85,7 +73,6 @@ function ProfileUsers() {
         setFollowingCount(followerCount);
       }
     });
-
     const checkFollowingStatus = async () => {
       try {
         const response = await axios.get(
@@ -121,7 +108,6 @@ function ProfileUsers() {
           follower: id,
         });
       }
-
       socket.current.emit("follow-user", {
         userId: user,
         followerId: id,
@@ -148,6 +134,7 @@ function ProfileUsers() {
       console.error(error);
     }
   };
+
   const openModal = () => {
     setIsOpen(true);
   };
@@ -163,38 +150,8 @@ function ProfileUsers() {
     setIsOpen2(false);
   };
 
-  useEffect(() => {
-    const fetchFollowingUsers = async () => {
-      try {
-        const userPromises = profile.followers.map((userId) =>
-          axios.get(`http://localhost:5050/users/${userId}`)
-        );
-
-        const users = await Promise.all(userPromises);
-        const followingUsersData = users.map((response) => response.data);
-        setFollowersUsers(followingUsersData);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    fetchFollowingUsers();
-  }, [profile.followers]);
-  useEffect(() => {
-    const fetchFollowingUsers = async () => {
-      try {
-        const userPromises = profile.following.map((userId) =>
-          axios.get(`http://localhost:5050/users/${userId}`)
-        );
-        const users = await Promise.all(userPromises);
-        const followingUsersData = users.map((response) => response.data);
-        setFollowingUsers(followingUsersData);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    fetchFollowingUsers();
-  }, [profile.following]);
+  FetchFollowersUsers(profile, setFollowersUsers);
+  FetchFollowingUsers(profile, setFollowingUsers);
   return (
     <>
       <div className="w-[300px] fixed z-30">
