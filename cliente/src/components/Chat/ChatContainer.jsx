@@ -14,7 +14,7 @@ export default function ChatContainer({ currentChat, socket }) {
   useEffect(() => {
     const fetchMessages = async () => {
       const response = await axios.post(
-        `http://localhost:5050/messages/getmsg`,
+        `https://socialapp-backend-production-a743.up.railway.app/messages/getmsg`,
         {
           from: user,
           to: currentChat._id,
@@ -33,11 +33,14 @@ export default function ChatContainer({ currentChat, socket }) {
       msg,
     });
 
-    await axios.post("http://localhost:5050/messages/addmsg", {
-      from: user,
-      to: currentChat._id,
-      message: msg,
-    });
+    await axios.post(
+      "https://socialapp-backend-production-a743.up.railway.app/addmsg",
+      {
+        from: user,
+        to: currentChat._id,
+        message: msg,
+      }
+    );
 
     const msgs = [...messages];
     msgs.push({ fromSelf: true, message: msg });

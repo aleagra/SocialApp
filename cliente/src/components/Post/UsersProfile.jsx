@@ -20,7 +20,7 @@ function ProfileUsers() {
   const socket = useRef(null);
   const [isFollowing, setIsFollowing] = useState(false);
   let { id } = useParams();
-  const url = `http://localhost:5050/users/${id}`;
+  const url = `https://socialapp-backend-production-a743.up.railway.app/users/${id}`;
   const [isOpen, setIsOpen] = useState(false);
   const [isOpen2, setIsOpen2] = useState(false);
   const [followersUsers, setFollowersUsers] = useState([]);
@@ -58,11 +58,18 @@ function ProfileUsers() {
     fetchUser();
   }, []);
 
-  const data = FetchData(`http://localhost:5050/posts/user/${id}`);
-  FetchPost(`http://localhost:5050/posts/user/${id}`, setPost);
+  const data = FetchData(
+    `https://socialapp-backend-production-a743.up.railway.app/posts/user/${id}`
+  );
+  FetchPost(
+    `https://socialapp-backend-production-a743.up.railway.app/posts/user/${id}`,
+    setPost
+  );
 
   useEffect(() => {
-    socket.current = io("http://localhost:5050");
+    socket.current = io(
+      "https://socialapp-backend-production-a743.up.railway.app"
+    );
     socket.current.emit("add-user", user);
 
     socket.current.on("follower-count-updated", ({ userId, followerCount }) => {
@@ -73,7 +80,7 @@ function ProfileUsers() {
     const checkFollowingStatus = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5050/users/not-following/${user}`
+          `https://socialapp-backend-production-a743.up.railway.app/users/not-following/${user}`
         );
         const notFollowingList = response.data; // Lista de personas que no sigues
 
@@ -97,13 +104,19 @@ function ProfileUsers() {
   const handleFollow = async () => {
     try {
       if (isFollowing) {
-        await axios.post(`http://localhost:5050/users/unfollow/${user}`, {
-          follower: id,
-        });
+        await axios.post(
+          `https://socialapp-backend-production-a743.up.railway.app/users/unfollow/${user}`,
+          {
+            follower: id,
+          }
+        );
       } else {
-        await axios.post(`http://localhost:5050/users/follow/${user}`, {
-          follower: id,
-        });
+        await axios.post(
+          `https://socialapp-backend-production-a743.up.railway.app/users/follow/${user}`,
+          {
+            follower: id,
+          }
+        );
       }
       socket.current.emit("follow-user", {
         userId: user,
@@ -118,9 +131,12 @@ function ProfileUsers() {
 
   const handleUnfollow = async () => {
     try {
-      await axios.post(`http://localhost:5050/users/unfollow/${user}`, {
-        follower: id,
-      });
+      await axios.post(
+        `https://socialapp-backend-production-a743.up.railway.app/users/unfollow/${user}`,
+        {
+          follower: id,
+        }
+      );
       setFollowingCount((prevCount) => prevCount - 1);
       socket.current.emit("unfollow-user", {
         userId: user,

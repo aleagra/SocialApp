@@ -35,7 +35,10 @@ const userPost = () => {
       newPost.img = fileName;
       console.log(newPost);
       try {
-        await axios.post("http://localhost:5050/upload", data);
+        await axios.post(
+          "https://socialapp-backend-production-a743.up.railway.app/upload",
+          data
+        );
       } catch (err) {}
     }
     video;
@@ -69,7 +72,10 @@ const userPost = () => {
               video: downloadURL,
             };
             try {
-              axios.post("http://localhost:5050/posts/", uploadVideo);
+              axios.post(
+                "https://socialapp-backend-production-a743.up.railway.app/posts/",
+                uploadVideo
+              );
               window.location.reload();
             } catch (err) {}
           });
@@ -79,7 +85,10 @@ const userPost = () => {
     //texto
     else
       try {
-        await axios.post("http://localhost:5050/posts/", newPost);
+        await axios.post(
+          "https://socialapp-backend-production-a743.up.railway.app/posts/",
+          newPost
+        );
         window.location.reload();
       } catch (err) {}
   };

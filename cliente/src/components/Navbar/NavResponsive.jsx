@@ -168,7 +168,9 @@ const NavResponsive = () => {
       try {
         if (Array.isArray(userData?.following)) {
           const userPromises = userData.followers.map((userId) =>
-            axios.get(`http://localhost:5050/users/${userId}`)
+            axios.get(
+              `https://socialapp-backend-production-a743.up.railway.app/users/${userId}`
+            )
           );
 
           const users = await Promise.all(userPromises);

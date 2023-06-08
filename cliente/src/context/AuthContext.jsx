@@ -31,7 +31,7 @@ export const AuthContextProvider = ({ children }) => {
       try {
         if (state.user) {
           const response = await axios.get(
-            `http://localhost:5050/users/${state.user}`
+            `https://socialapp-backend-production-a743.up.railway.app/users/${state.user}`
           );
           const user = response.data;
 

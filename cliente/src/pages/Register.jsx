@@ -61,7 +61,7 @@ const Register = () => {
     if (handleValidation()) {
       const { email, username, password, fullName } = values;
       const { data } = await axios.post(
-        "http://localhost:5050/users/register",
+        "https://socialapp-backend-production-a743.up.railway.app/users/register",
         {
           username,
           email,

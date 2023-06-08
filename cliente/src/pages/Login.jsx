@@ -28,10 +28,13 @@ export default function Login() {
       return;
     }
 
-    const { data } = await axios.post("http://localhost:5050/users/login", {
-      username,
-      password,
-    });
+    const { data } = await axios.post(
+      "https://socialapp-backend-production-a743.up.railway.app/users/login",
+      {
+        username,
+        password,
+      }
+    );
 
     if (data.status === false) {
       toast.error(data.msg, toastOptions);

@@ -57,7 +57,7 @@ export default function SetAvatar() {
       dispatch(Fetching());
 
       const response = await axios.post(
-        `http://localhost:5050/users/setavatar/${user}`,
+        `https://socialapp-backend-production-a743.up.railway.app/users/setavatar/${user}`,
         {
           image: selectedAvatar,
         }
@@ -65,9 +65,12 @@ export default function SetAvatar() {
 
       dispatch({ type: "SET_USER", payload: response.data });
 
-      await axios.put(`http://localhost:5050/posts/profileimg/${user}`, {
-        avatarImage: selectedAvatar,
-      });
+      await axios.put(
+        `https://socialapp-backend-production-a743.up.railway.app/posts/profileimg/${user}`,
+        {
+          avatarImage: selectedAvatar,
+        }
+      );
 
       dispatch(Fetching());
       navigate("/");

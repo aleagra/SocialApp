@@ -5,7 +5,9 @@ import { FetchData } from "../User";
 function MyPosts() {
   const { user } = useContext(AuthContext);
 
-  const data = FetchData(`http://localhost:5050/posts/user/${user}`);
+  const data = FetchData(
+    `https://socialapp-backend-production-a743.up.railway.app/posts/user/${user}`
+  );
   return (
     <div className="flex gap-y-12 pb-20 flex-col w-full justify-center items-center">
       {data.map((post, key) => {

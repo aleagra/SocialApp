@@ -12,7 +12,9 @@ function Recomendations() {
   const socket = useRef(null);
 
   useEffect(() => {
-    socket.current = io("http://localhost:5050");
+    socket.current = io(
+      "https://socialapp-backend-production-a743.up.railway.app"
+    );
     socket.current.emit("add-user", user);
     socket.current.on("follower-count-updated", ({ userId, followerCount }) => {
       if (userId === user) {
@@ -28,7 +30,7 @@ function Recomendations() {
     const fetchUsers = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5050/users/not-following/${user}`
+          `https://socialapp-backend-production-a743.up.railway.app/users/not-following/${user}`
         );
         const usersWithCount = response.data.map((user) => ({
           ...user,
@@ -49,7 +51,9 @@ function Recomendations() {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await axios.get(`http://localhost:5050/users/${user}`);
+        const response = await axios.get(
+          `https://socialapp-backend-production-a743.up.railway.app/users/${user}`
+        );
         const userData = response.data;
         setFollowingCount(userData?.following.length);
       } catch (error) {
@@ -69,11 +73,16 @@ function Recomendations() {
 
   const handleFollow = async (id) => {
     try {
-      const response = await axios.get(`http://localhost:5050/users/${id}`);
+      const response = await axios.get(
+        `https://socialapp-backend-production-a743.up.railway.app/users/${id}`
+      );
       const followedUserData = response.data;
-      await axios.post(`http://localhost:5050/users/follow/${user}`, {
-        follower: id,
-      });
+      await axios.post(
+        `https://socialapp-backend-production-a743.up.railway.app/users/follow/${user}`,
+        {
+          follower: id,
+        }
+      );
       setFollowersUsers((prevFollowers) => {
         const updatedList = [...prevFollowers];
         updatedList.push(followedUserData);

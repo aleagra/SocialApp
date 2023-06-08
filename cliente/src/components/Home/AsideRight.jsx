@@ -36,10 +36,15 @@ const AsideRight = () => {
 
   FetchFollowingUsers(userData, setFollowingUsers);
   FetchFollowersUsers(userData, setFollowersUsers);
-  FetchPost(`http://localhost:5050/posts/user/${user}`, setPost);
+  FetchPost(
+    `https://socialapp-backend-production-a743.up.railway.app/posts/user/${user}`,
+    setPost
+  );
 
   useEffect(() => {
-    socket.current = io("http://localhost:5050");
+    socket.current = io(
+      "https://socialapp-backend-production-a743.up.railway.app"
+    );
     socket.current.emit("add-user", user);
 
     socket.current.on("follower-count-updated", ({ userId, followerCount }) => {
@@ -55,9 +60,12 @@ const AsideRight = () => {
 
   const handleUnfollow = async (id) => {
     try {
-      await axios.post(`http://localhost:5050/users/unfollow/${user}`, {
-        follower: id,
-      });
+      await axios.post(
+        `https://socialapp-backend-production-a743.up.railway.app/users/unfollow/${user}`,
+        {
+          follower: id,
+        }
+      );
       setHiddenButtons((prevHiddenButtons) => [...prevHiddenButtons, id]);
       setFollowingCount((prevCount) => prevCount - 1);
       socket.current.emit("unfollow-user", {

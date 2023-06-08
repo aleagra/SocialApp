@@ -7,7 +7,9 @@ import { FetchData } from "../User";
 
 export function HomeCenter() {
   const { user } = useContext(AuthContext);
-  const data = FetchData(`http://localhost:5050/posts/friends/${user}`);
+  const data = FetchData(
+    `https://socialapp-backend-production-a743.up.railway.app/posts/friends/${user}`
+  );
   return (
     <>
       <div className="my-[4rem] max-md:mb-28 max-md:mt-0">

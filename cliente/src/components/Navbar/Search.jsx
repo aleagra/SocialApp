@@ -20,7 +20,7 @@ function Search() {
     async function obtenerUsuarios() {
       try {
         const response = await axios.get(
-          "http://localhost:5050/users/allusers"
+          "https://socialapp-backend-production-a743.up.railway.app/users/allusers"
         );
         const allUsers = response.data;
         const filteredUsers = allUsers.filter((users) => users._id !== user);
