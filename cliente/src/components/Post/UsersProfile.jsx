@@ -9,7 +9,12 @@ import { ReactSVG } from "react-svg";
 import { AuthContext } from "../../context/AuthContext";
 import { NavResponsive } from "../Navbar";
 import Wrapper from "../../wrapper/wrapper";
-import { FetchData, FetchFollowersUsers, FetchFollowingUsers } from "../User";
+import {
+  FetchData,
+  FetchFollowersUsers,
+  FetchFollowingUsers,
+  FetchPost,
+} from "../User";
 function ProfileUsers() {
   const { user, setFollowingCount } = useContext(AuthContext);
   const socket = useRef(null);
@@ -28,7 +33,6 @@ function ProfileUsers() {
     following: undefined,
     background: undefined,
   });
-  const urlPost = `http://localhost:5050/posts/user/${id}`;
   const [post, setPost] = useState([]);
   useEffect(() => {
     async function fetchUser() {
@@ -55,14 +59,7 @@ function ProfileUsers() {
   }, []);
 
   const data = FetchData(`http://localhost:5050/posts/user/${id}`);
-
-  const fetchPost = async () => {
-    const res = await axios.get(urlPost);
-    setPost(res.data.length);
-  };
-  useEffect(() => {
-    fetchPost();
-  }, []);
+  FetchPost(`http://localhost:5050/posts/user/${id}`, setPost);
 
   useEffect(() => {
     socket.current = io("http://localhost:5050");

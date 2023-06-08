@@ -10,7 +10,11 @@ import { Link } from "react-router-dom";
 import NavResponsive from "../components/Navbar/NavResponsive";
 import { io } from "socket.io-client";
 import Wrapper from "../wrapper/wrapper";
-import { FetchFollowersUsers, FetchFollowingUsers } from "../components/User";
+import {
+  FetchFollowersUsers,
+  FetchFollowingUsers,
+  FetchPost,
+} from "../components/User";
 
 function Profile() {
   const { user, userData, setFollowingCount } = useContext(AuthContext);
@@ -20,7 +24,6 @@ function Profile() {
   const [followersUsers, setFollowersUsers] = useState([]);
   const [followingUsers, setFollowingUsers] = useState([]);
   const [hiddenButtons, setHiddenButtons] = useState([]);
-  const url = `http://localhost:5050/posts/user/${user}`;
   const [post, setPost] = useState([]);
   const socket = useRef(null);
 
@@ -80,13 +83,7 @@ function Profile() {
     setShowModal(false);
   };
 
-  const fetchData = async () => {
-    const res = await axios.get(url);
-    setPost(res.data.length);
-  };
-  useEffect(() => {
-    fetchData();
-  }, []);
+  FetchPost(`http://localhost:5050/posts/user/${user}`, setPost);
 
   useEffect(() => {
     socket.current = io("http://localhost:5050");

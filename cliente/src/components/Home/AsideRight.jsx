@@ -6,7 +6,7 @@ import Recomendations from "./Recomendations";
 import { ReactSVG } from "react-svg";
 import { io } from "socket.io-client";
 import Modal from "./Modal";
-import { FetchFollowersUsers, FetchFollowingUsers } from "../User";
+import { FetchFollowersUsers, FetchFollowingUsers, FetchPost } from "../User";
 const AsideRight = () => {
   const { user, userData, followingCount, setFollowingCount } =
     useContext(AuthContext);
@@ -15,8 +15,7 @@ const AsideRight = () => {
   const [followingUsers, setFollowingUsers] = useState([]);
   const [followersUsers, setFollowersUsers] = useState([]);
   const [hiddenButtons, setHiddenButtons] = useState([]);
-  const url = `http://localhost:5050/posts/user/${user}`;
-  const [data, setData] = useState([]);
+  const [post, setPost] = useState([]);
   const socket = useRef(null);
 
   const openModal = () => {
@@ -35,16 +34,9 @@ const AsideRight = () => {
     setIsOpen2(false);
   };
 
-  FetchFollowingUsers(userData, setFollowingUsers, userData?.following);
-  FetchFollowersUsers(userData, setFollowersUsers, userData?.followers);
-
-  const fetchData = async () => {
-    const res = await axios.get(url);
-    setData(res.data.length);
-  };
-  useEffect(() => {
-    fetchData();
-  }, []);
+  FetchFollowingUsers(userData, setFollowingUsers);
+  FetchFollowersUsers(userData, setFollowersUsers);
+  FetchPost(`http://localhost:5050/posts/user/${user}`, setPost);
 
   useEffect(() => {
     socket.current = io("http://localhost:5050");
@@ -97,7 +89,7 @@ const AsideRight = () => {
             <div className="my-6 gap-4 flex w-[100%]">
               <div className="flex w-[33%] flex-col items-center">
                 <Link to="/Profile" className="text-center text-lg">
-                  <h1 className="font-bold">{data}</h1>
+                  <h1 className="font-bold">{post}</h1>
                   <h3 className="font-extralight opacity-60">Post</h3>
                 </Link>
               </div>
