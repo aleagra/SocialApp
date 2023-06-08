@@ -11,51 +11,56 @@ import {
 import { NavLink } from "react-router-dom";
 import Modal from "./Modal";
 import FetchFollowingUsers from "../User/FetchFollowingUsers";
+import "../../assets/css/index.css";
+import { ReactSVG } from "react-svg";
 
 export const RenderNavLink = () => {
   const { userData } = useContext(AuthContext);
   const [isOpen2, setIsOpen2] = useState(false);
   const [followingUsers, setFollowingUsers] = useState([]);
 
-  const openModal2 = () => {
-    setIsOpen2(true);
+  const openModal = () => {
+    setIsOpen2(!isOpen2);
   };
-  const closeModal2 = () => {
-    setIsOpen2(false);
-  };
+
+  const closeModal = () => {
+    setIsOpen2(!isOpen2);
+  }
+
+
   const navLinks = [
     {
       to: "/",
       icon: <HomeIcon />,
       text: "home",
       activeClassName: "active",
-      onClick: closeModal2,
+      onClick: closeModal,
     },
     {
       to: "/search",
       icon: <SearchIcon />,
       text: "search",
       activeClassName: "active",
-      onClick: closeModal2,
+      onClick: closeModal,
     },
     {
       icon: <BellIcon />,
       text: "Notifications",
-      onClick: openModal2,
+      onClick: openModal,
     },
     {
       to: "/chat",
       icon: <ChatIcon />,
       text: "chat",
       activeClassName: "active",
-      onClick: closeModal2,
+      onClick: closeModal,
     },
     {
       to: "/Profile",
       icon: <UserIcon />,
       text: "Profile",
       activeClassName: "active",
-      onClick: closeModal2,
+      onClick: closeModal,
     },
   ];
   FetchFollowingUsers(userData, setFollowingUsers);
@@ -92,33 +97,15 @@ export const RenderNavLink = () => {
       {isOpen2 && (
         <Modal
           isOpen={isOpen2}
-          closeModal={closeModal2}
-          style={`fixed max-xl:hidden inset-0 flex items-center z-20 bg-white dark:bg-[#0a0a13] absolute shadow-sm  w-[300px] max-xl:hidden h-full transition-opacity  duration-300 ease-out `}
+          closeModal={closeModal}
+          title={"Notifications"}
+          style={`fixed w-[300px] h-screen dark:bg-[#0a0a13]`}
           content={
             <>
               <div
-                className={`bg-white dark:bg-[#0a0a13] absolute shadow-sm modal-content z-20  w-[300px] max-xl:hidden h-full transition-opacity  duration-300 ease-out`}
+                transition-style="in:wipe:right"
+                className={`bg-white dark:bg-[#0a0a13] shadow-sm  z-20 max-xl:hidden w-full h-screen transition-opacity duration-300 ease-out`}
               >
-                <div className="w-full relative py-12 mb-12 flex justify-center items-center border-b-2">
-                  <p className="text-center text-2xl dark:text-white">
-                    Notifications
-                  </p>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth={1.5}
-                    stroke="currentColor"
-                    className="w-6 h-6 cursor-pointer absolute left-7 dark:stroke-white"
-                    onClick={closeModal2}
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M6 18L18 6M6 6l12 12"
-                    />
-                  </svg>
-                </div>
                 {followingUsers.map((element, key) => (
                   <div
                     className="flex justify-between  py-10 px-4 items-center max-xl:px-0 w-full dark:hover:bg-white/20 hover:bg-black/10"

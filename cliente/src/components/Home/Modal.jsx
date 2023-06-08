@@ -46,7 +46,6 @@ const Modal = ({ isOpen, closeModal, content, style, title, bg }) => {
             </div>
             {content}
           </div>
-          <div className="fixed inset-0 " onClick={closeModal}></div>
         </div>
       )}
     </>

@@ -2,11 +2,13 @@ import React from "react";
 import axios from "axios";
 import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { Aside, AsideRight } from "../Home";
 import { AuthContext } from "../../context/AuthContext";
 import { ReactSVG } from "react-svg";
 import NavResponsive from "./NavResponsive";
 import Wrapper from "../../wrapper/wrapper";
+import Aside from "../Home/Aside";
+import AsideRight from "../Home/AsideRight";
+
 function Search() {
   const { user } = useContext(AuthContext);
   const [users, setUsers] = useState([]);
