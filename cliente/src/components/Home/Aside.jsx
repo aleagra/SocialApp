@@ -14,7 +14,8 @@ import {
   SearchIcon,
   UserIcon,
 } from "../../utilities";
-import FetchFollowersUsers from "../User/FetchFollowersUsers";
+import FetchFollowersUsers from "../User/FetchFollowingUsers";
+import FetchFollowingUsers from "../User/FetchFollowingUsers";
 
 const Aside = () => {
   let btn = document.getElementById("btn");
@@ -31,7 +32,7 @@ const Aside = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchActive, setSearchActive] = useState(false);
 
-  const [followersUsers, setFollowersUsers] = useState([]);
+  const [followingUsers, setFollowingUsers] = useState([]);
 
   const handleOutsideClickSecondModal = (event) => {
     if (
@@ -167,7 +168,7 @@ const Aside = () => {
     ));
   };
 
-  FetchFollowersUsers(userData, setFollowersUsers);
+  FetchFollowingUsers(userData, setFollowingUsers);
   return (
     <>
       <div className="flex-col max-xl:hidden z-10 flex h-screen shadow-md dark:text-white bg-white dark:bg-[#0a0a13] ">
@@ -283,7 +284,7 @@ const Aside = () => {
                 />
               </svg>
             </div>
-            {followersUsers.map((element, key) => (
+            {followingUsers.map((element, key) => (
               <div
                 className="flex justify-between  py-10 px-4 items-center max-xl:px-0 w-full dark:hover:bg-white/20 hover:bg-black/10"
                 key={element._id}

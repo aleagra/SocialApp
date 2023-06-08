@@ -1,9 +1,9 @@
 import { useEffect } from "react";
 import axios from "axios";
 
-const FetchFollowersUsers = (userData, setFollowersUsers) => {
+const FetchFollowingUsers = (userData, setFollowingUsers) => {
   useEffect(() => {
-    const fetchFollowersUsers = async () => {
+    const fetchFollowingUsers = async () => {
       try {
         if (Array.isArray(userData?.following)) {
           const userPromises = userData.followers.map((userId) =>
@@ -12,15 +12,15 @@ const FetchFollowersUsers = (userData, setFollowersUsers) => {
 
           const users = await Promise.all(userPromises);
           const followingUsersData = users.map((response) => response.data);
-          setFollowersUsers(followingUsersData);
+          setFollowingUsers(followingUsersData);
         }
       } catch (error) {
         console.error(error);
       }
     };
 
-    fetchFollowersUsers();
+    fetchFollowingUsers();
   }, [userData?.following]);
 };
 
-export default FetchFollowersUsers;
+export default FetchFollowingUsers;
