@@ -24,7 +24,7 @@ export const RenderNavLink = () => {
   };
 
   const closeModal = () => {
-    setIsOpen2(!isOpen2);
+    setIsOpen2(false);
   }
 
 
