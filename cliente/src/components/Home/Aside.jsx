@@ -4,7 +4,6 @@ import { NavLink, Link } from "react-router-dom";
 import icon from "../../assets/icon.png";
 import { Toggle } from "../Navbar";
 import ColorItem from "./colorItem";
-import axios from "axios";
 import { ReactSVG } from "react-svg";
 import {
   BarsIcon,
@@ -14,8 +13,8 @@ import {
   PenIcon,
   SearchIcon,
   UserIcon,
-  UsersIcon,
 } from "../../utilities";
+import FetchFollowersUsers from "../User/FetchFollowersUsers";
 
 const Aside = () => {
   let btn = document.getElementById("btn");
@@ -31,6 +30,7 @@ const Aside = () => {
   const secondModalRef = useRef(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchActive, setSearchActive] = useState(false);
+
   const [followersUsers, setFollowersUsers] = useState([]);
 
   const handleOutsideClickSecondModal = (event) => {
@@ -98,7 +98,6 @@ const Aside = () => {
       icon: <BellIcon />,
       text: "Notifications",
       onClick: openModal2,
-      // Agregar el onClick para abrir el modal
     },
     {
       to: "/chat",
@@ -130,7 +129,6 @@ const Aside = () => {
     if (currentColor === "undefined") {
       currentColor = defaultColor;
     }
-
     setTheme(currentColor);
     localStorage.setItem("color", currentColor);
   };
@@ -169,26 +167,7 @@ const Aside = () => {
     ));
   };
 
-  useEffect(() => {
-    const fetchFollowersUsers = async () => {
-      try {
-        if (Array.isArray(userData?.following)) {
-          const userPromises = userData.followers.map((userId) =>
-            axios.get(`http://localhost:5050/users/${userId}`)
-          );
-
-          const users = await Promise.all(userPromises);
-          const followingUsersData = users.map((response) => response.data);
-          setFollowersUsers(followingUsersData);
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    fetchFollowersUsers();
-  }, [userData?.following]);
-
+  FetchFollowersUsers(userData, setFollowersUsers);
   return (
     <>
       <div className="flex-col max-xl:hidden z-10 flex h-screen shadow-md dark:text-white bg-white dark:bg-[#0a0a13] ">

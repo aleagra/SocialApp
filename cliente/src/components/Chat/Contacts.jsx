@@ -1,9 +1,8 @@
-import React, { useState, useContext } from "react";
-import { AuthContext } from "../../context/AuthContext";
+import React, { useState } from "react";
 import { ReactSVG } from "react-svg";
 export default function Contacts({ contacts, changeChat }) {
-  const { userData } = useContext(AuthContext);
   const [currentSelected, setCurrentSelected] = useState(undefined);
+
   const changeCurrentChat = (index, contact) => {
     setCurrentSelected(index);
     changeChat(contact);
@@ -43,21 +42,6 @@ export default function Contacts({ contacts, changeChat }) {
             );
           })}
         </div>
-        {/* <div className="flex items-center justify-center gap-[2rem] container">
-          <div className="">
-            <img
-              className="h-12 w-12"
-              src={`data:image/svg+xml;base64,${user.avatarImage}`}
-              alt="avatar"
-            />
-          </div>
-          <div
-            className="font-bold text-xl text-white uppercase
-            "
-          >
-            <h2>{user.username}</h2>
-          </div>
-        </div> */}
       </section>
     </>
   );
