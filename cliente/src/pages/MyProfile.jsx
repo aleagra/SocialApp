@@ -119,13 +119,13 @@ function Profile() {
         <Aside />
         <NavResponsive />
       </div>
-      <div className="w-full col-start-2 max-xl:col-start-1 max-2xl:pr-[4rem] max-xl:pr-0">
+      <div className="w-full col-start-2 max-xl:col-start-1 max-xl:pr-[4rem] max-md:pr-0">
         <div className="relative w-full justify-center max-md:px-0 items-center min-h-screen h-screen">
           <div className="flex flex-col dark:bg-[#131324] h-full dark:text-white max-xl:m-0">
             <div className="relative mb-[4rem] xl:pt-[4rem] max-xl:pt-0 flex flex-col">
               <div className="flex flex-col relative bg-white dark:bg-[#0a0a13] rounded-lg shadow-md">
                 <div className="w-full flex-col h-fit py-12 max-md:py-8 justify-center relavite flex items-center gap-5 max-md:gap-0">
-                  <div className="flex items-center gap-20 max-md:gap-4 max-md:flex-col">
+                  <div className="flex items-center gap-20 max-2xl:gap-12 max-md:gap-4 max-md:flex-col">
                     <ReactSVG
                       src={`data:image/svg+xml;base64,${btoa(
                         userData?.avatarImage
@@ -147,7 +147,7 @@ function Profile() {
                         </div>
                       </div>
 
-                      <div className="flex gap-10 max-md:px-12">
+                      <div className="flex gap-10 max-md:px-12 max-2xl:gap-5">
                         <div className="flex text-center text-xl gap-2">
                           <span className="font-bold max-md:text-sm">
                             {post}{" "}
@@ -337,7 +337,7 @@ function Profile() {
           </div>
         </div>
       )}
-      <div className="col-start-3 pr-[4rem] max-2xl:pr-0 pt-[4rem] max-xl:pt-0 max-xl:col-start-2 max-2xl:hidden">
+      <div className="col-start-3 mr-[4rem] max-2xl:pr-0 pt-[4rem] max-xl:pt-0 max-xl:col-start-2 max-md:hidden ">
         <Recomendations />
       </div>
     </>

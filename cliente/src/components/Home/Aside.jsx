@@ -83,7 +83,7 @@ const Aside = () => {
             isOpen={isOpen}
             title={"Settings"}
             closeModal={closeModal}
-            style={`dark:bg-[#0a0a13] dark:border fixed left-2 top-[36rem] bg-white px-6 py-2 rounded-xl shadow-xl z-20 w-[18rem] transition-opacity  duration-300 ease-out`}
+            style={`dark:bg-[#0a0a13] dark:border fixed left-2 top-[39rem] max-2xl:top-[25rem] bg-white py-2 rounded-xl shadow-xl z-20 w-[18rem] transition-opacity  duration-300 ease-out`}
             content={
               <div className="flex flex-col">
                 <Link
@@ -113,11 +113,11 @@ const Aside = () => {
             isOpen={isOpen3}
             title={"View"}
             closeModal={closeModal3}
-            style={`fixed flex dark:border px-6 py-2 w-[18rem] rounded-xl items-center flex-col left-2 top-[36rem] z-40`}
+            style={`fixed flex dark:border px-6 py-2 w-[18rem] dark:bg-[#0a0a13] bg-white rounded-xl max-2xl:top-[25rem] items-center flex-col left-2 top-[38rem] `}
             content={
               <div
                 ref={secondModalRef}
-                className="dark:bg-[#0a0a13] bg-white rounded-xl shadow-xl modal-content z-20 w-[17.5rem] h-fit"
+                className="rounded-xl shadow-xl modal-content z-20 w-[17.5rem] h-fit"
               >
                 <div className="modal-body relative p-4">
                   <div className="flex flex-wrap gap-4 p-3 max-sm:py-0">
