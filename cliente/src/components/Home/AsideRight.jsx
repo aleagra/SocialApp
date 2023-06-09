@@ -8,7 +8,7 @@ import { io } from "socket.io-client";
 import Modal from "./Modal";
 import { FetchFollowersUsers, FetchFollowingUsers, FetchPost } from "../User";
 const AsideRight = () => {
-  const { user, userData, followingCount, setFollowingCount } =
+  const { user, userData, followingCount, setFollowingCount, posts } =
     useContext(AuthContext);
   const [isOpen, setIsOpen] = useState(false);
   const [isOpen2, setIsOpen2] = useState(false);
@@ -60,14 +60,19 @@ const AsideRight = () => {
 
   const handleUnfollow = async (id) => {
     try {
+      // Ocultar el botón primero
+      setHiddenButtons((prevHiddenButtons) => [...prevHiddenButtons, id]);
+      setFollowingCount((prevCount) => prevCount - 1);
+
+      // Realizar la gestión en la base de datos
       await axios.post(
         `https://socialapp-backend-production-a743.up.railway.app/users/unfollow/${user}`,
         {
           follower: id,
         }
       );
-      setHiddenButtons((prevHiddenButtons) => [...prevHiddenButtons, id]);
-      setFollowingCount((prevCount) => prevCount - 1);
+
+      // Emitir el evento después de la gestión en la base de datos
       socket.current.emit("unfollow-user", {
         userId: user,
         followerId: id,
@@ -97,7 +102,7 @@ const AsideRight = () => {
             <div className="my-6 gap-4 flex w-[100%]">
               <div className="flex w-[33%] flex-col items-center">
                 <Link to="/Profile" className="text-center text-lg">
-                  <h1 className="font-bold">{post}</h1>
+                  <h1 className="font-bold">{posts.length}</h1>
                   <h3 className="font-extralight opacity-60">Post</h3>
                 </Link>
               </div>

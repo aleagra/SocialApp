@@ -17,14 +17,14 @@ import {
 } from "../components/User";
 
 function Profile() {
-  const { user, userData, setFollowingCount } = useContext(AuthContext);
+  const { user, userData, setFollowingCount, posts } = useContext(AuthContext);
   const [fullName, setFullName] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [isOpen2, setIsOpen2] = useState(false);
   const [followersUsers, setFollowersUsers] = useState([]);
   const [followingUsers, setFollowingUsers] = useState([]);
   const [hiddenButtons, setHiddenButtons] = useState([]);
-  const [post, setPost] = useState([]);
+
   const socket = useRef(null);
 
   const openModal = () => {
@@ -82,11 +82,6 @@ function Profile() {
   const closeModa = () => {
     setShowModal(false);
   };
-
-  FetchPost(
-    `https://socialapp-backend-production-a743.up.railway.app/posts/user/${user}`,
-    setPost
-  );
 
   useEffect(() => {
     socket.current = io(
@@ -158,7 +153,7 @@ function Profile() {
                       <div className="flex gap-10 max-md:px-12 max-2xl:gap-5">
                         <div className="flex text-center text-xl gap-2">
                           <span className="font-bold max-md:text-sm">
-                            {post}{" "}
+                            {posts.length}{" "}
                             <span className="text-black/20 dark:text-white/30">
                               Posts
                             </span>

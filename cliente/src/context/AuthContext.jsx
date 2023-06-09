@@ -7,6 +7,7 @@ import {
 } from "react";
 import AuthReducer from "./AuthReducer";
 import axios from "axios";
+import icon from "../assets/icon.png";
 
 const INITIAL_STATE = {
   user: JSON.parse(localStorage.getItem("user")),
@@ -19,9 +20,11 @@ export const AuthContext = createContext(INITIAL_STATE);
 export const AuthContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(AuthReducer, INITIAL_STATE);
   const [userData, setUserData] = useState(null);
-  const [followingCount, setFollowingCount] = useState(0);
+  const [followingCount, setFollowingCount] = useState();
   const [followedUserData, setFollowedUserData] = useState([]);
-
+  const [isLoading, setIsLoading] = useState(true);
+  const [posts, setPost] = useState([]);
+  const [postsFriends, setPostFriends] = useState([]);
   const updateFollowedUserData = useCallback((data) => {
     setFollowedUserData(data);
   }, []);
@@ -32,25 +35,61 @@ export const AuthContextProvider = ({ children }) => {
     }
   }, [state.user]);
 
-  const fetchUser = useCallback(async () => {
-    try {
-      if (state.user) {
-        const response = await axios.get(
-          `https://socialapp-backend-production-a743.up.railway.app/users/${state.user}`
-        );
-        const user = response.data;
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        if (state.user) {
+          setIsLoading(true);
 
-        dispatch({ type: "SET_USER", payload: user });
-        setUserData(user);
+          const [userDataResponse, postsResponse, mypostsResponse] =
+            await Promise.all([
+              axios.get(
+                `https://socialapp-backend-production-a743.up.railway.app/users/${state.user}`
+              ),
+              axios.get(
+                `https://socialapp-backend-production-a743.up.railway.app/posts/friends/${state.user}`
+              ),
+              axios.get(
+                `https://socialapp-backend-production-a743.up.railway.app/posts/user/${state.user}`
+              ),
+            ]);
+
+          const user = userDataResponse.data;
+          const posts = postsResponse.data;
+          const myposts = mypostsResponse.data;
+
+          dispatch({ type: "SET_USER", payload: user });
+          setUserData(user);
+
+          setPostFriends(
+            posts.sort((p1, p2) => {
+              return new Date(p2.createdAt) - new Date(p1.createdAt);
+            })
+          );
+
+          setPost(
+            myposts.sort((p1, p2) => {
+              return new Date(p2.createdAt) - new Date(p1.createdAt);
+            })
+          );
+        }
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setIsLoading(false);
       }
-    } catch (error) {
-      console.log(error);
-    }
+    };
+
+    fetchData();
   }, [state.user]);
 
-  useEffect(() => {
-    fetchUser();
-  }, [fetchUser]);
+  if (isLoading) {
+    return (
+      <div className="absolute z-40 bg-[#131324] w-full h-full flex items-center justify-center">
+        <img src={icon} alt="" />
+      </div>
+    );
+  }
 
   return (
     <AuthContext.Provider
@@ -66,6 +105,8 @@ export const AuthContextProvider = ({ children }) => {
         updateFollowedUserData,
         userData,
         setUserData,
+        posts,
+        postsFriends,
       }}
     >
       {children}

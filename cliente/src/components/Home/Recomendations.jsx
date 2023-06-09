@@ -73,37 +73,40 @@ function Recomendations() {
 
   const handleFollow = async (id) => {
     try {
+      // Actualizar el estado primero
       const response = await axios.get(
         `https://socialapp-backend-production-a743.up.railway.app/users/${id}`
       );
       const followedUserData = response.data;
-      await axios.post(
-        `https://socialapp-backend-production-a743.up.railway.app/users/follow/${user}`,
-        {
-          follower: id,
-        }
-      );
+
       setFollowersUsers((prevFollowers) => {
         const updatedList = [...prevFollowers];
         updatedList.push(followedUserData);
-
         return updatedList;
       });
 
       const updatedList = notFollowing.filter((user) => user._id !== id);
       setNotFollowing(updatedList);
       localStorage.setItem("notFollowing", JSON.stringify(updatedList));
+      updateFollowedUserData((prevData) => [...prevData, followedUserData]);
 
+      // Realizar la gestión en la base de datos después de actualizar el estado
+      await axios.post(
+        `https://socialapp-backend-production-a743.up.railway.app/users/follow/${user}`,
+        {
+          follower: id,
+        }
+      );
+
+      // Emitir el evento después de la gestión en la base de datos
       socket.current.emit("follow-user", {
         userId: user,
         followerId: id,
       });
-      updateFollowedUserData((prevData) => [...prevData, followedUserData]);
     } catch (error) {
       console.error(error);
     }
   };
-
   return (
     <>
       {notFollowing.length > 0 && (

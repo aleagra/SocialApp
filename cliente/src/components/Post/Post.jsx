@@ -16,7 +16,7 @@ const Post = ({ post, userprofile }) => {
   const [likes, setLikes] = useState([]);
   const [likesUsers, setLikesUsers] = useState([]);
   const { userData, user } = useContext(AuthContext);
-  const PF = "https://socialapp-backend-production-a743.up.railway.app/images/";
+  const PF = "https://socialapp-backend-production-a743.up.railway.app/images";
   const [toggle, setTogle] = useState(true);
   const [likesCount, setLikesCount] = useState(post.likesCount || 0);
 
@@ -35,11 +35,23 @@ const Post = ({ post, userprofile }) => {
 
   const likeHandler = async () => {
     try {
+      // Actualizar el estado primero
       const response = await axios.get(
         `https://socialapp-backend-production-a743.up.railway.app/posts/${post._id}/checkLike/${user}`
       );
       const hasLiked = response.data;
 
+      if (hasLiked) {
+        setLikesCount(likesCount - 1);
+        setIsLiked(false);
+      } else {
+        if (!isLiked) {
+          setLikesCount(likesCount + 1);
+          setIsLiked(true);
+        }
+      }
+
+      // Realizar la gestión en la base de datos después de actualizar el estado
       if (hasLiked) {
         await axios.put(
           `https://socialapp-backend-production-a743.up.railway.app/posts/${post._id}/like`,
@@ -47,8 +59,6 @@ const Post = ({ post, userprofile }) => {
             userId: userData._id,
           }
         );
-        setLikesCount(likesCount - 1);
-        setIsLiked(false);
       } else {
         if (!isLiked) {
           await axios.put(
@@ -57,11 +67,11 @@ const Post = ({ post, userprofile }) => {
               userId: userData._id,
             }
           );
-          setLikesCount(likesCount + 1);
-          setIsLiked(true);
         }
       }
-    } catch (err) {}
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   useEffect(() => {
