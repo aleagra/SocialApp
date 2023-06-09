@@ -1,4 +1,10 @@
-import { createContext, useEffect, useReducer, useState } from "react";
+import {
+  createContext,
+  useEffect,
+  useReducer,
+  useState,
+  useCallback,
+} from "react";
 import AuthReducer from "./AuthReducer";
 import axios from "axios";
 
@@ -12,13 +18,13 @@ export const AuthContext = createContext(INITIAL_STATE);
 
 export const AuthContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(AuthReducer, INITIAL_STATE);
-  const [userData, setUserData] = useState(null); // Agregar el useState para userData
+  const [userData, setUserData] = useState(null);
   const [followingCount, setFollowingCount] = useState(0);
   const [followedUserData, setFollowedUserData] = useState([]);
 
-  const updateFollowedUserData = (data) => {
+  const updateFollowedUserData = useCallback((data) => {
     setFollowedUserData(data);
-  };
+  }, []);
 
   useEffect(() => {
     if (state.user) {
@@ -26,25 +32,25 @@ export const AuthContextProvider = ({ children }) => {
     }
   }, [state.user]);
 
-  useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        if (state.user) {
-          const response = await axios.get(
-            `https://socialapp-backend-production-a743.up.railway.app/users/${state.user}`
-          );
-          const user = response.data;
+  const fetchUser = useCallback(async () => {
+    try {
+      if (state.user) {
+        const response = await axios.get(
+          `https://socialapp-backend-production-a743.up.railway.app/users/${state.user}`
+        );
+        const user = response.data;
 
-          dispatch({ type: "SET_USER", payload: user });
-          setUserData(user);
-        }
-      } catch (error) {
-        console.log(error);
+        dispatch({ type: "SET_USER", payload: user });
+        setUserData(user);
       }
-    };
-
-    fetchUser();
+    } catch (error) {
+      console.log(error);
+    }
   }, [state.user]);
+
+  useEffect(() => {
+    fetchUser();
+  }, [fetchUser]);
 
   return (
     <AuthContext.Provider
@@ -59,7 +65,7 @@ export const AuthContextProvider = ({ children }) => {
         followedUserData,
         updateFollowedUserData,
         userData,
-        setUserData, // Agregar userData al value del contexto
+        setUserData,
       }}
     >
       {children}

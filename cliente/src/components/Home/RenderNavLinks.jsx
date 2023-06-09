@@ -25,22 +25,21 @@ export const RenderNavLink = () => {
 
   const closeModal = () => {
     setIsOpen2(false);
-  }
-
+  };
 
   const navLinks = [
     {
       to: "/",
       icon: <HomeIcon />,
       text: "home",
-      activeClassName: "active",
+      activeclassname: "active",
       onClick: closeModal,
     },
     {
       to: "/search",
       icon: <SearchIcon />,
       text: "search",
-      activeClassName: "active",
+      activeclassname: "active",
       onClick: closeModal,
     },
     {
@@ -52,14 +51,14 @@ export const RenderNavLink = () => {
       to: "/chat",
       icon: <ChatIcon />,
       text: "chat",
-      activeClassName: "active",
+      activeclassname: "active",
       onClick: closeModal,
     },
     {
       to: "/Profile",
       icon: <UserIcon />,
       text: "Profile",
-      activeClassName: "active",
+      activeclassname: "active",
       onClick: closeModal,
     },
   ];
@@ -76,7 +75,7 @@ export const RenderNavLink = () => {
               <NavLink
                 onClick={link.onClick}
                 to={link.to}
-                activeClassName={link.activeClassName}
+                activeclassname={link.activeclassname}
                 className="flex gap-4 p-8 max-lg:p-2 hover:bg-gray-100 dark:hover:bg-white/10 max-2xl:pl-16 px-12 max-2xl:px-6 w-full color capitalize"
               >
                 {link.icon}
@@ -99,12 +98,11 @@ export const RenderNavLink = () => {
           isOpen={isOpen2}
           closeModal={closeModal}
           title={"Notifications"}
-          style={`fixed w-[300px] h-screen dark:bg-[#0a0a13]`}
+          style={`fixed w-[300px] h-screen dark:bg-[#0a0a13] bg-white dark:bg-[#0a0a13]`}
           content={
             <>
               <div
-                transition-style="in:wipe:right"
-                className={`bg-white dark:bg-[#0a0a13] shadow-sm  z-20 max-xl:hidden w-full h-screen transition-opacity duration-300 ease-out`}
+                className={` shadow-sm  z-20 max-xl:hidden w-full h-screen transition-opacity duration-300 ease-out`}
               >
                 {followingUsers.map((element, key) => (
                   <div

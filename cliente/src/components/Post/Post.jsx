@@ -246,7 +246,7 @@ const Post = ({ post, userprofile }) => {
               className={`relative items-center flex w-[100%] gap-5 p-6  border-t dark:border-white/40 border-black/40`}
             >
               <ReactSVG
-                src={`data:image/svg+xml;base64,${btoa(userData.avatarImage)}`}
+                src={`data:image/svg+xml;base64,${btoa(userData?.avatarImage)}`}
                 className="color-item  rounded-full w-16 h-auto"
               />
               <input

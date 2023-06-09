@@ -34,7 +34,7 @@ export default function ChatContainer({ currentChat, socket }) {
     });
 
     await axios.post(
-      "https://socialapp-backend-production-a743.up.railway.app/addmsg",
+      "https://socialapp-backend-production-a743.up.railway.app/messages/addmsg",
       {
         from: user,
         to: currentChat._id,

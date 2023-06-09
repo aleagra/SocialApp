@@ -15,27 +15,25 @@ export function HomeCenter() {
       <div className="my-[4rem] max-md:mb-28 max-md:mt-0">
         <UserPost />
         <div className="flex gap-y-12 flex-col w-full justify-center items-center">
-          {data.map((post, key) => {
-            return (
-              <React.Fragment key={post.id}>
-                {post.video ? (
-                  <video controls width="auto">
-                    <source src={post.video} />
-                  </video>
-                ) : (
-                  ""
-                )}
-                {post?.user?.map((user, key) => (
-                  <Post
-                    key={post.id}
-                    post={post}
-                    userprofile={user}
-                    video={post.video}
-                  />
-                ))}
-              </React.Fragment>
-            );
-          })}
+          {data.map((post) => (
+            <React.Fragment key={post.id}>
+              {post.video ? (
+                <video controls width="auto">
+                  <source src={post.video} />
+                </video>
+              ) : (
+                ""
+              )}
+              {post?.user?.map((user) => (
+                <Post
+                  key={`${post.id}-${user.id}`} // Utiliza una clave única para cada elemento <Post>
+                  post={post}
+                  userprofile={user}
+                  video={post.video}
+                />
+              ))}
+            </React.Fragment>
+          ))}
         </div>
       </div>
     </>

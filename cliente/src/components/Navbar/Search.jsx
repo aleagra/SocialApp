@@ -69,6 +69,7 @@ function Search() {
               if (regex.test(Element.username.toLowerCase())) {
                 return (
                   <a
+                    key={Element._id} // Agregar la propiedad "key" con valor único
                     className="w-full dark:border-gray-100/20 hover:bg-gray-100 dark:hover:bg-white/10"
                     onClick={(e) => {
                       search(Element._id);

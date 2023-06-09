@@ -21,7 +21,7 @@
     "emoji-datasource-apple": "^15.0.0",
     "emoji-mart": "^5.5.2",
     "emoji-picker-react": "^4.4.9",
-    "firebase": "^9.17.1",
+    "firebase": "^9.22.2",
     "leaflet": "^1.9.3",
     "localStorage": "^1.0.4",
     "react": "^18.2.0",

@@ -146,7 +146,7 @@ const NavResponsive = () => {
           <NavLink
             onClick={link.onClick}
             to={link.to}
-            activeClassName={link.activeClassName}
+            activeclassname={link.activeclassname}
             className="flex p-5 hover:bg-black/10 dark:hover:bg-white/10  w-full color font-bold"
           >
             {link.icon}
