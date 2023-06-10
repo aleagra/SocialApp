@@ -1,4 +1,4 @@
-import {
+import React, {
   createContext,
   useEffect,
   useReducer,
@@ -72,6 +72,18 @@ export const AuthContextProvider = ({ children }) => {
               return new Date(p2.createdAt) - new Date(p1.createdAt);
             })
           );
+
+          // Fetch contacts
+          if (Array.isArray(user?.following)) {
+            const userPromises = user.following.map((userId) =>
+              axios.get(
+                `https://socialapp-backend-production-a743.up.railway.app/users/${userId}`
+              )
+            );
+            const users = await Promise.all(userPromises);
+            const followingUsersData = users.map((response) => response.data);
+            setFollowedUserData(followingUsersData);
+          }
         }
       } catch (error) {
         console.log(error);
@@ -85,7 +97,7 @@ export const AuthContextProvider = ({ children }) => {
 
   if (isLoading) {
     return (
-      <div className="absolute z-40 bg-[#131324] w-full h-full flex items-center justify-center">
+      <div className="absolute z-40 bg-[#f7f7f7] w-full h-full flex items-center justify-center">
         <img src={icon} alt="" />
       </div>
     );

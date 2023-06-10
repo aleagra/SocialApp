@@ -121,12 +121,10 @@ const Post = ({ post, userprofile }) => {
 
   const openModal = () => {
     setIsOpen(true);
-    console.log("open");
   };
 
   const closeModal = () => {
     setIsOpen(false);
-    console.log("close");
   };
 
   useEffect(() => {
@@ -311,12 +309,9 @@ const Post = ({ post, userprofile }) => {
           content={
             <div>
               {" "}
-              {likesUsers.map((element, key) => (
-                <a href={"/" + element._id}>
-                  <div
-                    className="flex py-6 px-6 pl-10 max-md:pl-8 max-md:py-5 items-center max-xl:px-0 w-full dark:hover:bg-white/20 hover:bg-black/10"
-                    key={element._id}
-                  >
+              {likesUsers.map((element) => (
+                <a href={"/" + element._id} key={element._id}>
+                  <div className="flex py-6 px-6 pl-10 max-md:pl-8 max-md:py-5 items-center max-xl:px-0 w-full dark:hover:bg-white/20 hover:bg-black/10">
                     <div className="text-center flex items-center gap-4 max-md:gap-12">
                       <ReactSVG
                         src={`data:image/svg+xml;base64,${btoa(

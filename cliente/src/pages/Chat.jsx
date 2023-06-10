@@ -10,7 +10,7 @@ function Chat() {
   const socket = useRef();
   const [contacts, setContacts] = useState([]);
   const [currentChat, setCurrentChat] = useState(undefined);
-  const { user, userData } = useContext(AuthContext);
+  const { user, userData, followedUserData } = useContext(AuthContext);
 
   useEffect(() => {
     if (user) {
@@ -21,23 +21,6 @@ function Chat() {
     }
   }, [user]);
 
-  useEffect(() => {
-    const fetchContacts = async () => {
-      if (Array.isArray(userData?.following)) {
-        const userPromises = userData.following.map((userId) =>
-          axios.get(
-            `https://socialapp-backend-production-a743.up.railway.app/users/${userId}`
-          )
-        );
-        const users = await Promise.all(userPromises);
-        const followingUsersData = users.map((response) => response.data);
-        setContacts(followingUsersData);
-      }
-    };
-
-    fetchContacts();
-  }, [userData?.following]);
-
   const handleChatChange = (chat) => {
     setCurrentChat(chat);
   };
@@ -46,7 +29,7 @@ function Chat() {
     <>
       <Aside />
       <div className=" bg-white shadow-md overflow-y-hidden dark:bg-[#1e1f23] grid grid-cols-[25%,75%] xl:col-start-2 max-xl:row-start-1 ">
-        <Contacts contacts={contacts} changeChat={handleChatChange} />
+        <Contacts contacts={followedUserData} changeChat={handleChatChange} />
         {currentChat === undefined ? (
           <Welcome />
         ) : (

@@ -10,14 +10,14 @@ import {
 } from "../../utilities";
 import { NavLink } from "react-router-dom";
 import Modal from "./Modal";
-import FetchFollowingUsers from "../User/FetchFollowingUsers";
 import "../../assets/css/index.css";
 import { ReactSVG } from "react-svg";
+import { FetchFollowersUsers } from "../User";
 
 export const RenderNavLink = () => {
   const { userData } = useContext(AuthContext);
   const [isOpen2, setIsOpen2] = useState(false);
-  const [followingUsers, setFollowingUsers] = useState([]);
+  const [followersUsers, setFollowersUsers] = useState([]);
 
   const openModal = () => {
     setIsOpen2(!isOpen2);
@@ -62,7 +62,7 @@ export const RenderNavLink = () => {
       onClick: closeModal,
     },
   ];
-  FetchFollowingUsers(userData, setFollowingUsers);
+  FetchFollowersUsers(userData, setFollowersUsers);
   return (
     <>
       {navLinks.map((link, index) => (
@@ -104,7 +104,7 @@ export const RenderNavLink = () => {
               <div
                 className={` shadow-sm  z-20 max-xl:hidden w-full h-screen transition-opacity duration-300 ease-out`}
               >
-                {followingUsers.map((element, key) => (
+                {followersUsers.map((element, key) => (
                   <div
                     className="flex justify-between  py-10 px-4 items-center max-xl:px-0 w-full dark:hover:bg-white/20 hover:bg-black/10"
                     key={element._id}

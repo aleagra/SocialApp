@@ -10,7 +10,7 @@ import Aside from "../Home/Aside";
 import AsideRight from "../Home/AsideRight";
 
 function Search() {
-  const { user } = useContext(AuthContext);
+  const { user, setUserProfile } = useContext(AuthContext);
   const [users, setUsers] = useState([]);
   const [buscar, setBuscar] = useState("");
   const [usuariosEncontrados, setUsuariosEncontrados] = useState(true);
@@ -41,7 +41,10 @@ function Search() {
   }, [buscar, users]);
 
   function search(id) {
-    navigate("/" + id);
+    const element = id[0];
+    navigate("/" + element._id);
+    setUserProfile(element);
+    // localStorage.setItem("userProfile", JSON.stringify(element));
   }
   return (
     <>
@@ -72,7 +75,7 @@ function Search() {
                     key={Element._id} // Agregar la propiedad "key" con valor único
                     className="w-full dark:border-gray-100/20 hover:bg-gray-100 dark:hover:bg-white/10"
                     onClick={(e) => {
-                      search(Element._id);
+                      search([Element]);
                     }}
                   >
                     <div className="w-full m-auto">

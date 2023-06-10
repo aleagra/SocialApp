@@ -9,6 +9,7 @@ import { ReactSVG } from "react-svg";
 import { AuthContext } from "../../context/AuthContext";
 import { NavResponsive } from "../Navbar";
 import Wrapper from "../../wrapper/wrapper";
+import icon from "../../assets/icon.png";
 import {
   FetchData,
   FetchFollowersUsers,
@@ -16,7 +17,7 @@ import {
   FetchPost,
 } from "../User";
 function ProfileUsers() {
-  const { user, setFollowingCount } = useContext(AuthContext);
+  const { user, setFollowingCount, userProfile } = useContext(AuthContext);
   const socket = useRef(null);
   const [isFollowing, setIsFollowing] = useState(false);
   let { id } = useParams();
@@ -25,6 +26,8 @@ function ProfileUsers() {
   const [isOpen2, setIsOpen2] = useState(false);
   const [followersUsers, setFollowersUsers] = useState([]);
   const [followingUsers, setFollowingUsers] = useState([]);
+  const [profile1, setProfile1] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [profile, setProfile] = useState({
     currentUserImage: undefined,
     currentUserName: undefined,
@@ -34,30 +37,33 @@ function ProfileUsers() {
     background: undefined,
   });
   const [post, setPost] = useState([]);
-  useEffect(() => {
-    async function fetchUser() {
-      const { data } = await axios.get(url);
-      const {
-        username,
-        descripcion,
-        background,
-        avatarImage,
-        followers,
-        following,
-      } = data;
-      setProfile({
-        ...data,
-        currentUserImage: avatarImage,
-        currentUserName: username,
-        description: descripcion,
-        background: background,
-        followers: followers,
-        following: following,
-      });
-    }
-    fetchUser();
-  }, []);
+  const fetchUser = async () => {
+    const { data } = await axios.get(url);
+    const {
+      username,
+      descripcion,
+      background,
+      avatarImage,
+      followers,
+      following,
+    } = data;
+    setProfile({
+      ...data,
+      currentUserImage: avatarImage,
+      currentUserName: username,
+      description: descripcion,
+      background: background,
+      followers: followers,
+      following: following,
+    });
+  };
 
+  useEffect(() => {
+    (async () => {
+      await fetchUser();
+      setIsLoading(false);
+    })();
+  }, []);
   const data = FetchData(
     `https://socialapp-backend-production-a743.up.railway.app/posts/user/${id}`
   );
@@ -67,6 +73,7 @@ function ProfileUsers() {
   );
 
   useEffect(() => {
+    setProfile1(userProfile);
     socket.current = io(
       "https://socialapp-backend-production-a743.up.railway.app"
     );
@@ -165,6 +172,17 @@ function ProfileUsers() {
 
   FetchFollowersUsers(profile, setFollowersUsers);
   FetchFollowingUsers(profile, setFollowingUsers);
+
+  if (isLoading) {
+    // Mostrar la pantalla de carga mientras los datos se están cargando
+    return (
+      <>
+        <div className="absolute z-40 bg-[#f7f7f7] w-full h-full flex items-center justify-center">
+          <img src={icon} alt="" />
+        </div>
+      </>
+    );
+  }
   return (
     <>
       <div className="w-[300px] fixed z-30">
@@ -242,14 +260,6 @@ function ProfileUsers() {
             {data.map((post, key) => {
               return (
                 <>
-                  {post.video ? (
-                    <video controls width="auto" key={post.id}>
-                      <source src={post.video} />
-                    </video>
-                  ) : (
-                    ""
-                  )}
-
                   {post?.user?.map((user, key) => {
                     return (
                       <>
