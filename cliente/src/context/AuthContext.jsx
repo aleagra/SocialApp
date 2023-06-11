@@ -55,11 +55,21 @@ export const AuthContextProvider = ({ children }) => {
             ]);
 
           const user = userDataResponse.data;
+          const userWithoutPassword = {
+            id: user._id,
+            username: user.username,
+            email: user.email,
+            fullName: user.fullName,
+            avatarImage: user.avatarImage,
+            followers: user.followers,
+            following: user.following,
+            isAvatarImageSet: user.isAvatarImageSet,
+          };
           const posts = postsResponse.data;
           const myposts = mypostsResponse.data;
 
           dispatch({ type: "SET_USER", payload: user });
-          setUserData(user);
+          setUserData(userWithoutPassword);
 
           setPostFriends(
             posts.sort((p1, p2) => {

@@ -8,7 +8,7 @@ import Modal from "../components/Home/Modal";
 import { CloseIcon } from "../utilities";
 import { Link } from "react-router-dom";
 import NavResponsive from "../components/Navbar/NavResponsive";
-import { io } from "socket.io-client";
+import { io as socketIOClient } from "socket.io-client";
 import Wrapper from "../wrapper/wrapper";
 import {
   FetchFollowersUsers,
@@ -17,7 +17,8 @@ import {
 } from "../components/User";
 
 function Profile() {
-  const { user, userData, setFollowingCount, posts } = useContext(AuthContext);
+  const { user, userData, setFollowingCount, posts, dispatch } =
+    useContext(AuthContext);
   const [fullName, setFullName] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [isOpen2, setIsOpen2] = useState(false);
@@ -84,7 +85,7 @@ function Profile() {
   };
 
   useEffect(() => {
-    socket.current = io(
+    socket.current = socketIOClient(
       "https://socialapp-backend-production-a743.up.railway.app"
     );
     socket.current.emit("add-user", user);
@@ -115,6 +116,12 @@ function Profile() {
     } catch (error) {
       console.error(error);
     }
+  };
+  const handleLogout = () => {
+    dispatch({ type: "LOGOUT" });
+    localStorage.removeItem("user");
+    localStorage.removeItem("notFollowing");
+    location.reload();
   };
   return (
     <>
@@ -193,7 +200,7 @@ function Profile() {
                     </div>
                     <div
                       className="color-item rounded-lg flex p-2 px-4 h-fit cursor-pointer mt-8 md:hidden"
-                      onClick={openModa}
+                      onClick={handleLogout}
                     >
                       <p>Logout</p>
                     </div>

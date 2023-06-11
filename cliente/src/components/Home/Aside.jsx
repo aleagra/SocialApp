@@ -40,6 +40,7 @@ const Aside = () => {
   const handleLogout = () => {
     dispatch({ type: "LOGOUT" });
     localStorage.removeItem("user");
+    localStorage.removeItem("notFollowing");
     location.reload();
   };
   const defaultColor = "#E10606";

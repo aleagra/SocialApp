@@ -2,7 +2,7 @@ import { useState, useEffect, useContext, useRef } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import axios from "axios";
 import { ReactSVG } from "react-svg";
-import { io } from "socket.io-client";
+import { io as socketIOClient } from "socket.io-client";
 import { Link } from "react-router-dom";
 function Recomendations() {
   const { user, setFollowingCount, userData, updateFollowedUserData } =
@@ -12,7 +12,7 @@ function Recomendations() {
   const socket = useRef(null);
 
   useEffect(() => {
-    socket.current = io(
+    socket.current = socketIOClient(
       "https://socialapp-backend-production-a743.up.railway.app"
     );
     socket.current.emit("add-user", user);
@@ -25,7 +25,6 @@ function Recomendations() {
       socket.current.disconnect();
     };
   }, [user]);
-
   useEffect(() => {
     const fetchUsers = async () => {
       try {
@@ -33,13 +32,19 @@ function Recomendations() {
           `https://socialapp-backend-production-a743.up.railway.app/users/not-following/${user}`
         );
         const usersWithCount = response.data.map((user) => ({
-          ...user,
-          followingCount: user.followingCount,
+          _id: user._id,
+          username: user.username,
+          avatarImage: user.avatarImage,
         }));
         setNotFollowing(usersWithCount);
 
-        // Guardar la lista en el Local Storage
-        localStorage.setItem("notFollowing", JSON.stringify(usersWithCount));
+        // Guardar solo los campos necesarios en el Local Storage
+        const usersToSave = usersWithCount.map((user) => ({
+          _id: user.id,
+          username: user.username,
+          avatarImage: user.avatarImage,
+        }));
+        localStorage.setItem("notFollowing", JSON.stringify(usersToSave));
       } catch (error) {
         console.error(error);
       }
@@ -107,6 +112,7 @@ function Recomendations() {
       console.error(error);
     }
   };
+
   return (
     <>
       {notFollowing.length > 0 && (

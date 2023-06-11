@@ -257,29 +257,31 @@ const Post = ({ post, userprofile }) => {
                 src={`data:image/svg+xml;base64,${btoa(userData?.avatarImage)}`}
                 className="color-item  rounded-full w-16 h-auto"
               />
-              <input
-                className="w-full m-auto p-2 rounded-xl bg-gray-100 dark:bg-transparent dark:border dark:text-white dark:border-white/40  pl-3 pr-10 text-sm outline-none text-black"
-                placeholder="Write a comment"
-                onChange={(e) => setcommentwriting(e.target.value)}
-              />
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="absolute top-11 right-10 h-4 w-4 cursor-pointer opacity-70"
-                onClick={(e) => {
-                  handleComment();
-                  toggleComments();
-                }}
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5"
+              <div className="relative w-full h-full">
+                <input
+                  className="w-full m-auto p-3 rounded-xl bg-gray-100 dark:bg-transparent dark:border dark:text-white dark:border-white/40  pl-3 pr-10 text-sm outline-none text-black"
+                  placeholder="Write a comment"
+                  onChange={(e) => setcommentwriting(e.target.value)}
                 />
-              </svg>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="absolute top-4 right-5 h-4 w-4 cursor-pointer opacity-70"
+                  onClick={(e) => {
+                    handleComment();
+                    toggleComments();
+                  }}
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5"
+                  />
+                </svg>
+              </div>
             </div>
             {comments.map((item, index) => (
               <div

@@ -4,7 +4,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import Recomendations from "./Recomendations";
 import { ReactSVG } from "react-svg";
-import { io } from "socket.io-client";
+import { io as socketIOClient } from "socket.io-client";
 import Modal from "./Modal";
 import { FetchFollowersUsers, FetchFollowingUsers, FetchPost } from "../User";
 const AsideRight = () => {
@@ -42,7 +42,7 @@ const AsideRight = () => {
   );
 
   useEffect(() => {
-    socket.current = io(
+    socket.current = socketIOClient(
       "https://socialapp-backend-production-a743.up.railway.app"
     );
     socket.current.emit("add-user", user);

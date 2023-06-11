@@ -3,7 +3,7 @@ import { useState, useEffect, useContext, useRef } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { Aside, Modal, Recomendations } from "../Home";
-import { io } from "socket.io-client";
+import { io as socketIOClient } from "socket.io-client";
 import Post from "./Post";
 import { ReactSVG } from "react-svg";
 import { AuthContext } from "../../context/AuthContext";
@@ -74,7 +74,7 @@ function ProfileUsers() {
 
   useEffect(() => {
     setProfile1(userProfile);
-    socket.current = io(
+    socket.current = socketIOClient(
       "https://socialapp-backend-production-a743.up.railway.app"
     );
     socket.current.emit("add-user", user);

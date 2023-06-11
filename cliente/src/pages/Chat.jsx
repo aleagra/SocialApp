@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef, useContext } from "react";
 import axios from "axios";
-import { io } from "socket.io-client";
+import { io as socketIOClient } from "socket.io-client";
 import { AuthContext } from "../context/AuthContext";
 import { ChatContainer, Contacts, Welcome } from "../components/Chat";
 import { Aside } from "../components/Home";
@@ -14,7 +14,7 @@ function Chat() {
 
   useEffect(() => {
     if (user) {
-      socket.current = io(
+      socket.current = socketIOClient(
         "https://socialapp-backend-production-a743.up.railway.app"
       );
       socket.current.emit("add-user", user._id);
