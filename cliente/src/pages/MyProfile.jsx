@@ -187,13 +187,13 @@ function Profile() {
                   </div>
                   <div className="flex gap-6">
                     <div
-                      className="color-item rounded-lg flex p-2 px-4 h-fit cursor-pointer mt-8 md:hidden"
+                      className="color-item text-white rounded-lg flex p-2 px-4 h-fit cursor-pointer mt-8 md:hidden"
                       onClick={openModa}
                     >
                       <p>Edit profile</p>
                     </div>
                     <div
-                      className="color-item rounded-lg flex p-2 px-4 h-fit cursor-pointer mt-8 md:hidden"
+                      className="color-item text-white rounded-lg flex p-2 px-4 h-fit cursor-pointer mt-8 md:hidden"
                       onClick={handleLogout}
                     >
                       <p>Logout</p>
