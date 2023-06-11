@@ -141,10 +141,13 @@ export const Upload = ({ setOpen }) => {
 
   const handleUpload = async (e) => {
     e.preventDefault();
-    const res = await axios.post("http://localhost:5050/posts/", {
-      ...inputs,
-      tags,
-    });
+    const res = await axios.post(
+      "https://socialapp-backend-production-a743.up.railway.app/posts",
+      {
+        ...inputs,
+        tags,
+      }
+    );
     setOpen(false);
     res.status === 200 && navigate(`/${res.data._id}`);
   };

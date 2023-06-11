@@ -56,7 +56,7 @@ export const AuthContextProvider = ({ children }) => {
 
           const user = userDataResponse.data;
           const userWithoutPassword = {
-            id: user._id,
+            _id: user._id,
             username: user.username,
             email: user.email,
             fullName: user.fullName,

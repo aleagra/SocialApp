@@ -4,6 +4,6 @@
     "public": "dist"
   },
   "projects": {
-    "default": "social-application"
+    "default": "social-app-760d9"
   }
 }

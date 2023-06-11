@@ -43,10 +43,6 @@ function Profile() {
   const closeModal2 = () => {
     setIsOpen2(false);
   };
-  const updateMyData = (newData) => {
-    console.log("Datos actualizados:", newData);
-  };
-
   const handleClick = async (e) => {
     e.preventDefault();
 
@@ -60,8 +56,6 @@ function Profile() {
       ...userData,
       fullName: fullName,
     };
-    updateMyData(newData);
-    console.log(resp.data);
     const response = await axios.put(
       `https://socialapp-backend-production-a743.up.railway.app/posts/profilename/${userData._id}`,
       {
@@ -336,7 +330,7 @@ function Profile() {
                 </div>
                 <div className="flex justify-center w-full h-fit py-5">
                   <button
-                    className="p-2 color-item rounded-md w-fit h-fit whitespace-nowrap"
+                    className="p-2 text-white color-item rounded-md w-fit h-fit whitespace-nowrap"
                     type="submit"
                   >
                     Save changes

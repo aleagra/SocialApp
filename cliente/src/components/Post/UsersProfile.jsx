@@ -17,7 +17,7 @@ import {
   FetchPost,
 } from "../User";
 function ProfileUsers() {
-  const { user, setFollowingCount, userProfile } = useContext(AuthContext);
+  const { user, setFollowingCount } = useContext(AuthContext);
   const socket = useRef(null);
   const [isFollowing, setIsFollowing] = useState(false);
   let { id } = useParams();
@@ -26,7 +26,6 @@ function ProfileUsers() {
   const [isOpen2, setIsOpen2] = useState(false);
   const [followersUsers, setFollowersUsers] = useState([]);
   const [followingUsers, setFollowingUsers] = useState([]);
-  const [profile1, setProfile1] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [profile, setProfile] = useState({
     currentUserImage: undefined,
@@ -73,7 +72,6 @@ function ProfileUsers() {
   );
 
   useEffect(() => {
-    setProfile1(userProfile);
     socket.current = socketIOClient(
       "https://socialapp-backend-production-a743.up.railway.app"
     );
@@ -174,7 +172,6 @@ function ProfileUsers() {
   FetchFollowingUsers(profile, setFollowingUsers);
 
   if (isLoading) {
-    // Mostrar la pantalla de carga mientras los datos se están cargando
     return (
       <>
         <div className="absolute z-40 bg-[#f7f7f7] w-full h-full flex items-center justify-center">
@@ -190,7 +187,7 @@ function ProfileUsers() {
         <NavResponsive />
       </div>
 
-      <div className="relative w-full justify-center items-center min-h-screen h-screen xl:col-start-2 max-2xl:pr-[4rem] max-xl:pr-0">
+      <div className="relative w-full justify-center items-center min-h-screen h-screen xl:col-start-2 pr-[4rem] max-xl:pr-0">
         <div className="flex flex-col dark:bg-[#131324] h-full dark:text-white max-xl:m-0 max-lg:overflow-hidden">
           <div className="relative mb-[4rem] max-xl:pt-0 pt-[4rem] flex flex-col">
             <div className="flex flex-col  relative bg-white dark:bg-[#0a0a13] rounded-lg shadow-md">
@@ -348,14 +345,11 @@ function ProfileUsers() {
           />
         )}
       </div>
-      <div className="pr-[4rem] pt-[4rem] max-2xl:hidden">
-        <Recomendations />
-      </div>
     </>
   );
 }
 
 export default Wrapper(
   ProfileUsers,
-  "relative h-screen grid grid-cols-[300px,1fr,400px] gap-[4rem] max-xl:gap-[2rem]  max-2xl:grid-cols-[300px,1fr] max-xl:grid-cols-[1fr]"
+  "relative h-screen grid grid-cols-[300px,1fr] gap-[4rem] max-xl:gap-[2rem] max-xl:grid-cols-[1fr]"
 );

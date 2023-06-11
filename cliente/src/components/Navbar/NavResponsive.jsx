@@ -105,7 +105,7 @@ const NavResponsive = () => {
       activeClassName: "active",
     },
     {
-      to: "/Profile",
+      to: "/profile",
       icon: <UserIcon />,
       text: "Profile",
       activeClassName: "active",

@@ -14,6 +14,7 @@ const FetchFollowersUsers = (userData, setFollowersUsers) => {
 
           const users = await Promise.all(userPromises);
           const followersUsersData = users.map((response) => response.data);
+          followersUsersData.reverse(); // Ordenar al revés
           setFollowersUsers(followersUsersData);
         }
       } catch (error) {

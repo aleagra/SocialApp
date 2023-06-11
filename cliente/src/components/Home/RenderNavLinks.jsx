@@ -12,7 +12,7 @@ import { NavLink } from "react-router-dom";
 import Modal from "./Modal";
 import "../../assets/css/index.css";
 import { ReactSVG } from "react-svg";
-import { FetchFollowersUsers } from "../User";
+import { FetchData, FetchFollowersUsers } from "../User";
 
 export const RenderNavLink = () => {
   const { userData } = useContext(AuthContext);
@@ -55,7 +55,7 @@ export const RenderNavLink = () => {
       onClick: closeModal,
     },
     {
-      to: "/Profile",
+      to: "/profile",
       icon: <UserIcon />,
       text: "Profile",
       activeclassname: "active",
@@ -63,6 +63,7 @@ export const RenderNavLink = () => {
     },
   ];
   FetchFollowersUsers(userData, setFollowersUsers);
+
   return (
     <>
       {navLinks.map((link, index) => (
@@ -105,15 +106,12 @@ export const RenderNavLink = () => {
                 className={` shadow-sm  z-20 max-xl:hidden w-full h-screen transition-opacity duration-300 ease-out`}
               >
                 {followersUsers.map((element, key) => (
-                  <div
-                    className="flex justify-between  py-10 px-4 items-center max-xl:px-0 w-full dark:hover:bg-white/20 hover:bg-black/10"
-                    key={element._id}
-                  >
-                    <div className="flex w-full items-center ">
-                      <a
-                        className="flex items-center justify-evenly w-full "
-                        href={"/" + element._id}
-                      >
+                  <a href={"/" + element._id}>
+                    <div
+                      className="flex justify-between  py-10 px-4 items-center max-xl:px-0 w-full dark:hover:bg-white/20 hover:bg-black/10"
+                      key={element._id}
+                    >
+                      <div className="flex w-full items-center ">
                         <div className="w-full flex items-center gap-4 ">
                           <ReactSVG
                             src={`data:image/svg+xml;base64,${btoa(
@@ -128,9 +126,9 @@ export const RenderNavLink = () => {
                             has started to follow you.
                           </h3>
                         </div>
-                      </a>
+                      </div>
                     </div>
-                  </div>
+                  </a>
                 ))}
               </div>
             </>
