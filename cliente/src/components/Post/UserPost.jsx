@@ -1,21 +1,13 @@
-import { useContext, useRef, useState, useEffect } from "react";
+import { useContext, useState } from "react";
 import axios from "axios";
 import { AuthContext } from "../../context/AuthContext";
-import app from "../../Storage";
-import {
-  getStorage,
-  ref,
-  uploadBytesResumable,
-  getDownloadURL,
-} from "firebase/storage";
 import CloseIcon from "../../utilities/icons/CloseIcon";
-
+import { v4 as uuidv4 } from "uuid";
 import { ReactSVG } from "react-svg";
 import { ImgIcon } from "../../utilities";
 const userPost = () => {
   const { userData } = useContext(AuthContext);
   const [file, setFile] = useState("");
-  const [video, setVideo] = useState(null);
   const [inputStr, setInputStr] = useState("");
 
   const submitPost = async (e) => {
@@ -26,71 +18,44 @@ const userPost = () => {
       user: userData,
     };
 
-    //imagen
-    if (file) {
-      const data = new FormData();
-      const fileName = Date.now() + file.name;
-      data.append("name", fileName);
-      data.append("file", file);
-      newPost.img = fileName;
-      console.log(newPost);
-      try {
-        await axios.post(
-          "https://socialapp-backend-production-a743.up.railway.app/upload",
-          data
-        );
-      } catch (err) {}
-    }
-    video;
-    if (video) {
-      const fileName = new Date().getTime() + video.name;
-      const storage = getStorage(app);
-      const StorageRef = ref(storage, fileName);
-
-      const uploadTask = uploadBytesResumable(StorageRef, video);
-      uploadTask.on(
-        "state_changed",
-        (snapshot) => {
-          const progress =
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          console.log("Upload is " + progress + "% done");
-          switch (snapshot.state) {
-            case "paused":
-              console.log("Upload is paused");
-              break;
-            case "running":
-              console.log("Upload is running");
-              break;
-          }
-        },
-        (error) => {},
-        () => {
-          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-            const uploadVideo = {
-              userId: userData._id,
-              desc: inputStr,
-              video: downloadURL,
-            };
-            try {
-              axios.post(
-                "https://socialapp-backend-production-a743.up.railway.app/posts/",
-                uploadVideo
-              );
-              window.location.reload();
-            } catch (err) {}
-          });
+    const uploadImage = async () => {
+      if (file) {
+        const data = new FormData();
+        const fileName = uuidv4() + file.name; // Agregar el identificador único al nombre del archivo
+        data.append("name", fileName);
+        data.append("file", file);
+        newPost.img = fileName;
+        console.log(newPost);
+        try {
+          const response = await axios.post(
+            "https://socialapp-backend-production-a743.up.railway.app/upload",
+            data
+          );
+          const downloadURL = response.data; // URL de descarga de la imagen
+          newPost.img = downloadURL; // Reemplaza el nombre del archivo con la URL de descarga
+        } catch (err) {
+          console.error(err);
         }
-      );
-    }
-    //texto
-    else
+      }
+    };
+
+    const savePostToDatabase = async () => {
       try {
         await axios.post(
           "https://socialapp-backend-production-a743.up.railway.app/posts/",
           newPost
         );
         window.location.reload();
-      } catch (err) {}
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    try {
+      await Promise.all([uploadImage(), savePostToDatabase()]);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   const handleKey = (e) => {

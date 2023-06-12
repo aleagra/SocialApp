@@ -16,8 +16,8 @@ const Post = ({ post, userprofile }) => {
   const [likes, setLikes] = useState([]);
   const [likesUsers, setLikesUsers] = useState([]);
   const { userData, user } = useContext(AuthContext);
-  const PF = "https://socialapp-backend-production-a743.up.railway.app/images";
   const [toggle, setTogle] = useState(true);
+  const PF = "https://socialapp-backend-production-a743.up.railway.app/images/";
   const [likesCount, setLikesCount] = useState(post.likesCount || 0);
 
   useEffect(() => {
