@@ -60,19 +60,15 @@ const AsideRight = () => {
 
   const handleUnfollow = async (id) => {
     try {
-      // Ocultar el botón primero
       setHiddenButtons((prevHiddenButtons) => [...prevHiddenButtons, id]);
       setFollowingCount((prevCount) => prevCount - 1);
 
-      // Realizar la gestión en la base de datos
       await axios.post(
         `https://socialapp-backend-production-a743.up.railway.app/users/unfollow/${user}`,
         {
           follower: id,
         }
       );
-
-      // Emitir el evento después de la gestión en la base de datos
       socket.current.emit("unfollow-user", {
         userId: user,
         followerId: id,

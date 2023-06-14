@@ -83,7 +83,6 @@ export const AuthContextProvider = ({ children }) => {
             })
           );
 
-          // Fetch contacts
           if (Array.isArray(user?.following)) {
             const userPromises = user.following.map((userId) =>
               axios.get(

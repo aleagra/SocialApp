@@ -1,20 +1,16 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { NavLink } from "react-router-dom";
-import icon from "../../assets/icon.png";
 import { Toggle } from "../Navbar";
 import ColorItem from "../Home/colorItem";
 import axios from "axios";
 import { ReactSVG } from "react-svg";
 import {
-  BarsIcon,
   BellIcon,
   ChatIcon,
   HomeIcon,
-  PenIcon,
   SearchIcon,
   UserIcon,
-  UsersIcon,
 } from "../../utilities";
 
 const NavResponsive = () => {
@@ -96,7 +92,6 @@ const NavResponsive = () => {
       icon: <BellIcon />,
       text: "Notifications",
       onClick: openModal2,
-      // Agregar el onClick para abrir el modal
     },
     {
       to: "/chat",
@@ -251,34 +246,47 @@ const NavResponsive = () => {
                 Notifications
               </p>
             </div>
-            {followersUsers.map((element, key) => (
-              <div
-                className="flex justify-center w-full xl:hidden  dark:hover:bg-white/20 hover:bg-black/10 my-6"
-                key={element._id}
-              >
-                <div className="flex w-full items-center">
-                  <a
-                    className="flex items-center justify-evenly w-full"
-                    href={"/" + element._id}
-                  >
-                    <div className="w-full flex items-center gap-4 px-12">
-                      <ReactSVG
-                        src={`data:image/svg+xml;base64,${btoa(
-                          element.avatarImage
-                        )}`}
-                        className="color-item rounded-full w-16 h-full"
-                      />
-                      <h3 className="dark:text-white text-lg">
-                        <span className="text font-bold">
-                          {element.username}
-                        </span>{" "}
-                        has started to follow you.
-                      </h3>
-                    </div>
-                  </a>
-                </div>
+
+            {followersUsers.length < 1 ? (
+              <div className="h-[20rem] w-full max-md:text-center flex flex-col items-center gap-y-[1rem] justify-center px-[2rem]">
+                <BellIcon />
+                <h1 className="text-xl capitalize font-semibold dark:text-white text-center">
+                  There are no notifications to show.
+                </h1>
+                <p className="text-lg dark:text-white text-center opacity-40">
+                  Here the people who start to follow you will be shown.
+                </p>
               </div>
-            ))}
+            ) : (
+              followersUsers.map((element, key) => (
+                <div
+                  className="flex justify-center w-full xl:hidden  dark:hover:bg-white/20 hover:bg-black/10 my-6"
+                  key={element._id}
+                >
+                  <div className="flex w-full items-center">
+                    <a
+                      className="flex items-center justify-evenly w-full"
+                      href={"/" + element._id}
+                    >
+                      <div className="w-full flex items-center gap-4 px-12">
+                        <ReactSVG
+                          src={`data:image/svg+xml;base64,${btoa(
+                            element.avatarImage
+                          )}`}
+                          className="color-item rounded-full w-16 h-full"
+                        />
+                        <h3 className="dark:text-white text-lg">
+                          <span className="text font-bold">
+                            {element.username}
+                          </span>{" "}
+                          has started to follow you.
+                        </h3>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+              ))
+            )}
           </div>
           <div className="fixed xl:hidden" onClick={closeModal2}></div>
         </div>

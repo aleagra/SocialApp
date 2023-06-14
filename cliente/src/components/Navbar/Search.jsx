@@ -44,7 +44,6 @@ function Search() {
     const element = id[0];
     navigate("/" + element._id);
     setUserProfile(element);
-    // localStorage.setItem("userProfile", JSON.stringify(element));
   }
   return (
     <>
@@ -72,7 +71,7 @@ function Search() {
               if (regex.test(Element.username.toLowerCase())) {
                 return (
                   <a
-                    key={Element._id} // Agregar la propiedad "key" con valor único
+                    key={Element._id}
                     className="w-full dark:border-gray-100/20 hover:bg-gray-100 dark:hover:bg-white/10"
                     onClick={(e) => {
                       search([Element]);

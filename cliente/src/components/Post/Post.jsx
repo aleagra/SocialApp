@@ -35,7 +35,6 @@ const Post = ({ post, userprofile }) => {
 
   const likeHandler = async () => {
     try {
-      // Actualizar el estado primero
       const response = await axios.get(
         `https://socialapp-backend-production-a743.up.railway.app/posts/${post._id}/checkLike/${user}`
       );
@@ -51,7 +50,6 @@ const Post = ({ post, userprofile }) => {
         }
       }
 
-      // Realizar la gestión en la base de datos después de actualizar el estado
       if (hasLiked) {
         await axios.put(
           `https://socialapp-backend-production-a743.up.railway.app/posts/${post._id}/like`,
@@ -98,7 +96,7 @@ const Post = ({ post, userprofile }) => {
           value: comment,
         }
       );
-      // Obtener los comentarios actualizados desde el servidor
+
       const response = await axios.get(
         "https://socialapp-backend-production-a743.up.railway.app/posts/" +
           post._id +
@@ -134,24 +132,33 @@ const Post = ({ post, userprofile }) => {
           `https://socialapp-backend-production-a743.up.railway.app/posts/${post?._id}/likes`
         );
         setLikes(response.data);
-        if (Array.isArray(likes)) {
-          const userPromises = likes.map((userId) =>
-            axios.get(
-              `https://socialapp-backend-production-a743.up.railway.app/users/${userId}`
-            )
-          );
-
-          const users = await Promise.all(userPromises);
-          const likesUsersData = users.map((response) => response.data);
-          setLikesUsers(likesUsersData);
-        }
       } catch (err) {
         console.error("Error fetching likes:", err);
       }
     };
 
-    fetchLikes();
-  }, [post?._id, likesUsers]);
+    if (post?._id) {
+      fetchLikes();
+    }
+  }, [post?._id]);
+
+  useEffect(() => {
+    const fetchLikesUsers = async () => {
+      if (Array.isArray(likes)) {
+        const userPromises = likes.map((userId) =>
+          axios.get(
+            `https://socialapp-backend-production-a743.up.railway.app/users/${userId}`
+          )
+        );
+
+        const users = await Promise.all(userPromises);
+        const likesUsersData = users.map((response) => response.data);
+        setLikesUsers(likesUsersData);
+      }
+    };
+
+    fetchLikesUsers();
+  }, [likes]);
   return (
     <div className="flex w-[100%] flex-col gap-y-8">
       <div className=" flex w-[100%] flex-col rounded-lg bg-white shadow-lg dark:bg-[#0a0a13] dark:text-white max-lg:py-0">
@@ -193,9 +200,9 @@ const Post = ({ post, userprofile }) => {
             {post.desc}
           </p>
         </div>
-        <div className="max-h-[400px] flex justify-center">
+        <div className="flex justify-center">
           <img
-            className="rounded-md object-cover"
+            className="rounded-md object-cover max-w-[50%] max-md:max-w-[100%]"
             src={post.img && PF + post.img}
             alt=""
           />

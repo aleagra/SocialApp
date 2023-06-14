@@ -1,16 +1,16 @@
-import React from 'react';
+import React from "react";
 
 const getInitialTheme = () => {
-  if (typeof window !== 'undefined' && window.localStorage) {
-    const storedPrefs = window.localStorage.getItem('current-theme');
-    if (typeof storedPrefs === 'string') {
+  if (typeof window !== "undefined" && window.localStorage) {
+    const storedPrefs = window.localStorage.getItem("current-theme");
+    if (typeof storedPrefs === "string") {
       return storedPrefs;
     }
-    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      return 'dark';
+    if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+      return "dark";
     }
   }
-  return 'light';
+  return "light";
 };
 
 export const ThemeContext = React.createContext();
@@ -20,12 +20,12 @@ export const ThemeProvider = ({ initialTheme, children }) => {
 
   const checkTheme = (existing) => {
     const root = window.document.documentElement;
-    const isDark = existing === 'dark';
+    const isDark = existing === "dark";
 
-    root.classList.remove(isDark ? 'light' : 'dark');
+    root.classList.remove(isDark ? "light" : "dark");
     root.classList.add(existing);
 
-    localStorage.setItem('current-theme', existing);
+    localStorage.setItem("current-theme", existing);
   };
 
   if (initialTheme) {

@@ -4,6 +4,7 @@ import axios from "axios";
 import { ReactSVG } from "react-svg";
 import { io as socketIOClient } from "socket.io-client";
 import { Link } from "react-router-dom";
+
 function Recomendations() {
   const { user, setFollowingCount, userData, updateFollowedUserData } =
     useContext(AuthContext);
@@ -21,10 +22,12 @@ function Recomendations() {
         setFollowingCount(followerCount);
       }
     });
+
     return () => {
       socket.current.disconnect();
     };
-  }, [user]);
+  }, [user, setFollowingCount]);
+
   useEffect(() => {
     const fetchUsers = async () => {
       try {
@@ -36,15 +39,9 @@ function Recomendations() {
           username: user.username,
           avatarImage: user.avatarImage,
         }));
-        setNotFollowing(usersWithCount);
 
-        // Guardar solo los campos necesarios en el Local Storage
-        const usersToSave = usersWithCount.map((user) => ({
-          _id: user.id,
-          username: user.username,
-          avatarImage: user.avatarImage,
-        }));
-        localStorage.setItem("notFollowing", JSON.stringify(usersToSave));
+        setNotFollowing(usersWithCount);
+        localStorage.setItem("notFollowing", JSON.stringify(usersWithCount));
       } catch (error) {
         console.error(error);
       }
@@ -67,7 +64,7 @@ function Recomendations() {
     };
 
     fetchUserData();
-  }, [user]);
+  }, [user, setFollowingCount]);
 
   useEffect(() => {
     const storedNotFollowing = localStorage.getItem("notFollowing");
@@ -78,24 +75,20 @@ function Recomendations() {
 
   const handleFollow = async (id) => {
     try {
-      // Actualizar el estado primero
-      const response = await axios.get(
-        `https://socialapp-backend-production-a743.up.railway.app/users/${id}`
-      );
-      const followedUserData = response.data;
-
-      setFollowersUsers((prevFollowers) => {
-        const updatedList = [...prevFollowers];
-        updatedList.push(followedUserData);
-        return updatedList;
+      // Update the user object in notFollowing to indicate that it is being followed
+      const updatedList = notFollowing.map((user) => {
+        if (user._id === id) {
+          return {
+            ...user,
+            following: true,
+          };
+        }
+        return user;
       });
 
-      const updatedList = notFollowing.filter((user) => user._id !== id);
       setNotFollowing(updatedList);
       localStorage.setItem("notFollowing", JSON.stringify(updatedList));
-      updateFollowedUserData((prevData) => [...prevData, followedUserData]);
 
-      // Realizar la gestión en la base de datos después de actualizar el estado
       await axios.post(
         `https://socialapp-backend-production-a743.up.railway.app/users/follow/${user}`,
         {
@@ -103,10 +96,35 @@ function Recomendations() {
         }
       );
 
-      // Emitir el evento después de la gestión en la base de datos
       socket.current.emit("follow-user", {
         userId: user,
         followerId: id,
+      });
+
+      // Perform the GET requests in the background
+      Promise.all([
+        axios.get(
+          `https://socialapp-backend-production-a743.up.railway.app/users/${id}`
+        ),
+        axios.get(
+          `https://socialapp-backend-production-a743.up.railway.app/users/followed/${user}`
+        ),
+      ]).then(([response1, response2]) => {
+        const followedUserData = response1.data;
+        const followerData = response2.data;
+
+        setFollowersUsers((prevFollowers) => [
+          ...prevFollowers,
+          followedUserData,
+        ]);
+
+        updateFollowedUserData((prevData) => [...prevData, followedUserData]);
+        updateFollowersData((prevData) => [...prevData, followerData]);
+
+        socket.current.emit("follower-count-updated", {
+          userId: user,
+          followerCount: followerData.length,
+        });
       });
     } catch (error) {
       console.error(error);
@@ -119,36 +137,40 @@ function Recomendations() {
         <section className="py-6 px-8 max-2xl:px-4 rounded-md shadow-lg bg-white dark:text-white dark:bg-[#0a0a13]">
           <p className="font-semibold">RECOMMENDATIONS</p>
           <div className="flex w-full flex-col">
-            {notFollowing.slice(0, 3).map((Element) => (
+            {notFollowing.slice(0, 3).map((element) => (
               <div
                 className="flex justify-between max-2xl:gap-6 pt-6 items-center max-xl:px-0 w-full"
-                key={Element._id}
+                key={element._id}
               >
                 <div className="flex w-full items-center">
                   <Link
                     className="flex items-center justify-evenly w-full"
-                    to={`/${Element._id}`}
+                    to={`/${element._id}`}
                   >
                     <div className="w-full text-center flex items-center gap-4">
                       <ReactSVG
                         src={`data:image/svg+xml;base64,${btoa(
-                          Element.avatarImage
+                          element.avatarImage
                         )}`}
                         className="color-item rounded-full w-16 h-auto"
                       />
                       <h3 className="dark:text-white/70 capitalize">
-                        {Element.username}
+                        {element.username}
                       </h3>
                     </div>
                   </Link>
                 </div>
                 <div>
                   <button
-                    className="color-item rounded-xl p-2 px-4 text-sm text-white"
-                    id={`follow-btn-${Element._id}`}
-                    onClick={() => handleFollow(Element._id)}
+                    className={` rounded-xl p-2 px-4 text-sm  ${
+                      element.following
+                        ? "bg-white border border-black/20 text cursor-default"
+                        : "text-white color-item"
+                    }`}
+                    id={`follow-btn-${element._id}`}
+                    onClick={() => handleFollow(element._id)}
                   >
-                    Follow
+                    {element.following ? "Following" : "Follow"}
                   </button>
                 </div>
               </div>

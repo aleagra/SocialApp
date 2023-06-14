@@ -13,7 +13,7 @@ function FetchPost(url, setPost) {
     };
 
     fetchData();
-  }, [url, setPost]); // Agregar url y setPost como dependencias
+  }, [url, setPost]);
 
   return null;
 }

@@ -5,7 +5,7 @@ import { Aside, Recomendations } from "../components/Home";
 import MyPosts from "../components/Profile/MyPosts";
 import { ReactSVG } from "react-svg";
 import Modal from "../components/Home/Modal";
-import { CloseIcon } from "../utilities";
+import { CloseIcon, PenIcon } from "../utilities";
 import { Link } from "react-router-dom";
 import NavResponsive from "../components/Navbar/NavResponsive";
 import { io as socketIOClient } from "socket.io-client";
@@ -15,6 +15,8 @@ import {
   FetchFollowingUsers,
   FetchPost,
 } from "../components/User";
+import ColorItem from "../components/Home/colorItem";
+import { Toggle } from "../components/Navbar";
 
 function Profile() {
   const { user, userData, setFollowingCount, posts, dispatch } =
@@ -25,6 +27,8 @@ function Profile() {
   const [followersUsers, setFollowersUsers] = useState([]);
   const [followingUsers, setFollowingUsers] = useState([]);
   const [hiddenButtons, setHiddenButtons] = useState([]);
+  const [isOpen3, setIsOpen3] = useState(false);
+  const secondModalRef = useRef(null);
 
   const socket = useRef(null);
 
@@ -43,6 +47,10 @@ function Profile() {
   const closeModal2 = () => {
     setIsOpen2(false);
   };
+  const closeModal3 = () => {
+    setIsOpen3(false);
+  };
+
   const handleClick = async (e) => {
     e.preventDefault();
 
@@ -117,6 +125,22 @@ function Profile() {
     localStorage.removeItem("notFollowing");
     location.reload();
   };
+
+  const colors = ["#E10606", "#0F9130", "#3579FA", "#913CA0"];
+  const defaultColor = "#E10606";
+  let currentColor = defaultColor;
+  const setColor = (event) => {
+    currentColor = event.target.style.getPropertyValue("--bg-color");
+    if (currentColor === "undefined") {
+      currentColor = defaultColor;
+    }
+    setTheme(currentColor);
+    localStorage.setItem("color", currentColor);
+  };
+  useEffect(() => {
+    const currentColor = localStorage.getItem("color");
+    setTheme(currentColor);
+  });
   return (
     <>
       <div className="w-[300px] fixed z-30">
@@ -197,6 +221,14 @@ function Profile() {
                       onClick={handleLogout}
                     >
                       <p>Logout</p>
+                    </div>
+                    <div
+                      className="color-item rounded-lg flex p-2 px-4 h-fit cursor-pointer mt-8 md:hidden"
+                      onClick={() => {
+                        setIsOpen3(true);
+                      }}
+                    >
+                      <PenIcon />
                     </div>
                   </div>
                 </div>
@@ -284,6 +316,7 @@ function Profile() {
                 />
               )}
             </div>
+
             <MyPosts />
           </div>
         </div>
@@ -344,9 +377,41 @@ function Profile() {
       <div className="col-start-3 mr-[4rem] max-2xl:pr-0 pt-[4rem] max-xl:pt-0 max-xl:col-start-2 max-md:hidden ">
         <Recomendations />
       </div>
+
+      {isOpen3 && (
+        <Modal
+          isOpen={isOpen3}
+          title={"View"}
+          bg={"bg-black/60"}
+          closeModal={closeModal3}
+          style={`fixed flex dark:border px-6 py-2 w-[18rem] dark:bg-[#0a0a13] bg-white rounded-xl items-center flex-col left-2 top-[24rem] left-[11%] `}
+          content={
+            <div
+              ref={secondModalRef}
+              className="rounded-xl shadow-xl modal-content z-20 w-[17.5rem] h-fit"
+            >
+              <div className="modal-body relative p-4 text-black dark:text-white">
+                <div className="flex flex-wrap gap-4 p-3 max-sm:py-0">
+                  <h1>Colors:</h1>
+                  {colors.map((color, idx) => (
+                    <ColorItem key={idx} setColor={setColor} color={color} />
+                  ))}
+                </div>
+                <div className="flex gap-2 p-3 items-center">
+                  <h1>Thema:</h1>
+                  <Toggle />
+                </div>
+              </div>
+            </div>
+          }
+        />
+      )}
     </>
   );
 }
+const setTheme = (color) => {
+  document.documentElement.style.setProperty("--bg-color", color);
+};
 export default Wrapper(
   Profile,
   "relative h-screen grid grid-cols-[300px,1fr,400px] gap-[4rem] max-xl:gap-[2rem]  max-2xl:grid-cols-[300px,1fr] max-xl:grid-cols-[1fr]"

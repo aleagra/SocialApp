@@ -3,16 +3,13 @@ import { AuthContext } from "../../context/AuthContext";
 import { Link } from "react-router-dom";
 import { Toggle } from "../Navbar";
 import ColorItem from "./colorItem";
-import { ReactSVG } from "react-svg";
 import icon from "../../assets/icon.png";
-import FetchFollowersUsers from "../User/FetchFollowingUsers";
-import FetchFollowingUsers from "../User/FetchFollowingUsers";
 import { BarsIcon, PenIcon, UserIcon } from "../../utilities";
 import Modal from "./Modal";
 import { RenderNavLink } from "./RenderNavLinks";
 
 const Aside = () => {
-  const { dispatch, userData } = useContext(AuthContext);
+  const { dispatch } = useContext(AuthContext);
   const [isOpen, setIsOpen] = useState(false);
   const [isOpen2, setIsOpen2] = useState(false);
   const [isOpen3, setIsOpen3] = useState(false);
@@ -84,7 +81,7 @@ const Aside = () => {
             isOpen={isOpen}
             title={"Settings"}
             closeModal={closeModal}
-            style={`dark:bg-[#0a0a13] dark:border fixed left-2 top-[39rem] max-2xl:top-[25rem] bg-white py-2 rounded-xl shadow-xl z-20 w-[18rem] transition-opacity  duration-300 ease-out`}
+            style={`dark:bg-[#0a0a13] dark:border fixed left-2 top-[39rem] max-2xl:top-[20rem] bg-white py-2 rounded-xl shadow-xl z-20 w-[18rem] transition-opacity  duration-300 ease-out`}
             content={
               <div className="flex flex-col">
                 <Link

@@ -87,9 +87,7 @@ function ProfileUsers() {
         const response = await axios.get(
           `https://socialapp-backend-production-a743.up.railway.app/users/not-following/${user}`
         );
-        const notFollowingList = response.data; // Lista de personas que no sigues
-
-        // Verificar si el _id de la persona de interés está en la lista de no seguidos
+        const notFollowingList = response.data;
         const isCurrentlyFollowing = !notFollowingList.some(
           (person) => person._id === id
         );

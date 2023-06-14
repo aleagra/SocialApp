@@ -21,7 +21,7 @@ const userPost = () => {
     const uploadImage = async () => {
       if (file) {
         const data = new FormData();
-        const fileName = uuidv4() + file.name; // Agregar el identificador único al nombre del archivo
+        const fileName = uuidv4() + file.name;
         data.append("name", fileName);
         data.append("file", file);
         newPost.img = fileName;
@@ -31,8 +31,8 @@ const userPost = () => {
             "https://socialapp-backend-production-a743.up.railway.app/upload",
             data
           );
-          const downloadURL = response.data; // URL de descarga de la imagen
-          newPost.img = downloadURL; // Reemplaza el nombre del archivo con la URL de descarga
+          const downloadURL = response.data;
+          newPost.img = downloadURL;
         } catch (err) {
           console.error(err);
         }

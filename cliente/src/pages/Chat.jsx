@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useRef, useContext } from "react";
-import axios from "axios";
 import { io as socketIOClient } from "socket.io-client";
 import { AuthContext } from "../context/AuthContext";
 import { ChatContainer, Contacts, Welcome } from "../components/Chat";
@@ -8,16 +7,15 @@ import NavResponsive from "../components/Navbar/NavResponsive";
 import Wrapper from "../wrapper/wrapper";
 function Chat() {
   const socket = useRef();
-  const [contacts, setContacts] = useState([]);
   const [currentChat, setCurrentChat] = useState(undefined);
-  const { user, userData, followedUserData } = useContext(AuthContext);
+  const { user, followedUserData } = useContext(AuthContext);
 
   useEffect(() => {
     if (user) {
       socket.current = socketIOClient(
         "https://socialapp-backend-production-a743.up.railway.app"
       );
-      socket.current.emit("add-user", user._id);
+      socket.current.emit("add-user", user);
     }
   }, [user]);
 
