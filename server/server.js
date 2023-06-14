@@ -5,12 +5,11 @@ const mongoose = require("mongoose");
 const authRoutes = require("./routes/auth");
 const messageRoutes = require("./routes/messages");
 const postRoutes = require("./routes/posts.route");
+const User = require("./models/users.models");
 const app = express();
 const socket = require("socket.io");
-
 const multer = require("multer");
 const path = require("path");
-
 app.use(cors());
 app.use(express.json());
 
@@ -20,7 +19,7 @@ mongoose
     useUnifiedTopology: true,
   })
   .then(() => {
-    console.log("DB Connetion Successfull");
+    console.log("DB Connection Successful");
   })
   .catch((err) => {
     console.log(err.message);
@@ -44,6 +43,8 @@ const io = socket(server, {
 });
 mongoose.set("strictPopulate", false);
 global.onlineUsers = new Map();
+app.set("io", io);
+
 io.on("connection", (socket) => {
   global.chatSocket = socket;
   socket.on("add-user", (userId) => {
@@ -56,6 +57,51 @@ io.on("connection", (socket) => {
       socket.to(sendUserSocket).emit("msg-recieve", data.msg);
     }
   });
+
+  // Define la lógica para tu función FollowUser aquí mismo
+  socket.on("follow-user", async (data) => {
+  const user = await User.findById(data.userId);
+  const follower = await User.findById(data.followerId);
+
+  if (user && follower) {
+    if (!user.following.includes(data.followerId)) {
+      user.following.push(data.followerId);
+      follower.followers.push(data.userId);
+
+      await user.save();
+      await follower.save();
+
+      io.emit("follower-count-updated", {
+        userId: data.userId,
+        followerCount: user.following.length,
+      });
+    }
+  } else {
+    console.log("No se encontraron los documentos de usuario");
+  }
+});
+socket.on("unfollow-user", async (data) => {
+  const user = await User.findById(data.userId);
+  const follower = await User.findById(data.followerId);
+
+  if (user && follower) {
+    if (user.following.includes(data.followerId)) {
+      user.following.pull(data.followerId);
+      follower.followers.pull(data.userId);
+
+      await user.save();
+      await follower.save();
+
+      io.emit("follower-count-updated", {
+        userId: data.userId,
+        followerCount: user.following.length,
+      });
+    }
+  } else {
+    console.log("No se encontraron los documentos de usuario");
+  }
+});
+
 });
 
 const storage = multer.diskStorage({
@@ -70,66 +116,8 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 app.post("/upload", upload.single("file"), (req, res) => {
   try {
-    return res.status(200).json("archivo subido correctamente");
+    return res.status(200).json("Archivo subido correctamente");
   } catch (error) {
     console.error(error);
   }
 });
-
-// const express = require("express");
-// const mongose = require("mongoose");
-// const puertoMongo = process.env.LOCALHOST;
-// const app = express();
-// const socket = require("socket.io");
-// const cors = require("cors");
-// require("dotenv").config();
-// /**Cadena conexion con mongo */
-
-// mongose
-//   .connect(puertoMongo)
-//   .then(() => console.log("Connect MongoDB"))
-//   .catch((err) => {
-//     console.error(err);
-//   });
-// /**Fin de cadena conexion */
-// const routerU = require("./routes/users.route");
-// const routerPosts = require("./routes/posts.route");
-// const routerMessages = require("./routes/messages");
-
-// app.use(cors());
-// app.use(express.json());
-// app.use(express.urlencoded({ extended: true }));
-// app.use(routerU);
-// app.use(routerPosts);
-// app.use(routerMessages);
-// app.use(express.static(__dirname));
-
-// app.listen(process.env.PORT, () => {
-//   console.log(`Servidor corriendo por el puerto` + " " + process.env.PORT);
-// });
-
-// const server = app.listen(process.env.PORT, () =>
-//   console.log(`Server started on ${process.env.PORT}`)
-// );
-
-// const io = socket(server, {
-//   cors: {
-//     origin: "http://localhost:3000",
-//     credentials: true,
-//   },
-// });
-
-// global.onlineUsers = new Map();
-// io.on("connection", (socket) => {
-//   global.chatSocket = socket;
-//   socket.on("add-user", (userId) => {
-//     onlineUsers.set(userId, socket.id);
-//   });
-
-//   socket.on("send-msg", (data) => {
-//     const sendUserSocket = onlineUsers.get(data.to);
-//     if (sendUserSocket) {
-//       socket.to(sendUserSocket).emit("msg-recieve", data.msg);
-//     }
-//   });
-// });

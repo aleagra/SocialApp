@@ -1,38 +1,22 @@
 import React, { useEffect, useState, useRef, useContext } from "react";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import { io } from "socket.io-client";
-import styled from "styled-components";
-import { allUsersRoute, host } from "../utils/APIRoutes";
-import ChatContainer from "../components/ChatContainer";
-import Contacts from "../components/Contacts";
-import Welcome from "../components/Welcome";
+import { io as socketIOClient } from "socket.io-client";
 import { AuthContext } from "../context/AuthContext";
-
-export default function Chat() {
-  const navigate = useNavigate();
+import { ChatContainer, Contacts, Welcome } from "../components/Chat";
+import { Aside } from "../components/Home";
+import NavResponsive from "../components/Navbar/NavResponsive";
+import Wrapper from "../wrapper/wrapper";
+function Chat() {
   const socket = useRef();
-  const [contacts, setContacts] = useState([]);
   const [currentChat, setCurrentChat] = useState(undefined);
-  const { user } = useContext(AuthContext);
+  const { user, followedUserData } = useContext(AuthContext);
 
   useEffect(() => {
     if (user) {
-      socket.current = io(host);
-      socket.current.emit("add-user", user._id);
+      socket.current = socketIOClient(
+        "https://socialapp-backend-production-a743.up.railway.app"
+      );
+      socket.current.emit("add-user", user);
     }
-  }, [user]);
-
-  useEffect(() => {
-    const fetchContacts = async () => {
-      if (user) {
-        const response = await axios.get(`${allUsersRoute}`);
-        const users = response.data.filter((u) => u._id !== user._id);
-        setContacts(users);
-      }
-    };
-
-    fetchContacts();
   }, [user]);
 
   const handleChatChange = (chat) => {
@@ -41,16 +25,22 @@ export default function Chat() {
 
   return (
     <>
-      <section className="h-screen w-full flex flex-col justify-center gap-[1rem] items-center bg-[#131324] ">
-        <div className="h-full w-[100vw] bg-[#00000076] mt-[3%] grid grid-cols-[25%,75%]">
-          <Contacts contacts={contacts} changeChat={handleChatChange} />
-          {currentChat === undefined ? (
-            <Welcome />
-          ) : (
-            <ChatContainer currentChat={currentChat} socket={socket} />
-          )}
-        </div>
-      </section>
+      <Aside />
+      <div className=" bg-white shadow-md overflow-y-hidden dark:bg-[#1e1f23] grid grid-cols-[25%,75%] xl:col-start-2 max-xl:row-start-1 ">
+        <Contacts contacts={followedUserData} changeChat={handleChatChange} />
+        {currentChat === undefined ? (
+          <Welcome />
+        ) : (
+          <ChatContainer currentChat={currentChat} socket={socket} />
+        )}
+      </div>
+      <div className="row-start-2">
+        <NavResponsive />
+      </div>
     </>
   );
 }
+export default Wrapper(
+  Chat,
+  "relative h-screen grid grid-cols-[300px,1fr] max-xl:grid-cols-[1fr] max-xl:grid-rows-[1fr,50px]"
+);

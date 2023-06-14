@@ -1,5 +1,5 @@
 const { Post } = require("../models/post.models");
-const { User } = require("../models/users.models");
+const  User  = require("../models/users.models");
 
 const createPost = async (req, res) => {
   const newPost = new Post(req.body);
@@ -29,22 +29,21 @@ const getPost = async (req, res) => {
     res.status(500).json(err);
   }
 };
-
 const friendPost = async (req, res) => {
+  const userId = req.params.userId;
+
   try {
-    const userId = req.params.userId; // Obtener el ID del usuario actual
+    const user = await User.findById(userId);
+    const followedUserIds = user.following;
+    const followedUserPosts = await Post.find({ userId: { $in: followedUserIds } });
+    const userPosts = await Post.find({ userId });
+    const posts = followedUserPosts.concat(userPosts);
 
-    // Obtener los IDs de los usuarios seguidos, incluyendo el ID del usuario actual
-    const user = await User.findById(userId); // Obtener el usuario actual
-    const followedUsers = user.followers; // Obtener los IDs de los usuarios seguidos
-
-    // Obtener todos los posteos de los usuarios seguidos
-    const allPosts = await Post.find({ user: { $in: followedUsers } });
-
-    res.status(200).json(allPosts);
+    res.json(posts);
   } catch (err) {
-    res.status(500).json(err);
-  } 
+    console.error('Error al buscar publicaciones:', err);
+    res.status(500).json({ error: 'Error al buscar publicaciones.' });
+  }
 };
 
 const likePost = async (req, res) => {
@@ -62,6 +61,96 @@ const likePost = async (req, res) => {
     console.log(err);
   }
 };
+
+const getPostsByUserID = async (req, res) => {
+  const userId = req.params.userId;
+
+  try {
+    const posts = await Post.find({ userId: userId });
+    res.json(posts);
+  } catch (err) {
+    console.error('Error al buscar publicaciones:', err);
+    res.status(500).json({ error: 'Error al buscar publicaciones.' });
+  }
+};
+
+const updatePostsFullname = async (userId, newFullname) => {
+  try {
+    await Post.update({ userId: userId }, { $set: { "user.$[].fullName": newFullname } }, { multi: true });
+    console.log('Se actualizaron todas las publicaciones correctamente.');
+  } catch (err) {
+    console.error('Error al actualizar las publicaciones:', err);
+  }
+};
+
+const updateProfileFullName = async (req, res) => {
+  const userId = req.params.userId;
+  const newFullname = req.body.fullName; 
+
+  try {
+    await updatePostsFullname(userId, newFullname);
+    res.json({ message: 'Se actualizó el fullname en todas las publicaciones.' });
+    console.log(newFullname)
+  } catch (err) {
+    console.error('Error al actualizar el fullname:', err);
+    res.status(500).json({ error: 'Error al actualizar el fullname en las publicaciones.' });
+  }
+};
+
+const updatePostsAvatarImage = async (userId, newAvatarImage) => {
+  try {
+    await Post.update({ userId: userId }, { $set: { "user.$[].avatarImage": newAvatarImage } }, { multi: true });
+    console.log('Se actualizaron todas las publicaciones correctamente.');
+  } catch (err) {
+    console.error('Error al actualizar las publicaciones:', err);
+  }
+};
+
+const updateProfileAvatarImage = async (req, res) => {
+  const userId = req.params.userId;
+  const newAvatarImage = req.body.avatarImage;
+
+  try {
+    await updatePostsAvatarImage(userId, newAvatarImage);
+    res.json({ message: 'Se actualizó el avatarImage en todas las publicaciones.' });
+    console.log(newAvatarImage);
+  } catch (err) {
+    console.error('Error al actualizar el avatarImage:', err);
+    res.status(500).json({ error: 'Error al actualizar el avatarImage en las publicaciones.' });
+  }
+};
+
+const checkLike = async (req, res) => {
+  try {
+    const { id, userId } = req.params;
+    const post = await Post.findById(id);
+
+    if (!post) {
+      return res.status(404).json({ error: 'Post not found' });
+    }
+
+    const hasLiked = post.likes.includes(userId);
+    res.json(hasLiked);
+  } catch (err) {
+    // Manejar el error
+  }
+}
+
+const getLikes = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const post = await Post.findById(id).populate('likes', 'name'); // Suponiendo que el campo de likes en el modelo Post está referenciado a los usuarios que han dado like y tiene un campo 'name' para el nombre del usuario.
+
+    if (!post) {
+      return res.status(404).json({ message: 'Post not found' });
+    }
+    const likes = post.likes;
+    res.json(likes);
+  } catch (err) {
+    console.error('Error fetching likes:', err);
+    res.status(500).json({ message: 'Server error' });
+  }
+}
 
 const comentPost = async (req, res) => {
   const post = await Post.findById(req.params.id);
@@ -88,29 +177,40 @@ const findByPost = async (req, res) => {
     });
 };
 
-const findUserPosts =  (req, res) => {
-  const userId = req.params.userId;
+const getPostDetails = async (req, res) => {
+  const { id } = req.params;
 
-  // Buscar todos los post de un usuario específico
-  Post.find({ userId: userId })
-    .then(posts => {
-      res.json(posts);
-    })
-    .catch(error => {
-      res.status(500).send(error);
-    });
+  try {
+    const post = await Post.findById(id)
+      .populate('likes', 'username')
+      .populate('comments.userId', 'username');
+
+    if (!post) {
+      return res.json({ message: "Id no encontrado" });
+    }
+
+    res.json(post);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error retrieving post details" });
+  }
 };
+
 
 
 module.exports = {
   friendPost,
-  findUserPosts,
   createPost,
   getPost,
   likePost,
   comentPost,
   getAllPosts,
   findByPost,
-
+  checkLike,
+  getLikes,
+  getPostsByUserID,
+  getPostDetails,
+  updateProfileFullName,
+  updateProfileAvatarImage,
 
 };

@@ -5,7 +5,6 @@ const {
   setAvatar,
   logOut,
   getUsers,
-  createUser,
   findByUser,
   FollowUser,
   UnfollowUser,
@@ -14,6 +13,7 @@ const {
   findByFollowing,
   getNotFollowingUsers,
   getFollowers,
+  findUser,
 } = require("../controllers/usersController");
 
 const router = require("express").Router();
@@ -21,7 +21,7 @@ const uploadMulter = require("../config/multer");
 
 router.post("/login", login);
 router.post("/register",  register);
-router.get("/allusers/:id", getAllUsers);
+router.get("/search/:id", getAllUsers);
 router.post("/setavatar/:id", setAvatar);
 router.get("/logout/:id", logOut);
 router.get("/allusers", getUsers);
@@ -33,6 +33,7 @@ router.put("/:id",uploadMulter.single("background"), updateUser);
 router.post("/follow/:id", FollowUser);
 router.post("/unfollow/:id", UnfollowUser);
 router.get("/followers/:id",getFollowers);
+router.get("/search/:username",findUser);
 
 
 

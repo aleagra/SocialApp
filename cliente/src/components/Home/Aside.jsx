@@ -1,88 +1,157 @@
-import React from "react";
-import { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
-import axios from "axios";
+import { Link } from "react-router-dom";
+import { Toggle } from "../Navbar";
+import ColorItem from "./colorItem";
+import icon from "../../assets/icon.png";
+import { BarsIcon, PenIcon, UserIcon } from "../../utilities";
+import Modal from "./Modal";
+import { RenderNavLink } from "./RenderNavLinks";
 
 const Aside = () => {
-  const { user } = useContext(AuthContext);
-  const [notFollowing, setNotFollowing] = useState([]);
+  const { dispatch } = useContext(AuthContext);
+  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen2, setIsOpen2] = useState(false);
+  const [isOpen3, setIsOpen3] = useState(false);
+  const secondModalRef = useRef(null);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchActive, setSearchActive] = useState(false);
 
-  useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const response = await axios.get(
-          `http://localhost:5050/users/not-following/${user._id}`
-        );
-        setNotFollowing(response.data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    fetchUsers();
-  }, [user._id]);
-
-  const handleFollow = async (id) => {
-    try {
-      await axios.post(`http://localhost:5050/users/follow/${user._id}`, {
-        follower: id,
-      });
-
-      setNotFollowing((prevNotFollowing) =>
-        prevNotFollowing.filter((user) => user._id !== id)
-      );
-    } catch (error) {
-      console.error(error);
-    }
+  const openModal = () => {
+    setIsOpen(true);
   };
+
+  const closeModal = () => {
+    setIsOpen(false);
+  };
+
+  const openModal2 = () => {
+    setIsOpen2(true);
+  };
+
+  const closeModal3 = () => {
+    setIsOpen3(false);
+  };
+
+  const colors = ["#E10606", "#0F9130", "#3579FA", "#913CA0"];
+  const handleLogout = () => {
+    dispatch({ type: "LOGOUT" });
+    localStorage.removeItem("user");
+    localStorage.removeItem("notFollowing");
+    location.reload();
+  };
+  const defaultColor = "#E10606";
+  let currentColor = defaultColor;
+  const setColor = (event) => {
+    currentColor = event.target.style.getPropertyValue("--bg-color");
+    if (currentColor === "undefined") {
+      currentColor = defaultColor;
+    }
+    setTheme(currentColor);
+    localStorage.setItem("color", currentColor);
+  };
+  useEffect(() => {
+    const currentColor = localStorage.getItem("color");
+    setTheme(currentColor);
+  });
 
   return (
     <>
-      <div className="w-[25%] py-[2%] gap-y-10  justify-end  flex max-lg:hidden">
-        <div className="flex fixed w-[20%] flex-col  rounded-lg p-3 shadow-lg bg-white dark:text-white dark:bg-[#16181C] max-xl:text-xs">
-          <div className="w-full flex flex-col gap-y-1">
-            <h4 className=" text-sm  mt-2 mb-2  text font-semibold text-center">
-              RECOMMENDATION
-            </h4>
-            {notFollowing.map((Element) => {
-              return (
-                <>
-                  <div
-                    className="flex justify-between p-2 items-center max-xl:px-0"
-                    key={Element._id}
-                  >
-                    <div className="flex w-full items-center ">
-                      <a
-                        className="flex items-center justify-evenly w-full "
-                        href={"/Profile/" + Element._id}
-                      >
-                        <div className="w-full text-center flex items-center gap-4">
-                          <img
-                            alt=""
-                            src={`data:image/svg+xml;base64,${Element.avatarImage}`}
-                            className="w-12 h-10"
-                          />
-                          <h3 className=" font-extralight">
-                            {Element.username}
-                          </h3>
-                        </div>
-                      </a>
-                    </div>
-                    <button
-                      className="color-item rounded-lg p-2 text-md font-light"
-                      id={Element._id}
-                      onClick={() => handleFollow(Element._id)}
-                    >
-                      Follow
-                    </button>
+      <div className="flex-col max-xl:hidden z-10 flex h-screen shadow-md dark:text-white bg-white dark:bg-[#0a0a13] ">
+        <div className="flex px-12 max-2xl:px-4 max-lg:px-0 max-2xl:py-8 py-12 w-full max-2xl:justify-center">
+          <Link to="/" className="flex gap-2 items-center">
+            <img src={icon} className="w-10 h-100" alt="" />
+            <p className="text-2xl uppercase dark:text-white">SocialApp</p>
+          </Link>
+        </div>
+        <div className="w-full h-full relative">
+          <ul className="flex flex-col">
+            <RenderNavLink />
+            <li
+              className="p-8 px-12 h-fit w-full mb-16 max-2xl:mb-[15px] max-2xl:px-6 max-2xl:text-sm  max-2xl:pl-16 text-xl absolute bottom-0 flex gap-4 capitalize cursor-pointer hover:bg-gray-100 dark:hover:bg-white/10 color -tracking-tighter"
+              onClick={openModal}
+            >
+              <BarsIcon />
+              <span>More</span>
+            </li>
+          </ul>
+        </div>
+        {isOpen && (
+          <Modal
+            isOpen={isOpen}
+            title={"Settings"}
+            closeModal={closeModal}
+            style={`dark:bg-[#0a0a13] dark:border fixed left-2 top-[39rem] max-2xl:top-[20rem] bg-white py-2 rounded-xl shadow-xl z-20 w-[18rem] transition-opacity  duration-300 ease-out`}
+            content={
+              <div className="flex flex-col">
+                <Link
+                  className="flex items-center gap-4 p-4 hover:bg-black/10 dark:hover:bg-white/40"
+                  onClick={() => {
+                    setIsOpen3(true);
+                    setIsOpen(false);
+                  }}
+                >
+                  <PenIcon />
+                  <p className="text-xl font-bold">View</p>
+                </Link>
+                <Link
+                  to="/"
+                  onClick={handleLogout}
+                  className="flex items-center gap-4 p-4 hover:bg-black/10 dark:hover:bg-white/40"
+                >
+                  <UserIcon />
+                  <span className="text-xl font-bold">Log out</span>
+                </Link>
+              </div>
+            }
+          />
+        )}
+        {isOpen3 && (
+          <Modal
+            isOpen={isOpen3}
+            title={"View"}
+            closeModal={closeModal3}
+            style={`fixed flex dark:border px-6 py-2 w-[18rem] dark:bg-[#0a0a13] bg-white rounded-xl max-2xl:top-[25rem] items-center flex-col left-2 top-[38rem] `}
+            content={
+              <div
+                ref={secondModalRef}
+                className="rounded-xl shadow-xl modal-content z-20 w-[17.5rem] h-fit"
+              >
+                <div className="modal-body relative p-4">
+                  <div className="flex flex-wrap gap-4 p-3 max-sm:py-0">
+                    <h1>Colors:</h1>
+                    {colors.map((color, idx) => (
+                      <ColorItem key={idx} setColor={setColor} color={color} />
+                    ))}
                   </div>
-                </>
-              );
-            })}
+                  <div className="flex gap-2 p-3 items-center">
+                    <h1>Thema:</h1>
+                    <Toggle />
+                  </div>
+                </div>
+              </div>
+            }
+          />
+        )}
+      </div>
+      {searchActive && (
+        <div className="flex absolute bg-black h-screen w-[15%] z-20 justify-center left-0">
+          <div className="flex-1">
+            <input
+              type="text"
+              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-300"
+              placeholder="Buscar"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
           </div>
         </div>
-      </div>
+      )}
     </>
   );
+};
+const setTheme = (color) => {
+  document.documentElement.style.setProperty("--bg-color", color);
 };
 
 export default Aside;

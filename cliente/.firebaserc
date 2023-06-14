@@ -1,0 +1,9 @@
+{
+  "hosting": {
+    "site": "social-application",
+    "public": "dist"
+  },
+  "projects": {
+    "default": "social-app-760d9"
+  }
+}

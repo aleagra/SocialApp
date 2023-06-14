@@ -31,7 +31,10 @@ const postSchema = mongoose.Schema(
         required: true,
       },
     },
-    user: { type: mongoose.Schema.Types.Array, ref: "User" },
+    user: {
+      type: Array,
+      ref: 'User',
+    },
   },
   { timestamps: true }
 );
