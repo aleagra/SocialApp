@@ -169,7 +169,7 @@ const AsideRight = () => {
       {isOpen2 && (
         <Modal
           isOpen={isOpen2}
-          title={"Followig"}
+          title={"Following"}
           closeModal={closeModal2}
           style={`bg-white dark:bg-[#0a0a13] absolute overflow-y-scroll right-16 top-16 py-6 rounded-lg shadow-sm modal-content z-20 w-[336px] max-xl:hidden h-[438px] transition-opacity duration-300 ease-out`}
           content={

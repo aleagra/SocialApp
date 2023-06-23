@@ -5,10 +5,21 @@ import CloseIcon from "../../utilities/icons/CloseIcon";
 import { v4 as uuidv4 } from "uuid";
 import { ReactSVG } from "react-svg";
 import { ImgIcon } from "../../utilities";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 const userPost = () => {
   const { userData } = useContext(AuthContext);
   const [file, setFile] = useState("");
   const [inputStr, setInputStr] = useState("");
+
+  const toastOptions = {
+    position: "top-center",
+    autoClose: 8000,
+    pauseOnHover: true,
+    draggable: true,
+    theme: "light",
+  };
 
   const submitPost = async (e) => {
     e.preventDefault();
@@ -109,7 +120,25 @@ const userPost = () => {
                     type="file"
                     id="file"
                     accept=".png,.jpeg,.jpg"
-                    onChange={(e) => setFile(e.target.files[0])}
+                    onChange={(e) => {
+                      const selectedFile = e.target.files[0];
+                      const img = new Image();
+                      img.src = window.URL.createObjectURL(selectedFile);
+
+                      img.onload = function () {
+                        const width = img.width;
+                        const height = img.height;
+
+                        if (width <= 1366 && height <= 1366) {
+                          setFile(selectedFile);
+                        } else {
+                          toast.error(
+                            "The image must have a resolution less than or equal to 1366",
+                            toastOptions
+                          );
+                        }
+                      };
+                    }}
                   />
                 </label>
 
@@ -135,6 +164,7 @@ const userPost = () => {
             </div>
           </div>
         </div>
+        <ToastContainer />
       </div>
     </>
   );
