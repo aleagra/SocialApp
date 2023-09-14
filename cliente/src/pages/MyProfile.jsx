@@ -17,6 +17,7 @@ import {
 } from "../components/User";
 import ColorItem from "../components/Home/colorItem";
 import { Toggle } from "../components/Navbar";
+import { hostLink } from "../utilities/host";
 
 function Profile() {
   const { user, userData, setFollowingCount, posts, dispatch } =
@@ -54,18 +55,15 @@ function Profile() {
   const handleClick = async (e) => {
     e.preventDefault();
 
-    const resp = await axios.put(
-      `https://socialapp-backend-production-a743.up.railway.app/users/${userData._id}`,
-      {
-        fullName: fullName,
-      }
-    );
+    const resp = await axios.put(`${hostLink}/users/${userData._id}`, {
+      fullName: fullName,
+    });
     const newData = {
       ...userData,
       fullName: fullName,
     };
     const response = await axios.put(
-      `https://socialapp-backend-production-a743.up.railway.app/posts/profilename/${userData._id}`,
+      `${hostLink}/posts/profilename/${userData._id}`,
       {
         fullName: fullName,
       }
@@ -87,9 +85,7 @@ function Profile() {
   };
 
   useEffect(() => {
-    socket.current = socketIOClient(
-      "https://socialapp-backend-production-a743.up.railway.app"
-    );
+    socket.current = socketIOClient(`${hostLink}`);
     socket.current.emit("add-user", user);
 
     socket.current.on("follower-count-updated", ({ userId, followerCount }) => {
@@ -103,12 +99,9 @@ function Profile() {
   }, [user]);
   const handleUnfollow = async (id) => {
     try {
-      await axios.post(
-        `https://socialapp-backend-production-a743.up.railway.app/users/unfollow/${user}`,
-        {
-          follower: id,
-        }
-      );
+      await axios.post(`${hostLink}/users/unfollow/${user}`, {
+        follower: id,
+      });
       setHiddenButtons((prevHiddenButtons) => [...prevHiddenButtons, id]);
       setFollowingCount((prevCount) => prevCount - 1);
       socket.current.emit("unfollow-user", {

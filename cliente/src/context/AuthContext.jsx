@@ -8,6 +8,7 @@ import React, {
 import AuthReducer from "./AuthReducer";
 import axios from "axios";
 import icon from "../assets/icon.png";
+import { hostLink } from "../utilities/host";
 
 const INITIAL_STATE = {
   user: JSON.parse(localStorage.getItem("user")),
@@ -43,15 +44,9 @@ export const AuthContextProvider = ({ children }) => {
 
           const [userDataResponse, postsResponse, mypostsResponse] =
             await Promise.all([
-              axios.get(
-                `https://socialapp-backend-production-a743.up.railway.app/users/${state.user}`
-              ),
-              axios.get(
-                `https://socialapp-backend-production-a743.up.railway.app/posts/friends/${state.user}`
-              ),
-              axios.get(
-                `https://socialapp-backend-production-a743.up.railway.app/posts/user/${state.user}`
-              ),
+              axios.get(`${hostLink}/users/${state.user}`),
+              axios.get(`${hostLink}/posts/friends/${state.user}`),
+              axios.get(`${hostLink}/posts/user/${state.user}`),
             ]);
 
           const user = userDataResponse.data;
@@ -85,9 +80,7 @@ export const AuthContextProvider = ({ children }) => {
 
           if (Array.isArray(user?.following)) {
             const userPromises = user.following.map((userId) =>
-              axios.get(
-                `https://socialapp-backend-production-a743.up.railway.app/users/${userId}`
-              )
+              axios.get(`${hostLink}/users/${userId}`)
             );
             const users = await Promise.all(userPromises);
             const followingUsersData = users.map((response) => response.data);

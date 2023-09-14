@@ -10,13 +10,13 @@ export default function Contacts({ contacts, changeChat }) {
   };
   return (
     <>
-      <section className=" grid 2xl:grid-rows-[10%,85%,5%] grid-rows-[20%,75%] max-xl:grid-rows-[90%,10%] bg-white dark:bg-[#131324]">
-        <div className="flex justify-center items-center my-4 gap-[2rem] max-xl:hidden  border-b border-white/30">
+      <section className="grid max-h-screen  grid-rows-[10%,90%] max-xl:grid-rows-[90%,10%] bg-white dark:bg-[#131324]">
+        <div className="flex justify-center items-center gap-[2rem] max-xl:hidden  border-b border-white/30">
           <h3 className="text-black dark:text-white font-bold max-xl:hidden ">
             CHATS
           </h3>
         </div>
-        <div className="flex flex-col max-xl:overflow-x-hidden gap-[0.8rem] max-xl:overflow-y-scroll">
+        <div className="flex flex-col gap-[0.8rem] overflow-y-scroll">
           {contacts.length < 1 ? (
             <div className="h-[20rem] w-full max-md:bg-white max-md:text-center flex flex-col items-center gap-y-[1rem] max-xl:justify-center md:px-[2rem]">
               <ChatIcon />
@@ -47,7 +47,7 @@ export default function Contacts({ contacts, changeChat }) {
                       className="color-item  rounded-full w-16 h-16"
                     />
                   </div>
-                  <div className=" font-bold text-lg">
+                  <div className=" font-bold text-lg max-2xl:text-sm">
                     <h3 className="uppercase">{contact.username}</h3>
                   </div>
                 </div>

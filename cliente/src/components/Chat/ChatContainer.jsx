@@ -4,6 +4,7 @@ import ChatInput from "./ChatInput";
 import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
 import { AuthContext } from "../../context/AuthContext";
+import { hostLink } from "../../utilities/host";
 
 export default function ChatContainer({ currentChat, socket }) {
   const [messages, setMessages] = useState([]);
@@ -13,13 +14,10 @@ export default function ChatContainer({ currentChat, socket }) {
 
   useEffect(() => {
     const fetchMessages = async () => {
-      const response = await axios.post(
-        `https://socialapp-backend-production-a743.up.railway.app/messages/getmsg`,
-        {
-          from: user,
-          to: currentChat._id,
-        }
-      );
+      const response = await axios.post(`${hostLink}/messages/getmsg`, {
+        from: user,
+        to: currentChat._id,
+      });
       setMessages(response.data);
     };
 
@@ -33,14 +31,11 @@ export default function ChatContainer({ currentChat, socket }) {
       msg,
     });
 
-    await axios.post(
-      "https://socialapp-backend-production-a743.up.railway.app/messages/addmsg",
-      {
-        from: user,
-        to: currentChat._id,
-        message: msg,
-      }
-    );
+    await axios.post(`${hostLink}/messages/addmsg`, {
+      from: user,
+      to: currentChat._id,
+      message: msg,
+    });
 
     const msgs = [...messages];
     msgs.push({ fromSelf: true, message: msg });
@@ -71,7 +66,7 @@ export default function ChatContainer({ currentChat, socket }) {
             <div ref={scrollRef} key={uuidv4()}>
               <div
                 className={`message ${
-                  message.fromSelf ? "sended" : "recieved "
+                  message.fromSelf ? "sended" : "recieved"
                 }`}
               >
                 <div className="content max-xl: border-[1px] text-white dark:border-white/30 bg-black ">
@@ -89,10 +84,9 @@ export default function ChatContainer({ currentChat, socket }) {
 
 const Container = styled.div`
   display: grid;
-  grid-template-rows: 75% 20%;
+  grid-template-rows: 75% 25%;
   gap: 0.1rem;
 
-  overflow: hidden;
   @media screen and (min-width: 720px) and (max-width: 1080px) {
   }
   .chat-header {

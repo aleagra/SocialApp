@@ -5,6 +5,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { AuthContext } from "../context/AuthContext";
 import icon from "../assets/icon.png";
+import { hostLink } from "../utilities/host";
 export default function Login() {
   const navigate = useNavigate();
   const { dispatch } = useContext(AuthContext);
@@ -28,13 +29,10 @@ export default function Login() {
       return;
     }
 
-    const { data } = await axios.post(
-      "https://socialapp-backend-production-a743.up.railway.app/users/login",
-      {
-        username,
-        password,
-      }
-    );
+    const { data } = await axios.post(`${hostLink}/users/login`, {
+      username,
+      password,
+    });
 
     if (data.status === false) {
       toast.error(data.msg, toastOptions);

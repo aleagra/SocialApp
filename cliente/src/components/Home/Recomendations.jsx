@@ -4,6 +4,7 @@ import axios from "axios";
 import { ReactSVG } from "react-svg";
 import { io as socketIOClient } from "socket.io-client";
 import { Link } from "react-router-dom";
+import { hostLink } from "../../utilities/host";
 
 function Recomendations() {
   const { user, setFollowingCount, userData, updateFollowedUserData } =
@@ -13,9 +14,7 @@ function Recomendations() {
   const socket = useRef(null);
 
   useEffect(() => {
-    socket.current = socketIOClient(
-      "https://socialapp-backend-production-a743.up.railway.app"
-    );
+    socket.current = socketIOClient(`${hostLink}`);
     socket.current.emit("add-user", user);
     socket.current.on("follower-count-updated", ({ userId, followerCount }) => {
       if (userId === user) {
@@ -32,7 +31,7 @@ function Recomendations() {
     const fetchUsers = async () => {
       try {
         const response = await axios.get(
-          `https://socialapp-backend-production-a743.up.railway.app/users/not-following/${user}`
+          `${hostLink}/users/not-following/${user}`
         );
         const usersWithCount = response.data.map((user) => ({
           _id: user._id,
@@ -53,9 +52,7 @@ function Recomendations() {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await axios.get(
-          `https://socialapp-backend-production-a743.up.railway.app/users/${user}`
-        );
+        const response = await axios.get(`${hostLink}/users/${user}`);
         const userData = response.data;
         setFollowingCount(userData?.following.length);
       } catch (error) {
@@ -89,12 +86,9 @@ function Recomendations() {
       setNotFollowing(updatedList);
       localStorage.setItem("notFollowing", JSON.stringify(updatedList));
 
-      await axios.post(
-        `https://socialapp-backend-production-a743.up.railway.app/users/follow/${user}`,
-        {
-          follower: id,
-        }
-      );
+      await axios.post(`${hostLink}/users/follow/${user}`, {
+        follower: id,
+      });
 
       socket.current.emit("follow-user", {
         userId: user,
@@ -103,12 +97,8 @@ function Recomendations() {
 
       // Perform the GET requests in the background
       Promise.all([
-        axios.get(
-          `https://socialapp-backend-production-a743.up.railway.app/users/${id}`
-        ),
-        axios.get(
-          `https://socialapp-backend-production-a743.up.railway.app/users/followed/${user}`
-        ),
+        axios.get(`${hostLink}/users/${id}`),
+        axios.get(`${hostLink}/users/followed/${user}`),
       ]).then(([response1, response2]) => {
         const followedUserData = response1.data;
         const followerData = response2.data;

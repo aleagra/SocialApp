@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import axios from "axios";
+import { hostLink } from "../../utilities/host";
 
 const FetchFollowersUsers = (userData, setFollowersUsers) => {
   useEffect(() => {
@@ -7,9 +8,7 @@ const FetchFollowersUsers = (userData, setFollowersUsers) => {
       try {
         if (Array.isArray(userData?.followers)) {
           const userPromises = userData.followers.map((userId) =>
-            axios.get(
-              `https://socialapp-backend-production-a743.up.railway.app/users/${userId}`
-            )
+            axios.get(`${hostLink}/users/${userId}`)
           );
 
           const users = await Promise.all(userPromises);

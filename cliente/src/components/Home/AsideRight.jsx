@@ -7,6 +7,7 @@ import { ReactSVG } from "react-svg";
 import { io as socketIOClient } from "socket.io-client";
 import Modal from "./Modal";
 import { FetchFollowersUsers, FetchFollowingUsers, FetchPost } from "../User";
+import { hostLink } from "../../utilities/host";
 const AsideRight = () => {
   const { user, userData, followingCount, setFollowingCount, posts } =
     useContext(AuthContext);
@@ -36,15 +37,10 @@ const AsideRight = () => {
 
   FetchFollowingUsers(userData, setFollowingUsers);
   FetchFollowersUsers(userData, setFollowersUsers);
-  FetchPost(
-    `https://socialapp-backend-production-a743.up.railway.app/posts/user/${user}`,
-    setPost
-  );
+  FetchPost(`${hostLink}/posts/user/${user}`, setPost);
 
   useEffect(() => {
-    socket.current = socketIOClient(
-      "https://socialapp-backend-production-a743.up.railway.app"
-    );
+    socket.current = socketIOClient(`${hostLink}`);
     socket.current.emit("add-user", user);
 
     socket.current.on("follower-count-updated", ({ userId, followerCount }) => {
@@ -63,12 +59,9 @@ const AsideRight = () => {
       setHiddenButtons((prevHiddenButtons) => [...prevHiddenButtons, id]);
       setFollowingCount((prevCount) => prevCount - 1);
 
-      await axios.post(
-        `https://socialapp-backend-production-a743.up.railway.app/users/unfollow/${user}`,
-        {
-          follower: id,
-        }
-      );
+      await axios.post(`${hostLink}/users/unfollow/${user}`, {
+        follower: id,
+      });
       socket.current.emit("unfollow-user", {
         userId: user,
         followerId: id,

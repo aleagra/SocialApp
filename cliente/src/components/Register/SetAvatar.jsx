@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { ReactSVG } from "react-svg";
 import { v4 as uuidv4 } from "uuid";
 import { Fetching } from "../../context/AuthActions";
+import { hostLink } from "../../utilities/host";
 
 export default function SetAvatar() {
   const { user, dispatch } = useContext(AuthContext);
@@ -56,21 +57,15 @@ export default function SetAvatar() {
     try {
       dispatch(Fetching());
 
-      const response = await axios.post(
-        `https://socialapp-backend-production-a743.up.railway.app/users/setavatar/${user}`,
-        {
-          image: selectedAvatar,
-        }
-      );
+      const response = await axios.post(`${hostLink}/users/setavatar/${user}`, {
+        image: selectedAvatar,
+      });
 
       dispatch({ type: "SET_USER", payload: response.data });
 
-      await axios.put(
-        `https://socialapp-backend-production-a743.up.railway.app/posts/profileimg/${user}`,
-        {
-          avatarImage: selectedAvatar,
-        }
-      );
+      await axios.put(`${hostLink}/posts/profileimg/${user}`, {
+        avatarImage: selectedAvatar,
+      });
 
       dispatch(Fetching());
       navigate("/");

@@ -12,6 +12,7 @@ import {
   SearchIcon,
   UserIcon,
 } from "../../utilities";
+import { hostLink } from "../../utilities/host";
 
 const NavResponsive = () => {
   let btn = document.getElementById("btn");
@@ -163,9 +164,7 @@ const NavResponsive = () => {
       try {
         if (Array.isArray(userData?.following)) {
           const userPromises = userData.followers.map((userId) =>
-            axios.get(
-              `https://socialapp-backend-production-a743.up.railway.app/users/${userId}`
-            )
+            axios.get(`${hostLink}/users/${userId}`)
           );
 
           const users = await Promise.all(userPromises);

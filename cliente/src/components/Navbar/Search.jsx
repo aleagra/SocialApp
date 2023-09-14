@@ -8,6 +8,7 @@ import NavResponsive from "./NavResponsive";
 import Wrapper from "../../wrapper/wrapper";
 import Aside from "../Home/Aside";
 import AsideRight from "../Home/AsideRight";
+import { hostLink } from "../../utilities/host";
 
 function Search() {
   const { user, setUserProfile } = useContext(AuthContext);
@@ -19,9 +20,7 @@ function Search() {
   useEffect(() => {
     async function obtenerUsuarios() {
       try {
-        const response = await axios.get(
-          "https://socialapp-backend-production-a743.up.railway.app/users/allusers"
-        );
+        const response = await axios.get(`${hostLink}/users/allusers`);
         const allUsers = response.data;
         const filteredUsers = allUsers.filter((users) => users._id !== user);
         setUsers(filteredUsers);
@@ -43,7 +42,6 @@ function Search() {
   function search(id) {
     const element = id[0];
     navigate("/" + element._id);
-    setUserProfile(element);
   }
   return (
     <>

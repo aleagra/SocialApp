@@ -5,6 +5,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { AuthContext } from "../context/AuthContext";
 import icon from "../assets/icon.png";
+import { hostLink } from "../utilities/host";
 const Register = () => {
   const navigate = useNavigate();
   const { dispatch } = useContext(AuthContext);
@@ -60,15 +61,12 @@ const Register = () => {
     event.preventDefault();
     if (handleValidation()) {
       const { email, username, password, fullName } = values;
-      const { data } = await axios.post(
-        "https://socialapp-backend-production-a743.up.railway.app/users/register",
-        {
-          username,
-          email,
-          fullName,
-          password,
-        }
-      );
+      const { data } = await axios.post(`${hostLink}/users/register`, {
+        username,
+        email,
+        fullName,
+        password,
+      });
 
       if (data.status === false) {
         toast.error(data.msg, toastOptions);

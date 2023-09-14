@@ -7,6 +7,7 @@ import { ReactSVG } from "react-svg";
 import { ImgIcon } from "../../utilities";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { hostLink } from "../../utilities/host";
 
 const userPost = () => {
   const { userData } = useContext(AuthContext);
@@ -38,10 +39,7 @@ const userPost = () => {
         newPost.img = fileName;
         console.log(newPost);
         try {
-          const response = await axios.post(
-            "https://socialapp-backend-production-a743.up.railway.app/upload",
-            data
-          );
+          const response = await axios.post(`${hostLink}/upload`, data);
           const downloadURL = response.data;
           newPost.img = downloadURL;
         } catch (err) {
@@ -52,10 +50,7 @@ const userPost = () => {
 
     const savePostToDatabase = async () => {
       try {
-        await axios.post(
-          "https://socialapp-backend-production-a743.up.railway.app/posts/",
-          newPost
-        );
+        await axios.post(`${hostLink}/posts/`, newPost);
         window.location.reload();
       } catch (err) {
         console.error(err);

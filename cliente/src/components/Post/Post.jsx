@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import { Modal } from "../Home";
 import axios from "axios";
 import { ReactSVG } from "react-svg";
+import { hostLink } from "../../utilities/host";
 
 const Post = ({ post, userprofile }) => {
   const [isLiked, setIsLiked] = useState();
@@ -17,14 +18,14 @@ const Post = ({ post, userprofile }) => {
   const [likesUsers, setLikesUsers] = useState([]);
   const { userData, user } = useContext(AuthContext);
   const [toggle, setTogle] = useState(true);
-  const PF = "https://socialapp-backend-production-a743.up.railway.app/images/";
+  const PF = `${hostLink}/images/`;
   const [likesCount, setLikesCount] = useState(post.likesCount || 0);
 
   useEffect(() => {
     const fetchLikeStatus = async () => {
       try {
         const response = await axios.get(
-          `https://socialapp-backend-production-a743.up.railway.app/posts/${post._id}/checkLike/${user}`
+          `${hostLink}/posts/${post._id}/checkLike/${user}`
         );
         setIsLiked(response.data);
       } catch (err) {}
@@ -36,7 +37,7 @@ const Post = ({ post, userprofile }) => {
   const likeHandler = async () => {
     try {
       const response = await axios.get(
-        `https://socialapp-backend-production-a743.up.railway.app/posts/${post._id}/checkLike/${user}`
+        `${hostLink}/posts/${post._id}/checkLike/${user}`
       );
       const hasLiked = response.data;
 
@@ -51,20 +52,14 @@ const Post = ({ post, userprofile }) => {
       }
 
       if (hasLiked) {
-        await axios.put(
-          `https://socialapp-backend-production-a743.up.railway.app/posts/${post._id}/like`,
-          {
-            userId: userData._id,
-          }
-        );
+        await axios.put(`${hostLink}/posts/${post._id}/like`, {
+          userId: userData._id,
+        });
       } else {
         if (!isLiked) {
-          await axios.put(
-            `https://socialapp-backend-production-a743.up.railway.app/posts/${post._id}/like`,
-            {
-              userId: userData._id,
-            }
-          );
+          await axios.put(`${hostLink}/posts/${post._id}/like`, {
+            userId: userData._id,
+          });
         }
       }
     } catch (error) {
@@ -87,20 +82,13 @@ const Post = ({ post, userprofile }) => {
       comment: commentwriting,
     };
     try {
-      await axios.put(
-        "https://socialapp-backend-production-a743.up.railway.app/posts/" +
-          post._id +
-          "/comment",
-        {
-          userId: userData._id,
-          value: comment,
-        }
-      );
+      await axios.put(`${hostLink}/posts/` + post._id + "/comment", {
+        userId: userData._id,
+        value: comment,
+      });
 
       const response = await axios.get(
-        "https://socialapp-backend-production-a743.up.railway.app/posts/" +
-          post._id +
-          "/comments"
+        `${hostLink}/posts/` + post._id + "/comments"
       );
       setComments(response.data.comments);
     } catch (err) {
@@ -129,7 +117,7 @@ const Post = ({ post, userprofile }) => {
     const fetchLikes = async () => {
       try {
         const response = await axios.get(
-          `https://socialapp-backend-production-a743.up.railway.app/posts/${post?._id}/likes`
+          `${hostLink}/posts/${post?._id}/likes`
         );
         setLikes(response.data);
       } catch (err) {
@@ -146,9 +134,7 @@ const Post = ({ post, userprofile }) => {
     const fetchLikesUsers = async () => {
       if (Array.isArray(likes)) {
         const userPromises = likes.map((userId) =>
-          axios.get(
-            `https://socialapp-backend-production-a743.up.railway.app/users/${userId}`
-          )
+          axios.get(`${hostLink}/users/${userId}`)
         );
 
         const users = await Promise.all(userPromises);

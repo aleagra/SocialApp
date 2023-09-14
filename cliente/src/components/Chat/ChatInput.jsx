@@ -20,7 +20,7 @@ export default function ChatInput({ handleSendMsg }) {
   };
 
   return (
-    <section className="flex w-full px-12 max-xl:px-5 relative z-0 items-end">
+    <section className="flex w-full px-12 pb-10 max-xl:px-5 relative z-0 items-end">
       {showPicker && <Picker onEmojiClick={handleEmojiClick} />}
 
       <form className="flex h-16 w-full relative" onSubmit={sendChat}>
