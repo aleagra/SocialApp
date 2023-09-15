@@ -43,7 +43,7 @@ export const RenderNavLink = () => {
       onClick: closeModal,
     },
     {
-      icon: <BellIcon />,
+      icon: <BellIcon className={"w-6 h-6 hover"} />,
       text: "Notifications",
       onClick: openModal,
     },
@@ -107,7 +107,9 @@ export const RenderNavLink = () => {
               >
                 {followersUsers.length < 1 ? (
                   <div className="h-[20rem] max-md:text-center flex flex-col items-center gap-y-[1rem] justify-center md:px-[2rem]">
-                    <BellIcon />
+                    <BellIcon
+                      className={"w-6 h-6 stroke-black dark:stroke-white"}
+                    />
                     <h1 className="text-xl capitalize font-semibold dark:text-white text-center">
                       There are no notifications to show.
                     </h1>

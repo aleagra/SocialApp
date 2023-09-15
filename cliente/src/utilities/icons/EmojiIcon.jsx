@@ -8,7 +8,7 @@ function EmojiIcon() {
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="currentColor"
-      className="w-8 h-8 fill cursor-pointer absolute max-xl:left-2 xl:left-4 top-4 left-16 hover:bg-white/30 hover:rounded-md"
+      className="w-8 h-8 fill cursor-pointer absolute max-xl:left-2 xl:left-4 top-4 left-16 hover:bg-white/30 hover:rounded-md max-md:w-4 max-md:h-4 max-md:top-2"
     >
       <path
         strokeLinecap="round"

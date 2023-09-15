@@ -1,6 +1,6 @@
 import React from "react";
 
-function Bell() {
+function Bell({ className }) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -8,7 +8,7 @@ function Bell() {
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="currentColor"
-      className="w-6 h-6 stroke-black dark:stroke-white"
+      className={className}
     >
       <path
         strokeLinecap="round"

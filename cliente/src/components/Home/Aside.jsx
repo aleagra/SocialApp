@@ -91,7 +91,9 @@ const Aside = () => {
                     setIsOpen(false);
                   }}
                 >
-                  <PenIcon />
+                  <PenIcon
+                    className={"w-6 h-6 stroke-black dark:stroke-white"}
+                  />
                   <p className="text-xl font-bold">View</p>
                 </Link>
                 <Link

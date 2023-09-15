@@ -23,7 +23,10 @@ export default function ChatInput({ handleSendMsg }) {
     <section className="flex w-full px-12 pb-10 max-xl:px-5 relative z-0 items-end">
       {showPicker && <Picker onEmojiClick={handleEmojiClick} />}
 
-      <form className="flex h-16 w-full relative" onSubmit={sendChat}>
+      <form
+        className="flex h-16 w-full relative max-md:h-8"
+        onSubmit={sendChat}
+      >
         <div onClick={() => setShowPicker((val) => !val)}>
           <EmojiIcon />
         </div>
@@ -31,7 +34,7 @@ export default function ChatInput({ handleSendMsg }) {
           type="text"
           onChange={(e) => setMsg(e.target.value)}
           value={msg}
-          className=" border-2 rounded-lg  px-14 w-full focus:outline-none dark:text-white text-lg bg-transparent border-black/10 dark:border-white/30"
+          className=" border-2 rounded-lg  px-14 max-md:px-8 max-md:text-sm w-full focus:outline-none dark:text-white text-lg bg-transparent border-black/10 dark:border-white/30"
         />
         <button type="submit">
           <SendIcon />

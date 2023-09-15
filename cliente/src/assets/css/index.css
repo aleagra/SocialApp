@@ -16,6 +16,9 @@
   color: var(--bg-color);
   @apply bg-gray-100 dark:bg-white/10 font-semibold;
 }
+.hover:hover {
+  stroke: var(--bg-color);
+}
 ::-webkit-scrollbar {
   width: 10px;
 }

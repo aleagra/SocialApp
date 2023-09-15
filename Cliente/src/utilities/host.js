@@ -1,3 +1,3 @@
-export const hostLink="http://localhost:5050"
+export const hostLink="https://socialapp-backend-qvv4.onrender.com"
 
-//  "https://socialapp-backend-production-a743.up.railway.app"
+// "http://localhost:5050"

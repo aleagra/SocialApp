@@ -221,7 +221,7 @@ function Profile() {
                         setIsOpen3(true);
                       }}
                     >
-                      <PenIcon />
+                      <PenIcon className={"w-6 h-6 stroke-white"} />
                     </div>
                   </div>
                 </div>

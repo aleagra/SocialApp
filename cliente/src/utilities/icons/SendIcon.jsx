@@ -8,7 +8,7 @@ function SendIcon() {
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="currentColor"
-      className="w-9 h-9 fill absolute max-xl:right-3 xl:right-4 top-3 right-16 z-10 hover:bg-white/30 hover:rounded-md"
+      className="w-9 h-9 fill absolute max-xl:right-3 xl:right-4 top-3 right-16 z-10 hover:bg-white/30 hover:rounded-md max-md:w-5 max-md:h-5 max-md:top-2"
     >
       <path
         strokeLinecap="round"
